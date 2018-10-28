@@ -1,0 +1,16 @@
+{
+  "name": "colour_parser",
+  "description": "Script for parsing dominant and palette colours of images",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "dominant-color": "0.0.1",
+    "get-image-colors": "^1.8.1",
+    "mongodb": "^3.1.8",
+    "xml2js": "^0.4.19"
+  },
+  "engines": {
+    "node": "8.10.0",
+    "npm": "3.5.x"
+  }
+}

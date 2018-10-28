@@ -1,0 +1,22 @@
+{ filename: '13.png',
+  title: 'Bildnis einer Dame in einem schwarzen Kleid',
+  author: 'Maes, Nicolaes',
+  physical_descr: 'Oil on canvas',
+  dimension_x: '85,6',
+  dimension_y: '69,9',
+  colours:
+   { dominant: '#312c23',
+     palette: [ '#1a1712', '#baa98b', '#6c5945', '#8b8c7d', '#82828d' ] } }
+{ filename: '2085.png',
+  title: 'Liegender Hund im Schnee',
+  author: 'Marc, Franz',
+  physical_descr: 'Oil on canvas',
+  dimension_x: '62,5',
+  dimension_y: '105,0',
+  colours:
+   { dominant: '#9fb39a',
+     palette: [ '#c5ceb6', '#1e5c58', '#a8ae3d', '#709689', '#7c545b' ] } }
+
+
+
+     

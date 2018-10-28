@@ -1,0 +1,10 @@
+{
+  "db": {
+    "schema": "metadataDB",
+    "host": "localhost",
+    "port": 27017
+  },
+  "server": {
+    "port": 3000
+  }
+}
