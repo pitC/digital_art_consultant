@@ -2,8 +2,8 @@ IMG_FORMAT = ".png";
 NOT_FOUND = "not_found";
 ENGLISH_INDEX = 1;
 GERMAN_INDEX = 0;
-X_DIM_INDEX = 0;
-Y_DIM_INDEX = 1;
+X_DIM_INDEX = 1;
+Y_DIM_INDEX = 0;
 
 var xml2js = require("xml2js");
 var fs = require("fs");
@@ -63,6 +63,11 @@ function extractAdlibMetadata(record) {
     "dimension.value",
     0
   ]);
+
+  metadata.ratio =
+    Number.parseFloat(metadata.dimension_x) /
+    Number.parseFloat(metadata.dimension_y);
+
   return metadata;
 }
 

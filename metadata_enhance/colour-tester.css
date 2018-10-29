@@ -1,22 +1,125 @@
-{ filename: '13.png',
-  title: 'Bildnis einer Dame in einem schwarzen Kleid',
-  author: 'Maes, Nicolaes',
-  physical_descr: 'Oil on canvas',
-  dimension_x: '85,6',
-  dimension_y: '69,9',
-  colours:
-   { dominant: '#312c23',
-     palette: [ '#1a1712', '#baa98b', '#6c5945', '#8b8c7d', '#82828d' ] } }
-{ filename: '2085.png',
-  title: 'Liegender Hund im Schnee',
-  author: 'Marc, Franz',
-  physical_descr: 'Oil on canvas',
-  dimension_x: '62,5',
-  dimension_y: '105,0',
-  colours:
-   { dominant: '#9fb39a',
-     palette: [ '#c5ceb6', '#1e5c58', '#a8ae3d', '#709689', '#7c545b' ] } }
+{}
+{
+    "_id" : ObjectId("5bd76e33d790b8281cd38396"),
+    "filename" : "26.png",
+    "title" : "Bildnis eines Mädchens in Schäfertracht",
+    "author" : "Deutscher Meister der zweiten Hälfte des 17. Jahrhunderts",
+    "year" : "1665",
+    "physical_descr" : "Oil on canvas",
+    "dimension_x" : "67,2",
+    "dimension_y" : "86,1",
+    "ratio" : 0.779069767441861,
+    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/26.png",
+    "colours" : {
+        "dominant" : "#6e6e6b",
+        "palette" : [ 
+            "#6b6c69", 
+            "#cbccc3", 
+            "#232021", 
+            "#b0b8b4", 
+            "#9ba9bc"
+        ],
+        "prominent" : {
+            "Vibrant" : "#b46c44",
+            "LightVibrant" : null,
+            "DarkVibrant" : "#5d2325",
+            "Muted" : "#687a8a",
+            "LightMuted" : "#bfb59c",
+            "DarkMuted" : "#494030"
+        }
+    }
+}
 
+{
+    "_id" : ObjectId("5bd76de4d790b8281cd3838d"),
+    "filename" : "213.png",
+    "title" : "Angebliches Selbstbildnis des Künstlers mit seiner Frau und den Symbolen des christlichen Glaubens",
+    "author" : "Roos, Johann Heinrich",
+    "year" : "1675",
+    "physical_descr" : "Oil on canvas",
+    "dimension_x" : "81,0",
+    "dimension_y" : "70,1",
+    "ratio" : 1.15714285714286,
+    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/213.png",
+    "colours" : {
+        "dominant" : "#535340",
+        "palette" : [ 
+            "#34372c", 
+            "#bcb081", 
+            "#867d57", 
+            "#9aa5a1", 
+            "#8e989e"
+        ],
+        "prominent" : {
+            "Vibrant" : "#b39b52",
+            "LightVibrant" : "#ebdfaa",
+            "DarkVibrant" : "#584924",
+            "Muted" : "#857748",
+            "LightMuted" : "#b7baaf",
+            "DarkMuted" : "#5b5339"
+        }
+    }
+}
 
+{
+    "_id" : ObjectId("5bd76e4bd790b8281cd383a2"),
+    "filename" : "507.png",
+    "title" : "Flusslandschaft mit Schiffen bei aufgehendem Mond",
+    "author" : "Neer, Aert van der",
+    "year" : "1660",
+    "physical_descr" : "Mixed technique on oak",
+    "dimension_x" : "49,6",
+    "dimension_y" : "35,2",
+    "ratio" : 1.4,
+    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/507.png",
+    "colours" : {
+        "dominant" : "#594b31",
+        "palette" : [ 
+            "#483d2a", 
+            "#bea060", 
+            "#8b7041", 
+            "#a0a796", 
+            "#8e96a0"
+        ],
+        "prominent" : {
+            "Vibrant" : "#b4924d",
+            "LightVibrant" : null,
+            "DarkVibrant" : "#825413",
+            "Muted" : "#998450",
+            "LightMuted" : "#96978d",
+            "DarkMuted" : "#57462b"
+        }
+    }
+}
 
-     
+/* 16 */
+{
+    "_id" : ObjectId("5bd76e46d790b8281cd3839b"),
+    "filename" : "2085.png",
+    "title" : "Liegender Hund im Schnee",
+    "author" : "Marc, Franz",
+    "year" : "1911",
+    "physical_descr" : "Oil on canvas",
+    "dimension_x" : "105,0",
+    "dimension_y" : "62,5",
+    "ratio" : 1.69354838709677,
+    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/2085.png",
+    "colours" : {
+        "dominant" : "#9fb39a",
+        "palette" : [ 
+            "#c5ceb6", 
+            "#1e5c58", 
+            "#a8ae3d", 
+            "#709689", 
+            "#7c545b"
+        ],
+        "prominent" : {
+            "Vibrant" : "#bbbb3e",
+            "LightVibrant" : "#ddd872",
+            "DarkVibrant" : "#0a5a46",
+            "Muted" : "#6f967e",
+            "LightMuted" : "#c7cd95",
+            "DarkMuted" : "#406e56"
+        }
+    }
+}

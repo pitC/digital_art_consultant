@@ -6,22 +6,24 @@ var url = "mongodb://" + cfg.db.host + ":" + cfg.db.port;
 const COLLECTION = "img-metadata";
 var db;
 
-MongoClient.connect(
-  url,
-  function(err, database) {
-    if (err) throw err;
-    console.log("Database created!");
-    db = database.db(cfg.db.schema);
-
-    db.createCollection(COLLECTION, function(err, res) {
+exports.initDB = function(dropCollection, callback) {
+  MongoClient.connect(
+    url,
+    function(err, database) {
       if (err) throw err;
-      console.log("Collection " + COLLECTION + " created");
-    });
-  }
-);
-
-exports.dropCollection = function() {
-  db.collection.drop();
+      console.log("Database created!");
+      db = database.db(cfg.db.schema);
+      // if (dropCollection) {
+      // TODO: find the actual method for collection dropping
+      //   db.collection.drop();
+      // }
+      db.createCollection(COLLECTION, function(err, res) {
+        if (err) throw err;
+        console.log("Collection " + COLLECTION + " created");
+      });
+      callback();
+    }
+  );
 };
 
 exports.addObject = function(newObject, okCallback, errCallback) {

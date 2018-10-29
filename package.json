@@ -4,9 +4,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "color-convert": "^1.9.3",
+    "delta-e": "0.0.7",
     "dominant-color": "0.0.1",
+    "express": "^4.16.4",
     "get-image-colors": "^1.8.1",
     "mongodb": "^3.1.8",
+    "node-vibrant": "^3.0.0",
     "xml2js": "^0.4.19"
   },
   "engines": {
