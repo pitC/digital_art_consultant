@@ -11,7 +11,6 @@ exports.initDB = function(dropCollection, callback) {
     url,
     function(err, database) {
       if (err) throw err;
-      console.log("Database created!");
       db = database.db(cfg.db.schema);
       // if (dropCollection) {
       // TODO: find the actual method for collection dropping
@@ -25,6 +24,10 @@ exports.initDB = function(dropCollection, callback) {
     }
   );
 };
+
+this.initDB(null, function() {
+  console.log("Database created/connected!");
+});
 
 exports.addObject = function(newObject, okCallback, errCallback) {
   if (newObject) {
@@ -44,4 +47,19 @@ exports.addObject = function(newObject, okCallback, errCallback) {
       });
     });
   } else errCallback(null);
+};
+// TODO: add specific criteria
+exports.findImages = function(criteria, limit, okCallback, errCallback) {
+  db.collection(COLLECTION, function(err, collection) {
+    collection
+      .find()
+      .limit(limit)
+      .toArray(function(err, items) {
+        if (err) {
+          errCallback(err);
+        } else {
+          okCallback(items);
+        }
+      });
+  });
 };

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Digital Art Consultant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Add this to <head> -->
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" /> -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body class="text-center">
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+
+                <nav class="nav nav-masthead justify-content-center">
+                </nav>
+            </div>
+        </header>
+        <app>
+            <main role="main" class="inner cover">
+                <div class="row">
+                    <div class="col">
+                        <router-view></router-view>
+                    </div>
+                </div>
+            </main>
+        </app>
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Digital Art Consultant</p>
+            </div>
+        </footer>
+
+
+        <script type="module" src="js/vueapp.js"></script>
+
+</body>
