@@ -53,10 +53,9 @@ var app = new Vue({
         colours: [mainColour, secColour],
         enhance: enhance
       };
-      var self = this;
+      this.imgList.splice(0, this.imgList.length);
+      this.paletteList.splice(0, this.paletteList.length);
       axios.post(RECOMMEND_URL, request).then(response => {
-        this.imgList.splice(0, this.imgList.length);
-        this.paletteList.splice(0, this.paletteList.length);
         console.log(response.data);
         for (var index in response.data.paletteUsed) {
           this.paletteList.push(response.data.paletteUsed[index]);
