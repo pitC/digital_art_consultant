@@ -12,6 +12,7 @@
     "get-image-colors": "^1.8.1",
     "mongodb": "^3.1.8",
     "node-vibrant": "^3.0.0",
+    "request": "^2.88.0",
     "xml2js": "^0.4.19"
   },
   "engines": {
