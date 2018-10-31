@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.3",
+    "bootstrap-colorpicker": "^3.0.3",
     "color-convert": "^1.9.3",
     "delta-e": "0.0.7",
     "dominant-color": "0.0.1",

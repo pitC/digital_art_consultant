@@ -1,128 +1,198 @@
-{}
-{
-    "_id" : ObjectId("5bd76e33d790b8281cd38396"),
-    "filename" : "26.png",
-    "title" : "Bildnis eines Mädchens in Schäfertracht",
-    "author" : "Deutscher Meister der zweiten Hälfte des 17. Jahrhunderts",
-    "year" : "1665",
-    "physical_descr" : "Oil on canvas",
-    "dimension_x" : "67,2",
-    "dimension_y" : "86,1",
-    "ratio" : 0.779069767441861,
-    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/26.png",
-    "colours" : {
-        "dominant" : "#6e6e6b",
-        "palette" : [ 
-            "#6b6c69", 
-            "#cbccc3", 
-            "#232021", 
-            "#b0b8b4", 
-            "#9ba9bc"
+With Colormind.io
+[
+    {
+        "_id": "5bd76e33d790b8281cd38396",
+        "filename": "26.png",
+        "title": "Bildnis eines Mädchens in Schäfertracht",
+        "author": "Deutscher Meister der zweiten Hälfte des 17. Jahrhunderts",
+        "year": "1665",
+        "physical_descr": "Oil on canvas",
+        "dimension_x": "67,2",
+        "dimension_y": "86,1",
+        "ratio": 0.7790697674418605,
+        "fileURL": "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/26.png",
+        "colours": {
+            "dominant": "#6e6e6b",
+            "palette": [
+                "#6b6c69",
+                "#cbccc3",
+                "#232021",
+                "#b0b8b4",
+                "#9ba9bc"
+            ],
+            "prominent": {
+                "Vibrant": "#b46c44",
+                "LightVibrant": null,
+                "DarkVibrant": "#5d2325",
+                "Muted": "#687a8a",
+                "LightMuted": "#bfb59c",
+                "DarkMuted": "#494030"
+            }
+        },
+        "sortValue": 7.496215488741306,
+        "inputColours": [
+            "#B56C43",
+            "#A4652C",
+            "#8F4927",
+            "#B1825E",
+            "#3A3F31"
         ],
-        "prominent" : {
-            "Vibrant" : "#b46c44",
-            "LightVibrant" : null,
-            "DarkVibrant" : "#5d2325",
-            "Muted" : "#687a8a",
-            "LightMuted" : "#bfb59c",
-            "DarkMuted" : "#494030"
-        }
-    }
-}
-
-{
-    "_id" : ObjectId("5bd76de4d790b8281cd3838d"),
-    "filename" : "213.png",
-    "title" : "Angebliches Selbstbildnis des Künstlers mit seiner Frau und den Symbolen des christlichen Glaubens",
-    "author" : "Roos, Johann Heinrich",
-    "year" : "1675",
-    "physical_descr" : "Oil on canvas",
-    "dimension_x" : "81,0",
-    "dimension_y" : "70,1",
-    "ratio" : 1.15714285714286,
-    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/213.png",
-    "colours" : {
-        "dominant" : "#535340",
-        "palette" : [ 
-            "#34372c", 
-            "#bcb081", 
-            "#867d57", 
-            "#9aa5a1", 
-            "#8e989e"
+        "recommendationReason": "Average distance 7.496215488741306 below 100"
+    },
+    {
+        "_id": "5bd76de8d790b8281cd38391",
+        "filename": "166.png",
+        "title": "Bildnis eines Künstlers im Atelier",
+        "author": "Schalcken, Godfried",
+        "year": "1670",
+        "physical_descr": "Öl auf Eichenholz",
+        "dimension_x": "19,3",
+        "dimension_y": "24,1",
+        "ratio": 0.7916666666666666,
+        "fileURL": "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/166.png",
+        "colours": {
+            "dominant": "#443423",
+            "palette": [
+                "#32281c",
+                "#b78755",
+                "#7f5533",
+                "#94948e",
+                "#908c94"
+            ],
+            "prominent": {
+                "Vibrant": "#b07b49",
+                "LightVibrant": "#ddcf96",
+                "DarkVibrant": "#5a3e25",
+                "Muted": "#898886",
+                "LightMuted": "#aaa7a3",
+                "DarkMuted": "#4a4431"
+            }
+        },
+        "sortValue": 7.7297871431492835,
+        "inputColours": [
+            "#B56C43",
+            "#A4652C",
+            "#8F4927",
+            "#B1825E",
+            "#3A3F31"
         ],
-        "prominent" : {
-            "Vibrant" : "#b39b52",
-            "LightVibrant" : "#ebdfaa",
-            "DarkVibrant" : "#584924",
-            "Muted" : "#857748",
-            "LightMuted" : "#b7baaf",
-            "DarkMuted" : "#5b5339"
-        }
-    }
-}
-
-{
-    "_id" : ObjectId("5bd76e4bd790b8281cd383a2"),
-    "filename" : "507.png",
-    "title" : "Flusslandschaft mit Schiffen bei aufgehendem Mond",
-    "author" : "Neer, Aert van der",
-    "year" : "1660",
-    "physical_descr" : "Mixed technique on oak",
-    "dimension_x" : "49,6",
-    "dimension_y" : "35,2",
-    "ratio" : 1.4,
-    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/507.png",
-    "colours" : {
-        "dominant" : "#594b31",
-        "palette" : [ 
-            "#483d2a", 
-            "#bea060", 
-            "#8b7041", 
-            "#a0a796", 
-            "#8e96a0"
+        "recommendationReason": "Average distance 7.7297871431492835 below 100"
+    },
+    {
+        "_id": "5bd76deed790b8281cd38394",
+        "filename": "18.png",
+        "title": "Flusslandschaft",
+        "author": "Schütz d. Ä., Christian Georg",
+        "year": "1765",
+        "physical_descr": "Mixed technique on copper",
+        "dimension_x": "50,1",
+        "dimension_y": "38,4",
+        "ratio": 1.3157894736842106,
+        "fileURL": "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/18.png",
+        "colours": {
+            "dominant": "#626255",
+            "palette": [
+                "#393829",
+                "#bbbaa3",
+                "#828cad",
+                "#8f8e77",
+                "#a9ada3"
+            ],
+            "prominent": {
+                "Vibrant": "#9c642c",
+                "LightVibrant": null,
+                "DarkVibrant": "#773b1c",
+                "Muted": "#5867a1",
+                "LightMuted": "#c6c3a5",
+                "DarkMuted": "#544b24"
+            }
+        },
+        "sortValue": 8.269799649365194,
+        "inputColours": [
+            "#B56C43",
+            "#A4652C",
+            "#8F4927",
+            "#B1825E",
+            "#3A3F31"
         ],
-        "prominent" : {
-            "Vibrant" : "#b4924d",
-            "LightVibrant" : null,
-            "DarkVibrant" : "#825413",
-            "Muted" : "#998450",
-            "LightMuted" : "#96978d",
-            "DarkMuted" : "#57462b"
-        }
-    }
-}
-
-/* 16 */
-{
-    "_id" : ObjectId("5bd76e46d790b8281cd3839b"),
-    "filename" : "2085.png",
-    "title" : "Liegender Hund im Schnee",
-    "author" : "Marc, Franz",
-    "year" : "1911",
-    "physical_descr" : "Oil on canvas",
-    "dimension_x" : "105,0",
-    "dimension_y" : "62,5",
-    "ratio" : 1.69354838709677,
-    "fileURL" : "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/2085.png",
-    "colours" : {
-        "dominant" : "#9fb39a",
-        "palette" : [ 
-            "#c5ceb6", 
-            "#1e5c58", 
-            "#a8ae3d", 
-            "#709689", 
-            "#7c545b"
+        "recommendationReason": "Average distance 8.269799649365194 below 100"
+    },
+    {
+        "_id": "5bd76de8d790b8281cd38392",
+        "filename": "13.png",
+        "title": "Bildnis einer Dame in einem schwarzen Kleid",
+        "author": "Maes, Nicolaes",
+        "year": "1668",
+        "physical_descr": "Oil on canvas",
+        "dimension_x": "69,9",
+        "dimension_y": "85,6",
+        "ratio": 0.8117647058823529,
+        "fileURL": "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/13.png",
+        "colours": {
+            "dominant": "#312c23",
+            "palette": [
+                "#1a1712",
+                "#baa98b",
+                "#6c5945",
+                "#8b8c7d",
+                "#82828d"
+            ],
+            "prominent": {
+                "Vibrant": "#9c613b",
+                "LightVibrant": "#e4cba9",
+                "DarkVibrant": "#562415",
+                "Muted": "#a18257",
+                "LightMuted": "#cac5b1",
+                "DarkMuted": "#614f3c"
+            }
+        },
+        "sortValue": 8.288816362094597,
+        "inputColours": [
+            "#B56C43",
+            "#A4652C",
+            "#8F4927",
+            "#B1825E",
+            "#3A3F31"
         ],
-        "prominent" : {
-            "Vibrant" : "#bbbb3e",
-            "LightVibrant" : "#ddd872",
-            "DarkVibrant" : "#0a5a46",
-            "Muted" : "#6f967e",
-            "LightMuted" : "#c7cd95",
-            "DarkMuted" : "#406e56"
-        }
+        "recommendationReason": "Average distance 8.288816362094597 below 100"
+    },
+    {
+        "_id": "5bd76e4bd790b8281cd383a1",
+        "filename": "590.png",
+        "title": "Schloss Loenersloot in Holland",
+        "author": "Heyden, Jan van der",
+        "year": "1665",
+        "physical_descr": "Oil on oak",
+        "dimension_x": "29,0",
+        "dimension_y": "22,0",
+        "ratio": 1.3181818181818181,
+        "fileURL": "/home/pit/workspace/digital_art_consultant/Staedel_Teilset/Abbildungen_Teilset/590.png",
+        "colours": {
+            "dominant": "#93907f",
+            "palette": [
+                "#c4d0ca",
+                "#3e3124",
+                "#62492c",
+                "#8a7840",
+                "#797c6e"
+            ],
+            "prominent": {
+                "Vibrant": "#a4642c",
+                "LightVibrant": "#e7edce",
+                "DarkVibrant": "#62471c",
+                "Muted": "#938349",
+                "LightMuted": "#aabfd1",
+                "DarkMuted": "#634f2e"
+            }
+        },
+        "sortValue": 9.22467641462743,
+        "inputColours": [
+            "#B56C43",
+            "#A4652C",
+            "#8F4927",
+            "#B1825E",
+            "#3A3F31"
+        ],
+        "recommendationReason": "Average distance 9.22467641462743 below 100"
     }
-}
-
-#a4642c
-
+]

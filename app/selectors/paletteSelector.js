@@ -31,7 +31,6 @@ exports.selectImages = function(limit, criteria, candidateImages) {
     var distanceLimit = criteria.distanceLimit | DISTANCE_LIMIT;
     if (distance < distanceLimit) {
       img.sortValue = distance;
-      img.inputColours = inputColours;
       img.recommendationReason = `Average distance ${distance} below ${distanceLimit}`;
       selectedImages.push(img);
     }

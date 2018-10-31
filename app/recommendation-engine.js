@@ -55,7 +55,11 @@ exports.getRecommendation = function(criteria, callback) {
         prepareRecommendation(fetchedImages, enhancedCriteria, function(
           recommendedImages
         ) {
-          callback(recommendedImages);
+          var response = {
+            images: recommendedImages,
+            paletteUsed: enhancedCriteria.colours
+          };
+          callback(response);
         });
       });
     });
@@ -64,7 +68,11 @@ exports.getRecommendation = function(criteria, callback) {
       prepareRecommendation(fetchedImages, criteria, function(
         recommendedImages
       ) {
-        callback(recommendedImages);
+        var response = {
+          images: recommendedImages,
+          paletteUsed: criteria.colours
+        };
+        callback(response);
       });
     });
   }
