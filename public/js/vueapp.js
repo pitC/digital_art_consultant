@@ -115,6 +115,7 @@ var app = new Vue({
     },
     scanPhoto: function(event) {
       //TODO: refactor
+      //TODO: adjust white balance
       var self = this;
       const file = event.target.files[0];
       const reader = new FileReader();
