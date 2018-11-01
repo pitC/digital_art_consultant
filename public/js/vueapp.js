@@ -1,9 +1,4 @@
-// import ManualInput from "./app/components/manualInput";
-// import ResultList from "./app/components/resultList";
-
-// const app = new Vue({
-//   router
-// }).$mount("app");#
+// import PhotoInput from "./app/components/photoInput.js";
 
 const RECOMMEND_URL = "recommend";
 
@@ -16,6 +11,12 @@ Vue.component("palette-item", {
     }
   },
   props: ["colour"]
+});
+
+Vue.component("photo-input", {
+  // template:
+  template: "<div>test</div>",
+  props: ["paletteList"]
 });
 
 Vue.component("calc-log-item", {
@@ -32,6 +33,8 @@ Vue.component("calc-log-item", {
   },
   props: ["colour", "scores"]
 });
+
+Vue.component("photo-input", {});
 
 Vue.component("img-card", {
   template: `<div class="card">
@@ -64,10 +67,9 @@ var app = new Vue({
     };
   },
   methods: {
-    recommend: function(event) {
+    onManualInput: function(event) {
       var mainColour = document.getElementById("main-colour-inp").value;
       var secColour = document.getElementById("secondary-colour-inp").value;
-      var enhanceVal = document.getElementById("mode-select").value;
       var colours = [];
       if (mainColour.startsWith("#")) {
         colours.push(mainColour);
@@ -75,6 +77,15 @@ var app = new Vue({
       if (secColour.startsWith("#")) {
         colours.push(secColour);
       }
+      this.recommend(colours);
+    },
+    onPhotoInput: function(event) {
+      var colours = this.paletteList.slice();
+      this.recommend(colours);
+    },
+    recommend: function(colours) {
+      var enhanceVal = document.getElementById("mode-select").value;
+
       var enhance = enhanceVal == 1 ? true : false;
 
       var request = {
@@ -101,6 +112,33 @@ var app = new Vue({
           this.imgList.push(img);
         }
       });
+    },
+    scanPhoto: function(event) {
+      //TODO: refactor
+      var self = this;
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      const preview = document.getElementById("photo-img");
+      preview.addEventListener("load", function() {
+        self.paletteList.splice(0, self.paletteList.length);
+        var vibrant = new Vibrant(preview);
+        var swatches = vibrant.swatches();
+        for (var swatch in swatches)
+          if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
+            var colour = swatches[swatch].getHex();
+            self.paletteList.push(colour);
+          }
+        console.log(swatch);
+      });
+      reader.addEventListener(
+        "load",
+        function() {
+          var img = reader.result;
+          preview.src = img;
+        },
+        false
+      );
+      reader.readAsDataURL(file);
     }
   }
 });
