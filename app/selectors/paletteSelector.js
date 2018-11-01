@@ -9,11 +9,10 @@ function sortByDistance(imgA, imgB) {
     return -1;
   } else return 0;
 }
-// TODO: test this selector
+
 exports.selectImages = function(limit, criteria, candidateImages) {
   var selectedImages = [];
 
-  // for now we assume only one colour
   var inputColours = criteria.colours;
 
   for (index in candidateImages) {
@@ -27,11 +26,15 @@ exports.selectImages = function(limit, criteria, candidateImages) {
       img.colours.prominent.DarkMuted
     ];
 
-    var distance = colorUtils.getAverageDistance(inputColours, imgColours);
+    var [distance, calcLog] = colorUtils.getAverageDistance(
+      inputColours,
+      imgColours
+    );
     var distanceLimit = criteria.distanceLimit | DISTANCE_LIMIT;
     if (distance < distanceLimit) {
       img.sortValue = distance;
-      img.recommendationReason = `Average distance ${distance} below ${distanceLimit}`;
+      img.calcLog = calcLog;
+      img.recommendationReason = `Score: ${distance.toFixed(2)}`;
       selectedImages.push(img);
     }
   }

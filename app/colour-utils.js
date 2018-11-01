@@ -38,7 +38,7 @@ exports.getDistance = function(firstColour, secondColour) {
       console.log(err);
     }
   }
-  return distance;
+  return parseFloat(distance);
 };
 
 exports.getMinDistance = function(firstColours, secondColours) {
@@ -92,23 +92,28 @@ exports.enhancePalette = function(colours, callback) {
 exports.getAverageDistance = function(inputColours, sourceColours) {
   var minDistance = DELTA_MAX_DISTANCE;
   var sumDistance = 0;
+  var calcLog = {};
   for (inpIndex in inputColours) {
     minDistance = DELTA_MAX_DISTANCE;
+    var inputColour = inputColours[inpIndex];
     for (srcIndex in sourceColours) {
-      var currDistance = this.getDistance(
-        inputColours[inpIndex],
-        sourceColours[srcIndex]
-      );
+      var sourceColour = sourceColours[srcIndex];
+      var currDistance = this.getDistance(inputColour, sourceColour);
+      if (calcLog[sourceColour]) {
+        calcLog[sourceColour].push(currDistance.toFixed(0));
+      } else {
+        calcLog[sourceColour] = [currDistance.toFixed(0)];
+      }
       if (currDistance < minDistance) {
         minDistance = currDistance;
       }
     }
-    sumDistance += minDistance;
+    sumDistance = sumDistance + minDistance;
   }
   if (inputColours.length > 0) {
     var averageDistance = sumDistance / inputColours.length;
-    return averageDistance;
+    return [averageDistance, calcLog];
   } else {
-    return DELTA_MAX_DISTANCE;
+    return [DELTA_MAX_DISTANCE, calcLog];
   }
 };

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link href="dist/css/bootstrap-colorpicker.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -21,7 +22,7 @@
         <h1>Digital Art Consultant - tester</h1>
         <div id="manual-input" class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-sm">
                     <div id="main-colour-cp" class="input-group colorpicker-component">
                         <input type="text" id="main-colour-inp" class="form-control input-lg" />
                         <span class="input-group-addon colorpicker-input-addon">
@@ -29,7 +30,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm">
                     <div id="secondary-colour-cp" class="input-group colorpicker-component">
                         <input type="text" id="secondary-colour-inp" class="form-control input-lg" />
                         <span class="input-group-addon colorpicker-input-addon">
@@ -37,13 +38,13 @@
                         </span>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm">
                     <select class="custom-select" id="mode-select">
                         <option value="0" selected>No enhancement</option>
                         <option value="1">Colormind enhance</option>
                     </select>
                 </div>
-                <div class="col">
+                <div class="col-sm">
                     <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="recommend">Go!</button>
                 </div>
             </div>
@@ -57,8 +58,8 @@
         </div>
         <br>
         <div id="images" class="card-group">
-            <img-card v-for="img in imgList" v-bind:fileurl=img.fileURL v-bind:title=img.title v-bind:author=img.author
-                v-bind:reason=img.reason></img-card>
+            <img-card v-for="img in imgList" v-bind:calclog=img.calclog v-bind:fileurl=img.fileURL v-bind:title=img.title
+                v-bind:author=img.author v-bind:reason=img.reason></img-card>
         </div>
     </div>
     <!-- Optional JavaScript -->

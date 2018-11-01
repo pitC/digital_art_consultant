@@ -18,17 +18,39 @@ Vue.component("palette-item", {
   props: ["colour"]
 });
 
+Vue.component("calc-log-item", {
+  template: `
+  <tr>
+    <td> <span class='badge badge-light' :style='style'>{{colour}}</span></td>
+    <td>{{scores}}</td>
+  </tr>
+  `,
+  computed: {
+    style() {
+      return "background-color: " + this.colour;
+    }
+  },
+  props: ["colour", "scores"]
+});
+
 Vue.component("img-card", {
   template: `<div class="card">
                 <img class="card-img-top" :src="fileurl" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
                     <p class="card-text">{{author}}<br>{{reason}}</p>
+                    <table class="table table-bordered">
+                    <tr>
+                    <th>Src</th>
+                    <th>Scores</th>
+                    </tr>
+                    <calc-log-item v-for="(value,key) in calclog" v-bind:colour=key v-bind:scores=value></calc-log-item>
+                    </table>
                 </div>
             </div>
 
   `,
-  props: ["fileurl", "title", "author", "reason"]
+  props: ["fileurl", "title", "author", "reason", "calclog"]
 });
 
 var app = new Vue({
@@ -46,11 +68,17 @@ var app = new Vue({
       var mainColour = document.getElementById("main-colour-inp").value;
       var secColour = document.getElementById("secondary-colour-inp").value;
       var enhanceVal = document.getElementById("mode-select").value;
-
+      var colours = [];
+      if (mainColour.startsWith("#")) {
+        colours.push(mainColour);
+      }
+      if (secColour.startsWith("#")) {
+        colours.push(secColour);
+      }
       var enhance = enhanceVal == 1 ? true : false;
 
       var request = {
-        colours: [mainColour, secColour],
+        colours: colours,
         enhance: enhance
       };
       this.imgList.splice(0, this.imgList.length);
@@ -61,12 +89,14 @@ var app = new Vue({
           this.paletteList.push(response.data.paletteUsed[index]);
         }
         for (var index in response.data.images) {
+          var respImg = response.data.images[index];
           var img = {
-            title: response.data.images[index].title,
-            author: response.data.images[index].author,
-            reason: response.data.images[index].recommendationReason,
+            title: respImg.title,
+            author: respImg.author,
+            reason: respImg.recommendationReason,
             // TODO: take url directly from response
-            fileURL: "img/" + response.data.images[index].filename
+            fileURL: "img/" + respImg.filename,
+            calclog: respImg.calcLog
           };
           this.imgList.push(img);
         }
