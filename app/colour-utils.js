@@ -98,7 +98,10 @@ exports.getAverageDistance = function(inputColours, sourceColours) {
     var inputColour = inputColours[inpIndex];
     for (srcIndex in sourceColours) {
       var sourceColour = sourceColours[srcIndex];
-      var currDistance = this.getDistance(inputColour, sourceColour);
+      var currDistance = DELTA_MAX_DISTANCE;
+      if (inputColour !== null && sourceColour !== null) {
+        currDistance = this.getDistance(inputColour, sourceColour);
+      }
       if (calcLog[sourceColour]) {
         calcLog[sourceColour].push(currDistance.toFixed(0));
       } else {

@@ -11,7 +11,7 @@ var selectors = {
   "Complete palette": PALLETTE_SELECTOR
 };
 
-const DB_FETCH_LIMIT = 100;
+const DB_FETCH_LIMIT = 1000;
 const RECOMMENDATION_LIMIT = 5;
 
 function fetchImages(criteria, callback) {
