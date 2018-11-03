@@ -14,6 +14,7 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="dist/js/Vibrant.min.js"></script>
     <title>Digital Art Consultant - tester</title>
 </head>
 
@@ -24,7 +25,7 @@
             <div class="row">
                 <div class="col-sm">
                     <div id="main-colour-cp" class="input-group colorpicker-component">
-                        <input type="text" id="main-colour-inp" class="form-control input-lg" />
+                        <input type="text" id="main-colour-inp" class="form-control input-lg" value="#000000" />
                         <span class="input-group-addon colorpicker-input-addon">
                             <i></i>
                         </span>
@@ -32,11 +33,15 @@
                 </div>
                 <div class="col-sm">
                     <div id="secondary-colour-cp" class="input-group colorpicker-component">
-                        <input type="text" id="secondary-colour-inp" class="form-control input-lg" />
+                        <input type="text" id="secondary-colour-inp" class="form-control input-lg" value="#000000" />
                         <span class="input-group-addon colorpicker-input-addon">
                             <i></i>
                         </span>
                     </div>
+                </div>
+                <div class="col-sm">
+                    <input type='file' accept='image/*;capture=camera' v-on:change="onPhotoInput">
+                    <img id="photo-img" src="" height="200" alt="Image preview..." hidden>
                 </div>
                 <div class="col-sm">
                     <select class="custom-select" id="mode-select">
@@ -45,7 +50,7 @@
                     </select>
                 </div>
                 <div class="col-sm">
-                    <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="onManualInput">Go!</button>
+                    <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="onInputConfirmed">Go!</button>
                 </div>
             </div>
         </div>
@@ -71,14 +76,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
     <script src="dist/js/bootstrap-colorpicker.js"></script>
-    <script>
+    <!-- <script>
         $(function () {
             $('#main-colour-cp').colorpicker();
             $('#secondary-colour-cp').colorpicker();
 
         });
 
-    </script>
+    </script> -->
 
     <script type="module" src="js/vueapp.js"></script>
 </body>

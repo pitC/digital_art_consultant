@@ -1,6 +1,8 @@
 // import PhotoInput from "./app/components/photoInput.js";
 
 const RECOMMEND_URL = "recommend";
+const MANUAL_MODE = "manual";
+const PHOTO_MODE = "photo";
 
 Vue.component("palette-item", {
   template:
@@ -60,6 +62,7 @@ var app = new Vue({
   el: "#vue-app",
   data: function() {
     return {
+      mode: MANUAL_MODE,
       paletteList: [],
       imgList: [],
       mainInpColour: "#b46c44",
@@ -68,6 +71,9 @@ var app = new Vue({
   },
   methods: {
     onManualInput: function(event) {
+      this.mode = MANUAL_MODE;
+    },
+    getManualColours: function() {
       var mainColour = document.getElementById("main-colour-inp").value;
       var secColour = document.getElementById("secondary-colour-inp").value;
       var colours = [];
@@ -77,10 +83,49 @@ var app = new Vue({
       if (secColour.startsWith("#")) {
         colours.push(secColour);
       }
-      this.recommend(colours);
+      return colours;
     },
     onPhotoInput: function(event) {
+      //TODO: refactor
+      //TODO: adjust white balance
+      var self = this;
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      const preview = document.getElementById("photo-img");
+      preview.addEventListener("load", function() {
+        self.paletteList.splice(0, self.paletteList.length);
+        var vibrant = new Vibrant(preview);
+        var swatches = vibrant.swatches();
+        for (var swatch in swatches)
+          if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
+            var colour = swatches[swatch].getHex();
+            self.paletteList.push(colour);
+            self.mode = PHOTO_MODE;
+          }
+        console.log(swatch);
+      });
+      reader.addEventListener(
+        "load",
+        function() {
+          var img = reader.result;
+          preview.src = img;
+        },
+        false
+      );
+      reader.readAsDataURL(file);
+    },
+    getPhotoColours: function() {
       var colours = this.paletteList.slice();
+      return colours;
+    },
+    onInputConfirmed: function(event) {
+      var colours = [];
+      console.log(this.mode);
+      if (this.mode == MANUAL_MODE) {
+        colours = this.getManualColours();
+      } else if (this.mode == PHOTO_MODE) {
+        colours = this.getPhotoColours();
+      }
       this.recommend(colours);
     },
     recommend: function(colours) {
@@ -105,41 +150,23 @@ var app = new Vue({
             title: respImg.title,
             author: respImg.author,
             reason: respImg.recommendationReason,
-            // TODO: take url directly from response
-            fileURL: "img/" + respImg.filename,
+            fileURL: respImg.fileURL,
             calclog: respImg.calcLog
           };
           this.imgList.push(img);
         }
       });
-    },
-    scanPhoto: function(event) {
-      //TODO: refactor
-      //TODO: adjust white balance
-      var self = this;
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      const preview = document.getElementById("photo-img");
-      preview.addEventListener("load", function() {
-        self.paletteList.splice(0, self.paletteList.length);
-        var vibrant = new Vibrant(preview);
-        var swatches = vibrant.swatches();
-        for (var swatch in swatches)
-          if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
-            var colour = swatches[swatch].getHex();
-            self.paletteList.push(colour);
-          }
-        console.log(swatch);
-      });
-      reader.addEventListener(
-        "load",
-        function() {
-          var img = reader.result;
-          preview.src = img;
-        },
-        false
-      );
-      reader.readAsDataURL(file);
     }
+  },
+  mounted: function() {
+    var self = this;
+    // TODO: put in its own component
+    $(function() {
+      $("#main-colour-cp").colorpicker();
+      $("#secondary-colour-cp").colorpicker();
+      //TODO: put event listeners in the component template
+      $("#main-colour-cp").on("change", self.onManualInput);
+      $("#secondary-colour-cp").on("change", self.onManualInput);
+    });
   }
 });

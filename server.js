@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.set("port", process.env.PORT || 3000);
 
+//TODO: add input validation
 app.post("/recommend", function(req, res) {
   var criteria = req.body;
   recommendationEngine.getRecommendation(criteria, function(images) {
