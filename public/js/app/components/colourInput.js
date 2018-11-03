@@ -106,9 +106,7 @@ export default {
         for (var swatch in swatches)
           if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
             var colour = swatches[swatch].getHex();
-            // TODO: propagate to parent to update palette
             self.parsedColours.push(colour);
-
             self.mode = PHOTO_MODE;
           }
         self.$emit("photo-parsed", self.parsedColours);
