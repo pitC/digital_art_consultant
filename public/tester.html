@@ -21,39 +21,8 @@
 <body>
     <div id="vue-app">
         <h1>Digital Art Consultant - tester</h1>
-        <div id="manual-input" class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <div id="main-colour-cp" class="input-group colorpicker-component">
-                        <input type="text" id="main-colour-inp" class="form-control input-lg" value="#000000" />
-                        <span class="input-group-addon colorpicker-input-addon">
-                            <i></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div id="secondary-colour-cp" class="input-group colorpicker-component">
-                        <input type="text" id="secondary-colour-inp" class="form-control input-lg" value="#000000" />
-                        <span class="input-group-addon colorpicker-input-addon">
-                            <i></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <input type='file' accept='image/*;capture=camera' v-on:change="onPhotoInput">
-                    <img id="photo-img" src="" height="200" alt="Image preview..." hidden>
-                </div>
-                <div class="col-sm">
-                    <select class="custom-select" id="mode-select">
-                        <option value="0" selected>No enhancement</option>
-                        <option value="1">Colormind enhance</option>
-                    </select>
-                </div>
-                <div class="col-sm">
-                    <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="onInputConfirmed">Go!</button>
-                </div>
-            </div>
-        </div>
+        <colour-input v-bind:appstate=appState v-bind:paletteList=paletteList @photo-parsed="paletteUpdate"
+            @input-confirmed="recommend"></colour-input>
         <br>
         <div id="results" class="container">
             <div id="palette" class="row">
