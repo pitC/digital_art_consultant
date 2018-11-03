@@ -9,7 +9,6 @@ console.log(process.env.MONGODB_URI);
 var express = require("express"),
   path = require("path"),
   http = require("http"),
-  cfg = require("./config.json"),
   bodyParser = require("body-parser"),
   recommendationEngine = require("./app/recommendation-engine");
 
