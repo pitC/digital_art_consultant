@@ -9,10 +9,10 @@ export default {
     };
   },
   computed: {
-    buttonState() {
+    isButtonDisabled() {
       if (this.appstate == AppStates.SERVER_PROCESSING) {
-        return "disabled";
-      } else return "";
+        return true;
+      } else return false;
     },
     buttonLabel() {
       if (this.appstate == AppStates.READY) {
@@ -54,7 +54,7 @@ export default {
                     </select>
                 </div>
                 <div class="col-sm">
-                    <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="onInputConfirmed">{{buttonLabel}}</button>
+                    <button id="go-btn" type="button" class="btn btn-outline-primary" v-on:click="onInputConfirmed" v-bind:disabled="isButtonDisabled">{{buttonLabel}}</button>
                 </div>
             </div>
         </div>
