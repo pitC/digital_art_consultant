@@ -1,3 +1,5 @@
 node_modules/
 Staedel/
 public/img
+scripts/
+.env

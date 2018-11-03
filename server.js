@@ -1,3 +1,11 @@
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV !== "production") {
+  console.log("NODE_ENV not prodiction, load env!");
+  require("dotenv").load();
+}
+
+console.log(process.env.MONGODB_URI);
+
 var express = require("express"),
   path = require("path"),
   http = require("http"),
@@ -29,5 +37,4 @@ server = http.createServer(app);
 
 server.listen(app.get("port"), function() {
   console.log("Express server listening on port " + app.get("port"));
-  console.log(cfg);
 });

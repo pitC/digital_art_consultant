@@ -1,8 +1,7 @@
 var MongoClient = require("mongodb").MongoClient;
 var BSON = require("mongodb").BSONPure;
 var ObjectId = require("mongodb").ObjectID;
-cfg = require("./../config.json");
-var url = "mongodb://" + cfg.db.host + ":" + cfg.db.port;
+var url = process.env.MONGODB_URI;
 const COLLECTION = "img-metadata";
 var db;
 
@@ -11,7 +10,7 @@ exports.initDB = function(dropCollection, callback) {
     url,
     function(err, database) {
       if (err) throw err;
-      db = database.db(cfg.db.schema);
+      db = database.db = database.db();
       // if (dropCollection) {
       // TODO: find the actual method for collection dropping
       //   db.collection.drop();
