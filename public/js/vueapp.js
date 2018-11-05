@@ -1,6 +1,7 @@
 // import PhotoInput from "./app/components/photoInput.js";
 import ImgCard from "./app/components/imgCard.js";
 import ColourInput from "./app/components/colourInput.js";
+import StaticPreview from "./app/components/staticPreview.js";
 import AppStates from "./app/appStates.js";
 const RECOMMEND_URL = "recommend";
 const MANUAL_MODE = "manual";
@@ -18,12 +19,7 @@ Vue.component("palette-item", {
 });
 Vue.component("colour-input", ColourInput);
 
-Vue.component("photo-input", {
-  // template:
-  template: "<div>test</div>",
-  props: ["paletteList"]
-});
-Vue.component("photo-input", {});
+Vue.component("static-preview", StaticPreview);
 
 Vue.component("img-card", ImgCard);
 
@@ -35,7 +31,9 @@ var app = new Vue({
       imgList: [],
       mainInpColour: "#b46c44",
       secondaryInpColour: "#687a8a",
-      appState: AppStates.READY
+      appState: AppStates.READY,
+      previewActive: false,
+      activeCard: null
     };
   },
   methods: {

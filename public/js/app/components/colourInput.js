@@ -1,4 +1,6 @@
 import AppStates from "./../appStates.js";
+import { EventBus, EventDict } from "./../eventBus.js";
+
 const MANUAL_MODE = "manual";
 const PHOTO_MODE = "photo";
 export default {
@@ -110,6 +112,7 @@ export default {
             self.mode = PHOTO_MODE;
           }
         self.$emit("photo-parsed", self.parsedColours);
+        EventBus.$emit(EventDict.PHOTO_LOADED_DOM, preview);
       });
       reader.addEventListener(
         "load",

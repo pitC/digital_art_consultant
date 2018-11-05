@@ -1,3 +1,5 @@
+import { EventBus, EventDict } from "./../eventBus.js";
+
 Vue.component("calc-log-item", {
   template: `
   <tr>
@@ -25,9 +27,16 @@ export default {
                     </tr>
                     <calc-log-item v-for="(value,key) in calclog" v-bind:colour=key v-bind:scores=value></calc-log-item>
                     </table>
+                    <button type="button" class="btn btn-secondary" v-on:click="onPreviewRequest">Preview</button>
                 </div>
             </div>
 
   `,
-  props: ["fileurl", "title", "author", "reason", "calclog"]
+  props: ["fileurl", "title", "author", "reason", "calclog"],
+  methods: {
+    onPreviewRequest: function(event) {
+      var imgObject = document.querySelector(`[src="${this.fileurl}"]`);
+      EventBus.$emit(EventDict.IMG_ACTIVATED_DOM, imgObject);
+    }
+  }
 };
