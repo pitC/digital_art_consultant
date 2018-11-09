@@ -2,6 +2,7 @@
 import ImgCard from "./app/components/imgCard.js";
 import ColourInput from "./app/components/colourInput.js";
 import StaticPreview from "./app/components/staticPreview.js";
+import PhotoColourPicker from "./app/components/photoColourPicker.js";
 import AppStates from "./app/appStates.js";
 const RECOMMEND_URL = "recommend";
 const MANUAL_MODE = "manual";
@@ -22,6 +23,8 @@ Vue.component("colour-input", ColourInput);
 Vue.component("static-preview", StaticPreview);
 
 Vue.component("img-card", ImgCard);
+
+Vue.component("photo-colour-picker", PhotoColourPicker);
 
 var app = new Vue({
   el: "#vue-app",

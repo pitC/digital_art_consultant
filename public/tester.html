@@ -24,6 +24,7 @@
         <colour-input v-bind:appstate=appState v-bind:paletteList=paletteList @photo-parsed="paletteUpdate"
             @input-confirmed="recommend"></colour-input>
         <br>
+        <photo-colour-picker v-bind:appstate=appState></photo-colour-picker>
         <static-preview v-bind:appstate=appState></static-preview>
         <div id="results" class="container">
             <div id="palette" class="row">

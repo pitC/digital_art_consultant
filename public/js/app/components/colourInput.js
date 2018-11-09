@@ -108,11 +108,15 @@ export default {
         for (var swatch in swatches)
           if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
             var colour = swatches[swatch].getHex();
+            var pop = swatches[swatch].getPopulation();
             self.parsedColours.push(colour);
             self.mode = PHOTO_MODE;
           }
         self.$emit("photo-parsed", self.parsedColours);
-        EventBus.$emit(EventDict.PHOTO_LOADED_DOM, preview);
+        EventBus.$emit(EventDict.PHOTO_LOADED_DOM, {
+          img: preview,
+          parsedColours: self.parsedColours
+        });
       });
       reader.addEventListener(
         "load",
