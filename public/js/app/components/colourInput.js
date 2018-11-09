@@ -103,8 +103,10 @@ export default {
       const preview = document.getElementById("photo-img");
       preview.addEventListener("load", function() {
         self.parsedColours.splice(0, self.parsedColours.length);
-        var vibrant = new Vibrant(preview);
+        var vibrant = new Vibrant(preview, 64, 5);
         var swatches = vibrant.swatches();
+        var fullSwatchPalette = vibrant._swatches.slice();
+        var fullPalette = {};
         for (var swatch in swatches)
           if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
             var colour = swatches[swatch].getHex();
@@ -112,10 +114,15 @@ export default {
             self.parsedColours.push(colour);
             self.mode = PHOTO_MODE;
           }
+        for (var swatch in fullSwatchPalette) {
+          fullPalette[swatch] = fullSwatchPalette[swatch].getHex();
+        }
         self.$emit("photo-parsed", self.parsedColours);
         EventBus.$emit(EventDict.PHOTO_LOADED_DOM, {
           img: preview,
-          parsedColours: self.parsedColours
+          parsedColours: self.parsedColours,
+          swatches: swatches,
+          fullPalette: fullPalette
         });
       });
       reader.addEventListener(

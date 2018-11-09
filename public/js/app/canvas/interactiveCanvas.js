@@ -2,6 +2,9 @@ import Shape from "./Shape.js";
 
 const DEFAULT_SHAPE_WIDTH = 50;
 const DEFAULT_SHAPE_HEIGHT = 50;
+const DISTANCE_THRESHOLD = 5;
+const DISTANCE_MAX = 100;
+const PIXEL_INCREMENT = 20;
 
 function rgbToHex(rgb) {
   return "#" + ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]).toString(16);
@@ -14,6 +17,7 @@ export default class InteractiveCanvas {
     this.shapes = [];
     this.backgroundImg = backgroundImg;
     this.selected = null;
+    this.nearestColours = null;
   }
   findShape(mx, my) {
     for (var index in this.shapes) {
@@ -121,10 +125,22 @@ export default class InteractiveCanvas {
     var imgData = this.context.getImageData(mx, my, 1, 1);
     return rgbToHex(imgData.data);
   }
+
+  getPixelNearest(mx, my, fullPalette) {
+    if (this.nearestColours == null) {
+      this.nearestColours = nearestColor.from(fullPalette);
+    }
+    var imgData = this.context.getImageData(mx, my, 1, 1);
+    var pixelHex = rgbToHex(imgData.data);
+    var nearest = this.nearestColours(pixelHex).value;
+    return nearest;
+  }
   // TODO: find a better way - the method searches for exact pixel values
-  findPixelPalette(hexColours) {
+  findPixelPalette(hexColours, fullPalette) {
+    if (this.nearestColours == null) {
+      this.nearestColours = nearestColor.from(fullPalette);
+    }
     var searchedColours = hexColours.slice();
-    var foundColours = [];
     var imgData = this.context.getImageData(
       0,
       0,
@@ -134,23 +150,43 @@ export default class InteractiveCanvas {
     var data = imgData.data;
     var length = data.length;
     var channelCount = 4; // or 4 if also alpha
-    for (var i = 0; i < length; i += channelCount) {
+    var bestMatches = {};
+    for (var index in searchedColours) {
+      bestMatches[searchedColours[index]] = {
+        distance: DISTANCE_MAX,
+        pos: null
+      };
+    }
+    for (var i = 0; i < length; i += channelCount + PIXEL_INCREMENT) {
       var r = data[i];
       var g = data[i + 1];
       var b = data[i + 2];
       var pixelHex = rgbToHex([r, g, b]);
-      if (searchedColours.includes(pixelHex)) {
-        // remove found colour to avoid duplicates
-        var index = searchedColours.indexOf(pixelHex);
-        searchedColours.splice(index, 1);
-        var x = (i / channelCount) % this.canvas.width;
-        var y = Math.floor(i / channelCount / this.canvas.width);
-        var pos = { x: x, y: y };
-        var foundColour = { colour: pixelHex, pos: pos };
-        foundColours.push(foundColour);
+      var nearest = this.nearestColours(pixelHex);
+      if (nearest) {
+        if (searchedColours.includes(nearest.value)) {
+          var minDistance = bestMatches[nearest.value].distance;
+          var foundDistance = Math.ceil(nearest.distance);
+          if (foundDistance < minDistance) {
+            var x = (i / channelCount) % this.canvas.width;
+            var y = Math.floor(i / channelCount / this.canvas.width);
+            var pos = { x: x, y: y };
+
+            bestMatches[nearest.value] = { distance: foundDistance, pos: pos };
+            // if the match is close enough, drop the colour from search list
+            if (minDistance < DISTANCE_THRESHOLD) {
+              // remove found colour to avoid duplicates
+              var index = searchedColours.indexOf(nearest.value);
+              searchedColours.splice(index, 1);
+            }
+          }
+        }
+      }
+      if (searchedColours.length == 0) {
+        break;
       }
     }
-    return foundColours;
+    return bestMatches;
   }
 
   findPixelColour(hexColour) {

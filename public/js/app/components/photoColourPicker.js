@@ -14,7 +14,8 @@ export default {
       startMouseY: 0,
       mouseDebugStr: "",
       scale: 1,
-      markedColour: null
+      markedColour: null,
+      fullPalette: null
     };
   },
   computed: {
@@ -57,6 +58,7 @@ export default {
           this.interactiveCanvas.drawInteractiveObjects();
         } else {
           var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
+
           this.mouseDebugStr = `pos: ${pos.x}/${pos.y}`;
           this.markedColour = colour;
         }
@@ -71,7 +73,7 @@ export default {
       this.interactiveCanvas.selectShape(pos.x, pos.y);
       this.interactiveCanvas.draw();
     },
-    initCanvas: function(backgroundImg, parsedColours) {
+    initCanvas: function(backgroundImg, parsedColours, fullPalette) {
       this.backgroundImg = backgroundImg;
       this.interactiveCanvas = new InteractiveCanvas(
         this.$refs.photoCanvas,
@@ -80,14 +82,15 @@ export default {
       // this.interactiveCanvas.addShape(50, 50, "#f442f1");
 
       this.interactiveCanvas.draw();
-      var foundColours = this.interactiveCanvas.findPixelPalette(parsedColours);
-      for (var index in foundColours) {
-        var colour = foundColours[index];
-        this.interactiveCanvas.addShape(
-          colour.pos.x,
-          colour.pos.y,
-          colour.colour
-        );
+      var foundColours = this.interactiveCanvas.findPixelPalette(
+        parsedColours,
+        fullPalette
+      );
+      for (var key in foundColours) {
+        var colour = foundColours[key];
+        if (colour.pos) {
+          this.interactiveCanvas.addShape(colour.pos.x, colour.pos.y, key);
+        }
       }
 
       this.interactiveCanvas.drawInteractiveObjects();
@@ -100,7 +103,12 @@ export default {
   mounted: function() {
     EventBus.$on(EventDict.PHOTO_LOADED_DOM, parsedPhoto => {
       this.previewHidden = false;
-      this.initCanvas(parsedPhoto.img, parsedPhoto.parsedColours);
+      this.initCanvas(
+        parsedPhoto.img,
+        parsedPhoto.parsedColours,
+        parsedPhoto.fullPalette
+      );
+      this.fullPalette = parsedPhoto.fullPalette;
     });
 
     EventBus.$on(EventDict.IMG_ACTIVATED_DOM, imgObject => {
