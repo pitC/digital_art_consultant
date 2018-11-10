@@ -127,4 +127,8 @@ export default class Shape {
     this.x = targetx - this.selectedXoffset;
     this.y = targety - this.selectedYoffset;
   }
+  getColourSelector() {
+    var dimensions = getDimensions(this.x, this.y, this.w, this.h);
+    return dimensions.colourCircle;
+  }
 }

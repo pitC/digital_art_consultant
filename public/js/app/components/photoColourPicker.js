@@ -51,10 +51,9 @@ export default {
         if (this.draggingMode && this.interactiveCanvas.selected) {
           this.interactiveCanvas.clear();
           this.interactiveCanvas.drawBackground();
-          // TODO move colour selection to interactive canvas
-          var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
-          this.interactiveCanvas.selected.fill = colour;
-          this.interactiveCanvas.selected.move(pos.x, pos.y);
+
+          this.interactiveCanvas.moveSelected(pos.x, pos.y);
+
           this.interactiveCanvas.drawInteractiveObjects();
         } else {
           var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
@@ -86,7 +85,7 @@ export default {
 
       this.interactiveCanvas.draw();
       var foundColours = this.interactiveCanvas.findPixelPalette(
-        parsedColours,
+        parsedColours.map(o => o.colour),
         fullPalette
       );
       for (var key in foundColours) {

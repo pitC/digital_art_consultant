@@ -42,8 +42,9 @@
         <div id="palette" class="row">
           <h3>Palette used:</h3>
           <palette-item
-            v-for="colour in paletteList"
-            v-bind:colour="colour"
+            v-for="swatch in paletteList"
+            v-bind:colour="swatch.colour"
+            v-bind:population="swatch.population"
           ></palette-item>
         </div>
       </div>

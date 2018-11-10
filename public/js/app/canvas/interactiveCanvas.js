@@ -42,8 +42,16 @@ export default class InteractiveCanvas {
     return null;
   }
   moveSelected(mx, my) {
+    // TODO move colour selection to interactive canvas
+
     if (this.selected) {
       this.selected.move(mx, my);
+      var colourSelectorPos = this.selected.getColourSelector();
+      var colour = this.getPixelColour(
+        colourSelectorPos.x,
+        colourSelectorPos.y
+      );
+      this.selected.fill = colour;
     }
   }
 

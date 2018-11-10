@@ -80,7 +80,7 @@ export default {
       return colours;
     },
     getPhotoColours: function() {
-      var colours = this.parsedColours.slice();
+      var colours = this.parsedColours.map(o => o.colour);
       return colours;
     },
     onInputConfirmed: function(event) {
@@ -111,7 +111,8 @@ export default {
           if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
             var colour = swatches[swatch].getHex();
             var pop = swatches[swatch].getPopulation();
-            self.parsedColours.push(colour);
+            var colourInfo = { colour: colour, population: pop };
+            self.parsedColours.push(colourInfo);
             self.mode = PHOTO_MODE;
           }
         for (var swatch in fullSwatchPalette) {

@@ -10,13 +10,13 @@ const PHOTO_MODE = "photo";
 
 Vue.component("palette-item", {
   template:
-    "<h3><span class='badge badge-primary' :style='style'>{{colour}}</span></h3>",
+    "<h3><span class='badge badge-primary' :style='style'>{{colour}} ({{population}})</span></h3>",
   computed: {
     style() {
       return "background-color: " + this.colour;
     }
   },
-  props: ["colour"]
+  props: ["colour", "population"]
 });
 Vue.component("colour-input", ColourInput);
 
@@ -40,8 +40,8 @@ var app = new Vue({
     };
   },
   methods: {
-    paletteUpdate: function(colours) {
-      this.paletteList = colours;
+    paletteUpdate: function(swatches) {
+      this.paletteList = swatches;
     },
     recommend: function(colours) {
       var enhanceVal = document.getElementById("mode-select").value;
@@ -58,7 +58,10 @@ var app = new Vue({
       axios.post(RECOMMEND_URL, request).then(response => {
         console.log(response.data);
         for (var index in response.data.paletteUsed) {
-          this.paletteList.push(response.data.paletteUsed[index]);
+          this.paletteList.push({
+            colour: response.data.paletteUsed[index],
+            population: null
+          });
         }
         for (var index in response.data.images) {
           var respImg = response.data.images[index];
