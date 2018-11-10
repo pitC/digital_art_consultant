@@ -1,0 +1,44 @@
+.lightblue {
+    background-color: #91ccf4;
+    border-color: #91ccf4;
+    color: white;
+}
+.lightblue:hover {
+    background-color: #7ec8fa;
+    border-color: #7ec8fa;
+    color: white;
+}
+
+.container-fluid {
+    height: 100vh;
+    padding-top: 10px;
+    
+   
+}
+
+.bottom {
+       display: flex;
+       flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.logoframe {
+    border: white solid 1px;
+ padding: 10px;
+ margin-bottom: 10px;
+ text-transform: uppercase; 
+ color: white;
+ text-align: center;
+}
+.artbackground {
+
+    color: white;
+    background-image: url("../src/bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100%;
+  }
+  
