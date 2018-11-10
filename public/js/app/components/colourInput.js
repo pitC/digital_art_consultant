@@ -111,7 +111,7 @@ export default {
           if (swatches.hasOwnProperty(swatch) && swatches[swatch]) {
             var colour = swatches[swatch].getHex();
             var pop = swatches[swatch].getPopulation();
-            var colourInfo = { colour: colour, population: pop };
+            var colourInfo = { colour: colour, population: pop, name: swatch };
             self.parsedColours.push(colourInfo);
             self.mode = PHOTO_MODE;
           }

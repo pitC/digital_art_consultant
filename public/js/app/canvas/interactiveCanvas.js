@@ -45,7 +45,7 @@ export default class InteractiveCanvas {
     // TODO move colour selection to interactive canvas
 
     if (this.selected) {
-      this.selected.move(mx, my);
+      this.selected.move(mx, my, this.canvas.width, this.canvas.height);
       var colourSelectorPos = this.selected.getColourSelector();
       var colour = this.getPixelColour(
         colourSelectorPos.x,
@@ -80,14 +80,17 @@ export default class InteractiveCanvas {
     return this.canvas.width / computedWidth;
   }
 
-  addShape(x, y, colour) {
+  addShape(x, y, colour, label) {
     var newShape = new Shape(
       x,
       y,
       DEFAULT_SHAPE_WIDTH,
       DEFAULT_SHAPE_HEIGHT,
-      colour
+      colour,
+      label
     );
+    //set the colour selector as the given position instead of top-left corner
+    newShape.setColourSelectorPos(x, y);
     this.shapes.push(newShape);
   }
   clear() {
@@ -186,6 +189,25 @@ export default class InteractiveCanvas {
     return nearest;
   }
 
+  shapeWithinBoundaries(targetx, targety) {
+    var maxX = this.canvas.width;
+    var maxY = this.canvas.height;
+    var leftMargin = DEFAULT_SHAPE_WIDTH;
+    var topMargin = DEFAULT_SHAPE_HEIGHT / 2;
+    var rightMargin = DEFAULT_SHAPE_WIDTH / 4;
+    var bottomMargin = DEFAULT_SHAPE_HEIGHT / 2;
+    if (
+      targetx - leftMargin > 0 &&
+      targety - topMargin > 0 &&
+      targetx + rightMargin <= maxX &&
+      targety + bottomMargin <= maxY
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   findPixelPalette(hexColours, fullPalette) {
     if (this.nearestColours == null) {
       this.nearestColours = nearestColor.from(fullPalette);
@@ -221,8 +243,13 @@ export default class InteractiveCanvas {
             var x = (i / channelCount) % this.canvas.width;
             var y = Math.floor(i / channelCount / this.canvas.width);
             var pos = { x: x, y: y };
-
-            bestMatches[nearest.value] = { distance: foundDistance, pos: pos };
+            // do not add position if the shape would not fit.
+            if (this.shapeWithinBoundaries(pos.x, pos.y)) {
+              bestMatches[nearest.value] = {
+                distance: foundDistance,
+                pos: pos
+              };
+            }
             // if the match is close enough, drop the colour from search list
             if (minDistance < DISTANCE_THRESHOLD) {
               // remove found colour to avoid duplicates

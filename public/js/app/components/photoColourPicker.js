@@ -90,8 +90,14 @@ export default {
       );
       for (var key in foundColours) {
         var colour = foundColours[key];
+        var swatch = parsedColours.find(o => o.colour === key);
         if (colour.pos) {
-          this.interactiveCanvas.addShape(colour.pos.x, colour.pos.y, key);
+          this.interactiveCanvas.addShape(
+            colour.pos.x,
+            colour.pos.y,
+            key,
+            swatch.name
+          );
         }
       }
 

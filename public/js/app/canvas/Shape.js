@@ -7,6 +7,8 @@ const FRAME_ALPHA = 0.2;
 const OPAQUE = 1;
 const SHADOW_BLUR = 15;
 const FONT_COLOUR = "#000000";
+const LABEL_LEFT = "left";
+const LABEL_RIGHT = "right";
 
 const FONT_STYLE = "20pt Helvetica";
 
@@ -78,6 +80,7 @@ export default class Shape {
     this.selected = false;
     this.image = null;
     this.text = text;
+    this.orientation = LABEL_LEFT;
   }
   setImage(image) {
     this.image = image;
@@ -123,10 +126,42 @@ export default class Shape {
   unselect() {
     this.selected = false;
   }
-  move(targetx, targety) {
-    this.x = targetx - this.selectedXoffset;
-    this.y = targety - this.selectedYoffset;
+
+  moveAllowed(newX, newY, canvasW, canvasH) {
+    var dim = getDimensions(this.x, this.y, this.w, this.h);
+    var minX = dim.frame.x - dim.colourCircle.x;
+    var maxX = canvasW - dim.frame.w + dim.colourCircle.r;
+    var minY = 0;
+    var maxY = canvasH - dim.frame.h;
+
+    if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
+      return true;
+    } else {
+      return false;
+    }
   }
+
+  move(offsetx, offsety, canvasW = null, canvasH = null) {
+    var newX = offsetx - this.selectedXoffset;
+    var newY = offsety - this.selectedYoffset;
+    var moveAllowed = true;
+    if (canvasW && canvasH) {
+      moveAllowed = this.moveAllowed(newX, newY, canvasW, canvasH);
+    }
+
+    if (moveAllowed) {
+      this.x = newX;
+      this.y = newY;
+    }
+  }
+
+  setColourSelectorPos(targetx, targety) {
+    var dim = getDimensions(this.x, this.y, this.w, this.h);
+    var colourCircleDim = dim.colourCircle;
+    this.x = this.x - (colourCircleDim.x - this.x);
+    this.y = this.y - (colourCircleDim.y - this.y);
+  }
+
   getColourSelector() {
     var dimensions = getDimensions(this.x, this.y, this.w, this.h);
     return dimensions.colourCircle;
