@@ -22,6 +22,13 @@
       "name": "Launch Chrome",
       "url": "http://localhost:3000/tester.html",
       "webRoot": "${workspaceFolder}/public"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome live Photo picker",
+      "url": "http://localhost:3000/testerPhotoLive.html",
+      "webRoot": "${workspaceFolder}/public"
     }
   ]
 }

@@ -3,6 +3,7 @@ import ImgCard from "./app/components/imgCard.js";
 import ColourInput from "./app/components/colourInput.js";
 import StaticPreview from "./app/components/staticPreview.js";
 import PhotoColourPicker from "./app/components/photoColourPicker.js";
+import LivePhotoColourPicker from "./app/components/livePhotoColourPicker.js";
 import AppStates from "./app/appStates.js";
 const RECOMMEND_URL = "recommend";
 const MANUAL_MODE = "manual";
@@ -21,6 +22,8 @@ Vue.component("palette-item", {
 Vue.component("colour-input", ColourInput);
 
 Vue.component("static-preview", StaticPreview);
+
+Vue.component("live-photo-colour-picker", LivePhotoColourPicker);
 
 Vue.component("img-card", ImgCard);
 

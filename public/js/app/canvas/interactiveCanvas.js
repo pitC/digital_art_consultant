@@ -98,8 +98,8 @@ export default class InteractiveCanvas {
   }
   drawBackground() {
     if (this.backgroundImg) {
-      this.canvas.width = this.backgroundImg.naturalWidth;
-      this.canvas.height = this.backgroundImg.naturalHeight;
+      this.canvas.width = this.backgroundImg.naturalWidth||this.backgroundImg.videoWidth;
+      this.canvas.height = this.backgroundImg.naturalHeight||this.backgroundImg.vieoHeight;
       this.canvas.style.width = "100%";
       this.canvas.style.height = "auto";
       this.context.drawImage(this.backgroundImg, 0, 0);
