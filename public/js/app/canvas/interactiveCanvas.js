@@ -1,6 +1,6 @@
 import Shape from "./Shape.js";
 
-const DEFAULT_SHAPE_WIDTH = 50;
+const DEFAULT_SHAPE_WIDTH = 200;
 const DEFAULT_SHAPE_HEIGHT = 50;
 const DISTANCE_THRESHOLD = 5;
 const DISTANCE_MAX = 100;
@@ -8,6 +8,19 @@ const PIXEL_INCREMENT = 20;
 
 function rgbToHex(rgb) {
   return "#" + ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]).toString(16);
+}
+
+function findPos(obj) {
+  var curleft = 0,
+    curtop = 0;
+  if (obj.offsetParent) {
+    do {
+      curleft += obj.offsetLeft;
+      curtop += obj.offsetTop;
+    } while ((obj = obj.offsetParent));
+    return { x: curleft, y: curtop };
+  }
+  return undefined;
 }
 
 export default class InteractiveCanvas {
@@ -44,6 +57,14 @@ export default class InteractiveCanvas {
       this.selected.select(mx, my);
     }
   }
+
+  releaseShape() {
+    if (this.selected) {
+      this.selected.unselect();
+    }
+    this.selected = null;
+  }
+
   getScale() {
     var computedWidth = parseInt(
       getComputedStyle(this.canvas).getPropertyValue("width")
@@ -69,7 +90,7 @@ export default class InteractiveCanvas {
       this.canvas.width = this.backgroundImg.naturalWidth;
       this.canvas.height = this.backgroundImg.naturalHeight;
       this.canvas.style.width = "100%";
-      this.canvas.style.height = "100%";
+      this.canvas.style.height = "auto";
       this.context.drawImage(this.backgroundImg, 0, 0);
     }
   }
@@ -121,6 +142,27 @@ export default class InteractiveCanvas {
     // return { x: mx, y: my };
   }
 
+  getTouch(e) {
+    var touch = e.touches[0];
+    var scale = this.getScale();
+    var canvasPos = findPos(this.canvas);
+    if (touch) {
+      var pos = {
+        x: (touch.pageX - canvasPos.x) * scale,
+        y: (touch.pageY - canvasPos.y) * scale
+      };
+    }
+    return pos;
+  }
+
+  getPos(e) {
+    if (e.type.includes("mouse")) {
+      return this.getMouse(e);
+    } else if (e.type.includes("touch")) {
+      return this.getTouch(e);
+    }
+  }
+
   getPixelColour(mx, my) {
     var imgData = this.context.getImageData(mx, my, 1, 1);
     return rgbToHex(imgData.data);
@@ -135,7 +177,7 @@ export default class InteractiveCanvas {
     var nearest = this.nearestColours(pixelHex).value;
     return nearest;
   }
-  // TODO: find a better way - the method searches for exact pixel values
+
   findPixelPalette(hexColours, fullPalette) {
     if (this.nearestColours == null) {
       this.nearestColours = nearestColor.from(fullPalette);
@@ -149,7 +191,7 @@ export default class InteractiveCanvas {
     );
     var data = imgData.data;
     var length = data.length;
-    var channelCount = 4; // or 4 if also alpha
+    var channelCount = 4; // 4 if also alpha
     var bestMatches = {};
     for (var index in searchedColours) {
       bestMatches[searchedColours[index]] = {

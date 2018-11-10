@@ -32,7 +32,7 @@ export default {
     <p>{{mouseDebugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
     <div ref="photoCanvasRow" class="row">
         <div class="col">
-            <canvas ref="photoCanvas" @mousemove="onMouseMove" @mouseup="onMouseUp" @dblclick="onDblClick" @mousedown="onMouseDown"></canvas>
+            <canvas ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" @dblclick="onDblClick" ></canvas>
         </div>
     </div>
   </div>
@@ -44,14 +44,14 @@ export default {
       this.interactiveCanvas.addShape(pos.x, pos.y, colour);
       this.interactiveCanvas.draw();
     },
-    onMouseMove: function(event) {
+    onMove: function(event) {
       if (this.interactiveCanvas) {
-        var pos = this.interactiveCanvas.getMouse(event);
+        var pos = this.interactiveCanvas.getPos(event);
 
         if (this.draggingMode && this.interactiveCanvas.selected) {
           this.interactiveCanvas.clear();
           this.interactiveCanvas.drawBackground();
-
+          // TODO move colour selection to interactive canvas
           var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
           this.interactiveCanvas.selected.fill = colour;
           this.interactiveCanvas.selected.move(pos.x, pos.y);
@@ -64,12 +64,15 @@ export default {
         }
       }
     },
-    onMouseUp: function(event) {
+    onUp: function(event) {
       this.draggingMode = false;
+      var pos = this.interactiveCanvas.getPos(event);
+      this.interactiveCanvas.releaseShape();
     },
-    onMouseDown: function(event) {
+    onDown: function(event) {
       this.draggingMode = true;
-      var pos = this.interactiveCanvas.getMouse(event);
+      var pos = this.interactiveCanvas.getPos(event);
+
       this.interactiveCanvas.selectShape(pos.x, pos.y);
       this.interactiveCanvas.draw();
     },
