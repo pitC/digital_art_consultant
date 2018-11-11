@@ -1,36 +1,55 @@
+html,
+body {
+	height: 100%;
+width: 100%;
+margin:0;
+padding:0;
+background-image: url("../src/bg.jpg");
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-position: center center;
+background-size: cover;}
 
 
-.container-fluid {
-    height: 100vh;
-    
-   
-}
-
-.bottom {
-       display: flex;
-       flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-
-.logoframe {
-    border: white solid 1px;
- padding: 10px;
- margin-bottom: 10px;
- text-transform: uppercase; 
- color: white;
- text-align: center;
-}
-.artbackground {
-
+.container {
+    margin: auto;
+    height: 100%;
+  min-height: 100%;
+	display: flex;
+	flex-direction: column;
     color: white;
-    background-image: url("../src/bg.jpg");
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-position: center center;
-    background-size: cover;
-    min-height: 100%;
-  }
+   
+
+    
+}
+
+	.box {
+		text-align: center;
+		color: white;
+	
+		padding: 0px;
+		
+		display: flex;
+		flex-direction: column;
+    justify-content: center;
+	}
+	
+	.box-1 {
+        
+		flex: 1;
+	}
+	
+	.box-2 {
+
+		flex: 1;
+	}
+	
+	.box-3 {
+	
+		flex: 1;
+	}
+
+    
   .lightblue {
     background-color: #91ccf4;
     border-color: #91ccf4;
@@ -56,3 +75,84 @@
 
 .greenborder {
     border: green solid 3px;}
+    .yellowborder {
+        border: yellow solid 3px;}
+    
+
+        .logoframe {
+            border: white solid 1px;
+         padding: 10px;
+         margin-bottom: 10px;
+         text-transform: uppercase; 
+         color: white;
+         text-align: center;
+        }
+
+    /*
+.container-fluid {
+    height: 100vh;
+flex-direction: column;    
+    
+   
+}
+
+
+.introscreen {
+display: flex;
+flex-direction: column;
+}
+
+.fill-height-or-more > div {
+    
+    flex: 1;
+  }
+  c
+
+.logoframe {
+    border: white solid 1px;
+ padding: 10px;
+ margin-bottom: 10px;
+ text-transform: uppercase; 
+ color: white;
+ text-align: center;
+}
+
+.artbackground {
+
+    color: white;
+    background-image: url("../src/bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100%;
+  }
+  
+  .lightblue {
+    background-color: #91ccf4;
+    border-color: #91ccf4;
+    color: white;
+}
+.lightblue:hover {
+    background-color: #7ec8fa;
+    border-color: #7ec8fa;
+    color: white;
+}
+.lightblue:active {
+    background-color: lightcyan;
+    border-color:lightcyan;
+    color: white;
+}
+
+
+.lightblue:after {
+    background-color: lightcyan;
+    border-color:lightcyan;
+    color: white;
+}
+
+.greenborder {
+    border: green solid 3px;}
+    .yellowborder {
+        border: yellow solid 3px;}
+    
