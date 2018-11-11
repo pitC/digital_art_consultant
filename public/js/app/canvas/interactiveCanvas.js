@@ -1,10 +1,11 @@
 import Shape from "./Shape.js";
+import ColourSelector from "./colourSelector.js";
 
 const DEFAULT_SHAPE_WIDTH = 200;
 const DEFAULT_SHAPE_HEIGHT = 50;
 const DISTANCE_THRESHOLD = 5;
 const DISTANCE_MAX = 100;
-const PIXEL_INCREMENT = 20;
+const PIXEL_INCREMENT = 1;
 
 function rgbToHex(rgb) {
   return "#" + ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]).toString(16);
@@ -24,14 +25,65 @@ function findPos(obj) {
 }
 
 export default class InteractiveCanvas {
-  constructor(canvas, backgroundImg) {
+  constructor(canvas, sourceImg, isVideo) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.shapes = [];
-    this.backgroundImg = backgroundImg;
+
     this.selected = null;
     this.nearestColours = null;
+    var canvasW = null;
+    var canvasH = null;
+    if (isVideo) {
+      this.takeImgFromVideo(sourceImg);
+    } else {
+      this.backgroundImg = sourceImg;
+      this.canvas.width = sourceImg.naturalWidth;
+      this.canvas.height = sourceImg.naturalHeight;
+    }
   }
+
+  initializeCanvas() {
+    this.canvas.width = this.backgroundImg.naturalWidth;
+    this.canvas.height = this.backgroundImg.naturalHeight;
+    this.drawBackground();
+    this.initalizePalettes();
+    this.drawInteractiveObjects();
+  }
+
+  initalizePalettes() {
+    var parsedColours = ColourSelector.getAllColours(this.canvas);
+    var prominentColours = parsedColours.prominent;
+    var fullPalette = parsedColours.all;
+    var fullPaletteObj = ColourSelector.getPaletteMap(fullPalette);
+    var foundColours = this.findPixelPalette(
+      prominentColours.map(o => o.colour),
+      fullPaletteObj
+    );
+    for (var key in foundColours) {
+      var colour = foundColours[key];
+      var swatch = prominentColours.find(o => o.colour === key);
+      if (colour.pos) {
+        this.addShape(colour.pos.x, colour.pos.y, key, swatch.name);
+      }
+    }
+  }
+
+  takeImgFromVideo(video) {
+    const canvas = document.createElement("canvas");
+    var scale = 1;
+    canvas.width = video.clientWidth * scale;
+    canvas.height = video.clientHeight * scale;
+    canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+    const image = new Image();
+    var self = this;
+    image.onload = function() {
+      self.backgroundImg = image;
+      self.initializeCanvas();
+    };
+    image.src = canvas.toDataURL();
+  }
+
   findShape(mx, my) {
     for (var index in this.shapes) {
       var currentShape = this.shapes[index];
@@ -98,10 +150,8 @@ export default class InteractiveCanvas {
   }
   drawBackground() {
     if (this.backgroundImg) {
-      this.canvas.width = this.backgroundImg.naturalWidth||this.backgroundImg.videoWidth;
-      this.canvas.height = this.backgroundImg.naturalHeight||this.backgroundImg.vieoHeight;
-      this.canvas.style.width = "100%";
-      this.canvas.style.height = "auto";
+      // this.canvas.style.width = "100%";
+      // this.canvas.style.height = "auto";
       this.context.drawImage(this.backgroundImg, 0, 0);
     }
   }
@@ -209,9 +259,8 @@ export default class InteractiveCanvas {
   }
 
   findPixelPalette(hexColours, fullPalette) {
-    if (this.nearestColours == null) {
-      this.nearestColours = nearestColor.from(fullPalette);
-    }
+    var nearestColours = nearestColor.from(fullPalette);
+
     var searchedColours = hexColours.slice();
     var imgData = this.context.getImageData(
       0,
@@ -229,13 +278,19 @@ export default class InteractiveCanvas {
         pos: null
       };
     }
+    var nearestFound = {};
     for (var i = 0; i < length; i += channelCount + PIXEL_INCREMENT) {
       var r = data[i];
       var g = data[i + 1];
       var b = data[i + 2];
       var pixelHex = rgbToHex([r, g, b]);
-      var nearest = this.nearestColours(pixelHex);
+      var nearest = nearestColours(pixelHex);
       if (nearest) {
+        if (nearestFound.hasOwnProperty(nearest)) {
+          nearestFound[nearest] += 1;
+        } else {
+          nearestFound[nearest] = 1;
+        }
         if (searchedColours.includes(nearest.value)) {
           var minDistance = bestMatches[nearest.value].distance;
           var foundDistance = Math.ceil(nearest.distance);

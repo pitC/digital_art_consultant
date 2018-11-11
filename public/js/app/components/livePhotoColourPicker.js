@@ -1,5 +1,6 @@
 import { EventBus, EventDict } from "./../eventBus.js";
 import InteractiveCanvas from "./../canvas/interactiveCanvas.js";
+import ColourSelector from "./../canvas/colourSelector.js";
 const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
 
@@ -14,7 +15,7 @@ export default {
       draggingMode: false,
       startMouseX: 0,
       startMouseY: 0,
-      mouseDebugStr: "",
+      debugStr: "",
       scale: 1,
       markedColour: null,
       fullPalette: null,
@@ -43,11 +44,11 @@ export default {
   //  //
   template: `
   <div id="photo-colour-picker" class="container" >
-    <p>{{mouseDebugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
+    <p>{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
    
     <div ref="photoCanvasRow" class="row">
         <div class="col">
-            <video id="video" autoplay width="100%" v-bind:hidden="isVideoHidden"></video>
+            <video ref="video" autoplay v-bind:hidden="isVideoHidden"></video>
             <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
         </div>
     </div>
@@ -76,7 +77,7 @@ export default {
         } else {
           var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
 
-          this.mouseDebugStr = `pos: ${pos.x}/${pos.y}`;
+          this.debugStr = `pos: ${pos.x}/${pos.y}`;
           this.markedColour = colour;
         }
       }
@@ -101,41 +102,21 @@ export default {
       this.mode = VIDEO_PREVIEW_MODE;
     },
     onTakeSnapshot: function(event) {
-      var video = document.getElementById("video");
+      var video = this.$refs.video;
       this.mode = COLOUR_PICK_MODE;
-      this.$refs.photoCanvas.width = video.videoWidth;
-      this.$refs.photoCanvas.height = video.videoHeight;
-      var ctx = this.$refs.photoCanvas.getContext("2d");
-
-      ctx.drawImage(video, 0, 0);
+      this.initCanvas(video, true);
     },
-    initCanvas: function(backgroundImg, parsedColours, fullPalette) {
-      this.backgroundImg = backgroundImg;
+    initCanvas: function(
+      sourceImg,
+      isVideo = false,
+      prominentColours = null,
+      fullPalette = null
+    ) {
       this.interactiveCanvas = new InteractiveCanvas(
         this.$refs.photoCanvas,
-        this.backgroundImg
+        sourceImg,
+        isVideo
       );
-      // this.interactiveCanvas.addShape(50, 50, "#f442f1");
-
-      this.interactiveCanvas.draw();
-      var foundColours = this.interactiveCanvas.findPixelPalette(
-        parsedColours.map(o => o.colour),
-        fullPalette
-      );
-      for (var key in foundColours) {
-        var colour = foundColours[key];
-        var swatch = parsedColours.find(o => o.colour === key);
-        if (colour.pos) {
-          this.interactiveCanvas.addShape(
-            colour.pos.x,
-            colour.pos.y,
-            key,
-            swatch.name
-          );
-        }
-      }
-
-      this.interactiveCanvas.drawInteractiveObjects();
     },
     drawCanvas: function() {
       this.interactiveCanvas.draw();
@@ -147,6 +128,7 @@ export default {
       this.previewHidden = false;
       this.initCanvas(
         parsedPhoto.img,
+        false,
         parsedPhoto.parsedColours,
         parsedPhoto.fullPalette
       );
@@ -156,7 +138,7 @@ export default {
     EventBus.$on(EventDict.IMG_ACTIVATED_DOM, imgObject => {
       this.previewHidden = true;
     });
-    var video = document.getElementById("video");
+    var video = this.$refs.video;
     var videoDevices = [];
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
@@ -183,10 +165,10 @@ export default {
           };
           return navigator.mediaDevices.getUserMedia(videoProps);
         })
-        .then(function(stream) {
+        .then(stream => {
           video.src = window.URL.createObjectURL(stream);
           video.play();
-          // this.mode = VIDEO_PREVIEW_MODE;
+          this.mode = VIDEO_PREVIEW_MODE;
         });
     }
   }
