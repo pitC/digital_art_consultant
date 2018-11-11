@@ -3,6 +3,7 @@ import InteractiveCanvas from "./../canvas/interactiveCanvas.js";
 import ColourSelector from "./../canvas/colourSelector.js";
 const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
+const PROCESSING_MODE = "processing";
 
 export default {
   props: ["appstate"],
@@ -19,7 +20,7 @@ export default {
       scale: 1,
       markedColour: null,
       fullPalette: null,
-      mode: COLOUR_PICK_MODE
+      mode: VIDEO_PREVIEW_MODE
     };
   },
   computed: {
@@ -31,14 +32,40 @@ export default {
       }
     },
     isPreviewHidden() {
-      if (this.mode == COLOUR_PICK_MODE) {
+      if (this.mode == COLOUR_PICK_MODE || this.mode == PROCESSING_MODE) {
         return false;
       } else {
         return true;
       }
     },
+
+    isProcessing() {
+      if (this.mode == PROCESSING_MODE) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    isPreviewNotReady() {
+      if (this.mode == PROCESSING_MODE || this.mode == VIDEO_PREVIEW_MODE) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isPreviewReady() {
+      return !this.isPreviewNotReady;
+    },
     style() {
       return "background-color: " + this.markedColour;
+    },
+    snapshotLabel() {
+      if (this.mode == PROCESSING_MODE) {
+        return "Crunching colours...";
+      } else {
+        return "Take snapshot";
+      }
     }
   },
   //  //
@@ -52,9 +79,9 @@ export default {
             <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
         </div>
     </div>
-    <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isVideoHidden">Take snapshot</button>
-    <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewHidden">Retake snapshot</button>
-    <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewHidden">Find art!</button>
+    <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">{{snapshotLabel}}</button>
+    <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Retake snapshot</button>
+    <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Find art!</button>
   </div>
     `,
   methods: {
@@ -100,26 +127,36 @@ export default {
       }
     },
     onRetakeSnapshot: function(event) {
+      this.interactiveCanvas.drawBackground();
       this.mode = VIDEO_PREVIEW_MODE;
     },
     onTakeSnapshot: function(event) {
       var video = this.$refs.video;
-      this.mode = COLOUR_PICK_MODE;
+
       this.debugStr = `client: ${video.clientWidth}/${
         video.clientHeight
       } video:${video.videoWidth}/${video.videoHeight}`;
       // TODO - display "wait" feedback in the UI until canvas initialized
+      this.mode = PROCESSING_MODE;
       this.initCanvas(video, true);
     },
     onCommitColours: function(event) {
       var selectedColours = this.interactiveCanvas.getShapeColours();
       console.log(selectedColours);
     },
-    initCanvas: function(sourceImg, isVideo = false) {
+    initCanvas: function(sourceImg, isVideo = false, parseColours = true) {
+      var self = this;
+
       this.interactiveCanvas = new InteractiveCanvas(
         this.$refs.photoCanvas,
         sourceImg,
-        isVideo
+        isVideo,
+        parseColours,
+        function() {
+          if (parseColours) {
+            self.mode = COLOUR_PICK_MODE;
+          }
+        }
       );
     }
   },
@@ -128,6 +165,7 @@ export default {
     // TODO: refactor this one
     var video = this.$refs.video;
     var videoDevices = [];
+    this.mode = PROCESSING_MODE;
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -157,6 +195,7 @@ export default {
           video.src = window.URL.createObjectURL(stream);
           video.play();
           this.mode = VIDEO_PREVIEW_MODE;
+          this.initCanvas(video, true, false);
         });
     }
   }

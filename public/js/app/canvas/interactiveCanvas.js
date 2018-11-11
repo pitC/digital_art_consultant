@@ -25,7 +25,7 @@ function findPos(obj) {
 }
 
 export default class InteractiveCanvas {
-  constructor(canvas, sourceImg, isVideo) {
+  constructor(canvas, sourceImg, isVideo, scanImg, onReadyCb) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.shapes = [];
@@ -35,7 +35,7 @@ export default class InteractiveCanvas {
     var canvasW = null;
     var canvasH = null;
     if (isVideo) {
-      this.takeImgFromVideo(sourceImg);
+      this.initializeCanvas(sourceImg, scanImg, onReadyCb);
     } else {
       this.backgroundImg = sourceImg;
       this.canvas.width = sourceImg.naturalWidth;
@@ -43,12 +43,18 @@ export default class InteractiveCanvas {
     }
   }
 
-  initializeCanvas() {
-    this.canvas.width = this.backgroundImg.naturalWidth;
-    this.canvas.height = this.backgroundImg.naturalHeight;
-    this.drawBackground();
-    this.initalizePalettes();
-    this.drawInteractiveObjects();
+  initializeCanvas(sourceImg, scanImg, onReadyCallback) {
+    var self = this;
+    this.takeImgFromVideo(sourceImg, function() {
+      self.canvas.width = self.backgroundImg.naturalWidth;
+      self.canvas.height = self.backgroundImg.naturalHeight;
+      self.drawBackground();
+      if (scanImg) {
+        self.initalizePalettes();
+        self.drawInteractiveObjects();
+      }
+      onReadyCallback();
+    });
   }
 
   initalizePalettes() {
@@ -69,7 +75,7 @@ export default class InteractiveCanvas {
     }
   }
 
-  takeImgFromVideo(video) {
+  takeImgFromVideo(video, callback) {
     const canvas = document.createElement("canvas");
     var scale = 1;
     canvas.width = video.clientWidth * scale;
@@ -79,7 +85,7 @@ export default class InteractiveCanvas {
     var self = this;
     image.onload = function() {
       self.backgroundImg = image;
-      self.initializeCanvas();
+      callback();
     };
     image.src = canvas.toDataURL();
   }
@@ -166,11 +172,11 @@ export default class InteractiveCanvas {
     }
   }
   drawInteractiveObjects() {
-    var scale = this.getScale();
+    // var scale = this.getScale();
     for (var index in this.shapes) {
       // draw the selected one at the end to make it appear on top
       if (!this.shapes[index].isSelected()) {
-        this.shapes[index].draw(this.context, scale);
+        this.shapes[index].draw(this.context);
       }
     }
     if (this.selected) {
