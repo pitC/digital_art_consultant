@@ -136,7 +136,6 @@ export default {
       this.debugStr = `client: ${video.clientWidth}/${
         video.clientHeight
       } video:${video.videoWidth}/${video.videoHeight}`;
-      // TODO - display "wait" feedback in the UI until canvas initialized
       this.mode = PROCESSING_MODE;
       var self = this;
 
@@ -146,6 +145,8 @@ export default {
     },
     onCommitColours: function(event) {
       var selectedColours = this.interactiveCanvas.getShapeColours();
+      var video = this.$refs.video;
+      video.pause();
       console.log(selectedColours);
     },
     initCanvas: function(sourceImg, isVideo = false) {
@@ -190,7 +191,7 @@ export default {
           return navigator.mediaDevices.getUserMedia(videoProps);
         })
         .then(stream => {
-          video.src = window.URL.createObjectURL(stream);
+          video.srcObject = stream;
           video.play();
           this.mode = VIDEO_PREVIEW_MODE;
           var self = this;

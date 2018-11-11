@@ -63,6 +63,7 @@ export default class InteractiveCanvas {
       self.selected = null;
       self.shapes = [];
       self.drawBackground();
+      // a small delay so that canvas can show the background first
       setTimeout(function() {
         self.initalizePalettes();
         self.drawInteractiveObjects();
@@ -115,8 +116,6 @@ export default class InteractiveCanvas {
     return null;
   }
   moveSelected(mx, my) {
-    // TODO move colour selection to interactive canvas
-
     if (this.selected) {
       this.selected.move(mx, my, this.canvas.width, this.canvas.height);
       var colourSelectorPos = this.selected.getColourSelector();
@@ -205,6 +204,7 @@ export default class InteractiveCanvas {
   }
 
   getMouse(e) {
+    // TODO: check if really not working on Firefox
     var scale = this.getScale();
     var mouseX = parseInt(e.offsetX) * scale;
     var mouseY = parseInt(e.offsetY) * scale;
@@ -354,16 +354,6 @@ export default class InteractiveCanvas {
   }
 
   findPixelColour(hexColour) {
-    // iterate pixel by pixel and get Image Data - pretty slow
-    // for (var x = 0; x < this.canvas.width; x++) {
-    //   for (var y = 0; y < this.canvas.height; y++) {
-    //     var imgData = this.context.getImageData(x, y, 1, 1);
-    //     var pixelHex = rgbToHex(imgData.data);
-    //     if (pixelHex === hexColour) {
-    //       return { x: x, y: y };
-    //     }
-    //   }
-    // }
     var imgData = this.context.getImageData(
       0,
       0,
