@@ -27,6 +27,7 @@ background-size: cover;
 { margin: auto;
     padding: 15px;
 }
+/*
 .strechheight{
     margin: auto;
     min-height: 90%;
@@ -36,18 +37,16 @@ background-size: cover;
     
  
 }
-
+*/
     
 
 	.box {
 		text-align: center;
 		color: white;
-	
 		padding: 0px;
-		
 		display: flex;
 		flex-direction: column;
-    justify-content: center;
+		justify-content: center;
 	}
 	
 	.box-1 {
@@ -154,7 +153,48 @@ background-size: cover;
             
             
             
+            /* Color Bar */
+
+
             
+            .colorbar {
+                
+width:200px;
+                
+height:100px;
+               margin: auto; 
+display: block;
+margin-bottom: 15px;
+
+            }
+            
+            .color {
+  height: 100px;
+  width: 100px;
+  background-color: lightpink;
+  border-radius: 50%;
+  border: 2px solid white;
+  float: left;
+  
+  z-index: 3;
+            }
+            .bar {
+                
+                text-align: center;
+                vertical-align: middle;
+                line-height: 80px;
+                font-size: 30px;
+                left:80px;
+                width:250px;
+                top: 10px;
+                height:80px;
+                background:rgba(0,0,0,.1);
+                border: 2px solid white;
+                border-radius:0px;
+                z-index: 1;
+            }
+            
+           
             
             
     /*
