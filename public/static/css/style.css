@@ -1,17 +1,7 @@
-.lightblue {
-    background-color: #91ccf4;
-    border-color: #91ccf4;
-    color: white;
-}
-.lightblue:hover {
-    background-color: #7ec8fa;
-    border-color: #7ec8fa;
-    color: white;
-}
+
 
 .container-fluid {
     height: 100vh;
-    padding-top: 10px;
     
    
 }
@@ -41,4 +31,28 @@
     background-size: cover;
     min-height: 100%;
   }
-  
+  .lightblue {
+    background-color: #91ccf4;
+    border-color: #91ccf4;
+    color: white;
+}
+.lightblue:hover {
+    background-color: #7ec8fa;
+    border-color: #7ec8fa;
+    color: white;
+}
+.lightblue:active {
+    background-color: lightcyan;
+    border-color:lightcyan;
+    color: white;
+}
+
+
+.lightblue:after {
+    background-color: lightcyan;
+    border-color:lightcyan;
+    color: white;
+}
+
+.greenborder {
+    border: green solid 3px;}
