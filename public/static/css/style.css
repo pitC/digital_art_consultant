@@ -4,24 +4,40 @@ body {
 width: 100%;
 margin:0;
 padding:0;
-background-image: url("../src/bg.jpg");
+background:
+/* top, transparent black, faked with gradient */ 
+linear-gradient(
+  rgba(0, 0, 0, 0.3), 
+  rgba(0, 0, 0, 0.6)
+), url("../src/bg.jpg");
 background-repeat: no-repeat;
-background-attachment: scroll;
+background-attachment: fixed;
 background-position: center center;
-background-size: cover;}
-
-
-.container {
-    margin: auto;
+background-size: cover;
+}
+.container-fluid
+{ padding: 0px;
     height: 100%;
-  min-height: 100%;
+    display: flex;
+	flex-direction: column;
+  
+
+ }
+.container
+{ margin: auto;
+    padding: 15px;
+}
+.strechheight{
+    margin: auto;
+    min-height: 90%;
+  width: 100%;
 	display: flex;
 	flex-direction: column;
-    color: white;
-   
+    
+ 
+}
 
     
-}
 
 	.box {
 		text-align: center;
@@ -78,6 +94,7 @@ background-size: cover;}
     .yellowborder {
         border: yellow solid 3px;}
     
+   /* Logo style */
 
         .logoframe {
             border: white solid 1px;
@@ -88,6 +105,58 @@ background-size: cover;}
          text-align: center;
         }
 
+            /* Toggle switch */
+
+
+            .switch input { 
+                display:none;
+            }
+            .switch {
+                display:flex;
+                width:50px;
+                height:50%;
+                margin:0;
+                transform:translateY(50%);
+            
+            }
+            
+            .slider {
+                position:absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                border-radius:15px;
+                box-shadow:0 0 0 2px rgba(0,0,0,.5), 0 0 3px rgba(0,0,0,.5);
+                cursor:pointer;
+                border:4px solid transparent;
+                overflow:hidden;
+                 transition:.4s;
+            }
+            .slider:before {
+                position:absolute;
+                content:"";
+                width:100%;
+                height:100%;
+                background:rgba(0,0,0,.5);
+                border-radius:20px;
+                transform:translateX(-30px);
+                transition:.4s;
+            }
+            
+            input:checked + .slider:before {
+                transform:translateX(30px);
+                background:limeGreen;
+            }
+            input:checked + .slider {
+                box-shadow:0 0 0 2px limeGreen,0 0 2px limeGreen;
+            }
+            
+            
+            
+            
+            
+            
     /*
 .container-fluid {
     height: 100vh;
