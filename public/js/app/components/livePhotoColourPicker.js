@@ -154,6 +154,11 @@ export default {
       var selectedColours = this.interactiveCanvas.getShapeColours();
       var video = this.$refs.video;
       video.pause();
+      if ("srcObject" in video) {
+        video.srcObject.getTracks()[0].stop();
+      } else {
+        video.src.stop();
+      }
       console.log(selectedColours);
     },
     initCanvas: function(sourceImg, isVideo = false) {
