@@ -93,7 +93,7 @@ export default class Shape {
     }
   }
   drawAsShape(ctx, scale = 1) {
-    var dimensions = getDimensions(this.x, this.y, this.w, this.h);
+    var dimensions = getDimensions(this.x, this.y, this.w, this.h,scale);
     drawFrame(ctx, dimensions.frame, this.selected);
     drawColourCircle(ctx, dimensions.colourCircle, this.fill);
     drawText(ctx, dimensions.text, this.text);

@@ -138,7 +138,8 @@ export default class InteractiveCanvas {
     var computedWidth = parseInt(
       getComputedStyle(this.canvas).getPropertyValue("width")
     );
-    return this.canvas.width / computedWidth;
+    var scale = this.canvas.width / computedWidth;
+    return scale;
   }
 
   addShape(x, y, colour, label) {
@@ -165,10 +166,11 @@ export default class InteractiveCanvas {
     }
   }
   drawInteractiveObjects() {
+    var scale = this.getScale();
     for (var index in this.shapes) {
       // draw the selected one at the end to make it appear on top
       if (!this.shapes[index].isSelected()) {
-        this.shapes[index].draw(this.context);
+        this.shapes[index].draw(this.context, scale);
       }
     }
     if (this.selected) {
