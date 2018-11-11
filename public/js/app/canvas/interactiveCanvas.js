@@ -63,11 +63,11 @@ export default class InteractiveCanvas {
       self.selected = null;
       self.shapes = [];
       self.drawBackground();
-
-      self.initalizePalettes();
-      self.drawInteractiveObjects();
-
-      onReadyCallback();
+      setTimeout(function() {
+        self.initalizePalettes();
+        self.drawInteractiveObjects();
+        onReadyCallback();
+      }, 100);
     });
   }
 
