@@ -1,6 +1,7 @@
-import SharedStorage from "./../sharedStorage.js";
-import ImgCard from "./imgCard.js";
-import AppState from "./../appStates.js";
+import SharedStorage from "../sharedStorage.js";
+import ImgCard from "../components/imgCard.js";
+import AppState from "../appStates.js";
+import RouteNames from "./../RouteNames.js";
 
 Vue.component("img-card", ImgCard);
 

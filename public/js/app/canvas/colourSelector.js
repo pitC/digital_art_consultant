@@ -11,7 +11,7 @@ function extractFromSwatch(swatch, label = null) {
   var colourInfo = { colour: colour, population: pop, name: label };
   return colourInfo;
 }
-// TODO: select two out of possibly 6 prominent colours
+
 function selectFromProminent(prominentColours) {
   var maxVibrant = { population: 0 };
   var maxMuted = { population: 0 };

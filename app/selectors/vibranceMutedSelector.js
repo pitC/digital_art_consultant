@@ -9,7 +9,6 @@ function sortByDistance(imgA, imgB) {
     return -1;
   } else return 0;
 }
-// TODO: test this selector
 exports.selectImages = function(limit, criteria, candidateImages) {
   var selectedImages = [];
 
@@ -38,7 +37,7 @@ exports.selectImages = function(limit, criteria, candidateImages) {
       inpSecColour,
       imgVibrantColours
     );
-    var distance = (distanceMuted + distanceVibrant)/2;
+    var distance = (distanceMuted + distanceVibrant) / 2;
     var distanceLimit = criteria.distanceLimit | DISTANCE_LIMIT;
     if (distance < distanceLimit) {
       img.sortValue = distance;

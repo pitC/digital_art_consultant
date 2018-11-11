@@ -180,7 +180,6 @@ export default {
   },
 
   mounted: function() {
-    // TODO: refactor this one
     var video = this.$refs.video;
     this.mode = PROCESSING_MODE;
     // Get access to the camera!
