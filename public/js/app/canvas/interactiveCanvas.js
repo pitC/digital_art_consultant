@@ -25,17 +25,18 @@ function findPos(obj) {
 }
 
 export default class InteractiveCanvas {
-  constructor(canvas, sourceImg, isVideo, scanImg, onReadyCb) {
+  constructor(canvas, sourceImg, isVideo = false) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.shapes = [];
 
     this.selected = null;
     this.nearestColours = null;
-    var canvasW = null;
-    var canvasH = null;
+    this.videoSource;
+
     if (isVideo) {
-      this.initializeCanvas(sourceImg, scanImg, onReadyCb);
+      this.videoSource = sourceImg;
+      this.initializeCanvas(sourceImg);
     } else {
       this.backgroundImg = sourceImg;
       this.canvas.width = sourceImg.naturalWidth;
@@ -43,16 +44,29 @@ export default class InteractiveCanvas {
     }
   }
 
-  initializeCanvas(sourceImg, scanImg, onReadyCallback) {
+  initializeCanvas(sourceVideo) {
+    this.canvas.width = sourceVideo.clientWidth;
+    this.canvas.height = sourceVideo.clientHeight;
+    this.backgroundImg = sourceVideo;
+    this.drawBackground();
+  }
+
+  unfreeze() {
+    this.initializeCanvas(this.videoSource);
+  }
+
+  takeSnapshot(onReadyCallback) {
     var self = this;
-    this.takeImgFromVideo(sourceImg, function() {
+    this.takeImgFromVideo(function() {
       self.canvas.width = self.backgroundImg.naturalWidth;
       self.canvas.height = self.backgroundImg.naturalHeight;
+      self.selected = null;
+      self.shapes = [];
       self.drawBackground();
-      if (scanImg) {
-        self.initalizePalettes();
-        self.drawInteractiveObjects();
-      }
+
+      self.initalizePalettes();
+      self.drawInteractiveObjects();
+
       onReadyCallback();
     });
   }
@@ -75,9 +89,10 @@ export default class InteractiveCanvas {
     }
   }
 
-  takeImgFromVideo(video, callback) {
+  takeImgFromVideo(callback) {
     const canvas = document.createElement("canvas");
     var scale = 1;
+    var video = this.videoSource;
     canvas.width = video.clientWidth * scale;
     canvas.height = video.clientHeight * scale;
     canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);

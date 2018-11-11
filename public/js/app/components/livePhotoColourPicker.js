@@ -127,7 +127,7 @@ export default {
       }
     },
     onRetakeSnapshot: function(event) {
-      this.interactiveCanvas.drawBackground();
+      this.interactiveCanvas.unfreeze();
       this.mode = VIDEO_PREVIEW_MODE;
     },
     onTakeSnapshot: function(event) {
@@ -138,25 +138,23 @@ export default {
       } video:${video.videoWidth}/${video.videoHeight}`;
       // TODO - display "wait" feedback in the UI until canvas initialized
       this.mode = PROCESSING_MODE;
-      this.initCanvas(video, true);
+      var self = this;
+
+      this.interactiveCanvas.takeSnapshot(function() {
+        self.mode = COLOUR_PICK_MODE;
+      });
     },
     onCommitColours: function(event) {
       var selectedColours = this.interactiveCanvas.getShapeColours();
       console.log(selectedColours);
     },
-    initCanvas: function(sourceImg, isVideo = false, parseColours = true) {
+    initCanvas: function(sourceImg, isVideo = false) {
       var self = this;
 
       this.interactiveCanvas = new InteractiveCanvas(
         this.$refs.photoCanvas,
         sourceImg,
-        isVideo,
-        parseColours,
-        function() {
-          if (parseColours) {
-            self.mode = COLOUR_PICK_MODE;
-          }
-        }
+        isVideo
       );
     }
   },
@@ -195,7 +193,10 @@ export default {
           video.src = window.URL.createObjectURL(stream);
           video.play();
           this.mode = VIDEO_PREVIEW_MODE;
-          this.initCanvas(video, true, false);
+          var self = this;
+          setTimeout(function() {
+            self.initCanvas(video, true);
+          }, 1000);
         });
     }
   }
