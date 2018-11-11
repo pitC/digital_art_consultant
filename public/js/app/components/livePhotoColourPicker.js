@@ -152,6 +152,13 @@ export default {
     },
     onCommitColours: function(event) {
       var selectedColours = this.interactiveCanvas.getShapeColours();
+
+      SharedStorage.putInputColours(selectedColours);
+      console.log(selectedColours);
+      this.$router.push(RouteNames.RESULT_LIST);
+    },
+
+    stopVideo: function() {
       var video = this.$refs.video;
       video.pause();
       if ("srcObject" in video) {
@@ -159,10 +166,8 @@ export default {
       } else {
         video.src.stop();
       }
-      SharedStorage.putInputColours(selectedColours);
-      console.log(selectedColours);
-      this.$router.push(RouteNames.RESULT_LIST);
     },
+
     initCanvas: function(sourceImg, isVideo = false) {
       if (this.$refs.photoCanvas) {
         this.interactiveCanvas = new InteractiveCanvas(
@@ -196,5 +201,10 @@ export default {
         }, 1000);
       });
     }
+  },
+
+  beforeRouteLeave: function(to, from, next) {
+    this.stopVideo();
+    next();
   }
 };
