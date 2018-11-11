@@ -1,6 +1,7 @@
 import { EventBus, EventDict } from "./../eventBus.js";
 import InteractiveCanvas from "./../canvas/interactiveCanvas.js";
-import ColourSelector from "./../canvas/colourSelector.js";
+import SharedStorage from "./../sharedStorage.js";
+import RouteNames from "./../RouteNames.js";
 const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
 const PROCESSING_MODE = "processing";
@@ -13,7 +14,6 @@ var VIDEO_CONSTRAINTS = {
 };
 
 export default {
-  props: ["appstate"],
   data: function() {
     return {
       interactiveCanvas: null,
@@ -159,16 +159,18 @@ export default {
       } else {
         video.src.stop();
       }
+      SharedStorage.putInputColours(selectedColours);
       console.log(selectedColours);
+      this.$router.push(RouteNames.RESULT_LIST);
     },
     initCanvas: function(sourceImg, isVideo = false) {
-      var self = this;
-
-      this.interactiveCanvas = new InteractiveCanvas(
-        this.$refs.photoCanvas,
-        sourceImg,
-        isVideo
-      );
+      if (this.$refs.photoCanvas) {
+        this.interactiveCanvas = new InteractiveCanvas(
+          this.$refs.photoCanvas,
+          sourceImg,
+          isVideo
+        );
+      }
     }
   },
 

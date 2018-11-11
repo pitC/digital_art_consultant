@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> </link>
     <!-- <script src="dist/js/VibrantPixelLocation.js"></script> -->
     <script src="dist/js/Vibrant.min.js"></script>
     <script src="dist/js/nearestColor.js"></script>
@@ -28,9 +29,12 @@
 
   <body>
     <div id="vue-app">
-      <live-photo-colour-picker
-        v-bind:appstate="appState"
-      ></live-photo-colour-picker>
+      <nav>
+        <router-link to="/photo-input">Start</router-link>
+        <router-link to="/results">Results</router-link>
+      </nav>
+
+      <router-view></router-view>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

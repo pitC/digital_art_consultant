@@ -27,7 +27,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome live Photo picker",
-      "url": "http://localhost:3000/testerPhotoLive.html",
+      "url": "http://localhost:3000/testerPhotoLive.html#/photo-input",
       "webRoot": "${workspaceFolder}/public"
     }
   ]
