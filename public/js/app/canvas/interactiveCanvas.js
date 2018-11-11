@@ -107,6 +107,15 @@ export default class InteractiveCanvas {
     }
   }
 
+  getShapeColours() {
+    var colours = [];
+    for (var index in this.shapes) {
+      var colour = this.shapes[index].fill;
+      colours.push(colour);
+    }
+    return colours;
+  }
+
   selectShape(mx, my) {
     var shape = this.findShape(mx, my);
     if (this.selected) {

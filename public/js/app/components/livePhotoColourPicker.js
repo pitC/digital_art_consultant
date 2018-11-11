@@ -48,20 +48,22 @@ export default {
    
     <div ref="photoCanvasRow" class="row">
         <div class="col">
-            <video ref="video" autoplay v-bind:hidden="isVideoHidden"></video>
+            <video ref="video" width="100%" autoplay v-bind:hidden="isVideoHidden"></video>
             <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
         </div>
     </div>
     <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isVideoHidden">Take snapshot</button>
     <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewHidden">Retake snapshot</button>
+    <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewHidden">Find art!</button>
   </div>
     `,
   methods: {
     onDblClick: function(event) {
-      var pos = this.interactiveCanvas.getMouse(event);
-      var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
-      this.interactiveCanvas.addShape(pos.x, pos.y, colour);
-      this.interactiveCanvas.draw();
+      // TODO: decide if colour addition is supported or not
+      // var pos = this.interactiveCanvas.getMouse(event);
+      // var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
+      // this.interactiveCanvas.addShape(pos.x, pos.y, colour);
+      // this.interactiveCanvas.draw();
     },
     onMove: function(event) {
       if (this.interactiveCanvas) {
@@ -76,11 +78,10 @@ export default {
           this.interactiveCanvas.drawInteractiveObjects();
         } else {
           var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
-
-          this.debugStr = `pos: ${pos.x}/${pos.y}`;
           this.markedColour = colour;
         }
       }
+      event.preventDefault();
     },
     onUp: function(event) {
       this.draggingMode = false;
@@ -104,40 +105,27 @@ export default {
     onTakeSnapshot: function(event) {
       var video = this.$refs.video;
       this.mode = COLOUR_PICK_MODE;
+      this.debugStr = `client: ${video.clientWidth}/${
+        video.clientHeight
+      } video:${video.videoWidth}/${video.videoHeight}`;
+      // TODO - display "wait" feedback in the UI until canvas initialized
       this.initCanvas(video, true);
     },
-    initCanvas: function(
-      sourceImg,
-      isVideo = false,
-      prominentColours = null,
-      fullPalette = null
-    ) {
+    onCommitColours: function(event) {
+      var selectedColours = this.interactiveCanvas.getShapeColours();
+      console.log(selectedColours);
+    },
+    initCanvas: function(sourceImg, isVideo = false) {
       this.interactiveCanvas = new InteractiveCanvas(
         this.$refs.photoCanvas,
         sourceImg,
         isVideo
       );
-    },
-    drawCanvas: function() {
-      this.interactiveCanvas.draw();
     }
   },
 
   mounted: function() {
-    EventBus.$on(EventDict.PHOTO_LOADED_DOM, parsedPhoto => {
-      this.previewHidden = false;
-      this.initCanvas(
-        parsedPhoto.img,
-        false,
-        parsedPhoto.parsedColours,
-        parsedPhoto.fullPalette
-      );
-      this.fullPalette = parsedPhoto.fullPalette;
-    });
-
-    EventBus.$on(EventDict.IMG_ACTIVATED_DOM, imgObject => {
-      this.previewHidden = true;
-    });
+    // TODO: refactor this one
     var video = this.$refs.video;
     var videoDevices = [];
     // Get access to the camera!
