@@ -5,6 +5,13 @@ const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
 const PROCESSING_MODE = "processing";
 
+var VIDEO_CONSTRAINTS = {
+  audio: false,
+  video: {
+    facingMode: "environment"
+  }
+};
+
 export default {
   props: ["appstate"],
   data: function() {
@@ -163,42 +170,24 @@ export default {
   mounted: function() {
     // TODO: refactor this one
     var video = this.$refs.video;
-    var videoDevices = [];
     this.mode = PROCESSING_MODE;
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices
-        .enumerateDevices()
-        .then(devices => {
-          devices.forEach(function(device) {
-            if (device.kind == "videoinput") {
-              videoDevices.push({
-                deviceId: device.deviceId,
-                label: device.label
-              });
-            }
-          });
-          var constraints = {
-            deviceId: {
-              exact: videoDevices[videoDevices.length - 1]["deviceId"]
-            }
-          };
-          var videoProps = {
-            video: constraints
-          };
-          return navigator.mediaDevices.getUserMedia(videoProps);
-        })
-        .then(stream => {
+      navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {
+        if ("srcObject" in video) {
           video.srcObject = stream;
-          video.play();
-          this.mode = VIDEO_PREVIEW_MODE;
-          var self = this;
-          setTimeout(function() {
-            self.initCanvas(video, true);
-          }, 1000);
-        });
+        } else {
+          video.src = window.URL.createObjectURL(stream);
+        }
+        video.play();
+        this.mode = VIDEO_PREVIEW_MODE;
+        var self = this;
+        setTimeout(function() {
+          self.initCanvas(video, true);
+        }, 1000);
+      });
     }
   }
 };
