@@ -1,8 +1,8 @@
 import Shape from "./Shape.js";
 import ColourSelector from "./colourSelector.js";
 
-const DEFAULT_SHAPE_WIDTH = 200;
-const DEFAULT_SHAPE_HEIGHT = 50;
+const DEFAULT_SHAPE_WIDTH = 150;
+const DEFAULT_SHAPE_HEIGHT = 40;
 const DISTANCE_THRESHOLD = 5;
 const DISTANCE_MAX = 100;
 const PIXEL_INCREMENT = 1;

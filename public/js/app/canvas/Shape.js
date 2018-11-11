@@ -10,8 +10,8 @@ const FONT_COLOUR = "#000000";
 const LABEL_LEFT = "left";
 const LABEL_RIGHT = "right";
 
-const FONT_STYLE = "20pt Helvetica";
-
+const FONT_STYLE = "14pt Helvetica";
+// TODO: consider orientation
 function getDimensions(frameX, frameY, frameW, frameH, scale = 1) {
   // frame X and Y are positions for top-left pixel
   var dimensions = {};
@@ -59,6 +59,7 @@ function drawColourCircle(ctx, circleDim, fill) {
 }
 
 function drawText(ctx, textDim, text, fill = FONT_COLOUR) {
+  ctx.shadowBlur = 0;
   ctx.font = FONT_STYLE;
   ctx.textBaseline = "middle";
   ctx.fillStyle = FONT_COLOUR;
@@ -93,7 +94,7 @@ export default class Shape {
     }
   }
   drawAsShape(ctx, scale = 1) {
-    var dimensions = getDimensions(this.x, this.y, this.w, this.h,scale);
+    var dimensions = getDimensions(this.x, this.y, this.w, this.h, scale);
     drawFrame(ctx, dimensions.frame, this.selected);
     drawColourCircle(ctx, dimensions.colourCircle, this.fill);
     drawText(ctx, dimensions.text, this.text);
@@ -131,8 +132,8 @@ export default class Shape {
     var dim = getDimensions(this.x, this.y, this.w, this.h);
     var minX = dim.frame.x - dim.colourCircle.x;
     var maxX = canvasW - dim.frame.w + dim.colourCircle.r;
-    var minY = 0;
-    var maxY = canvasH - dim.frame.h;
+    var minY = 0 - FRAME_PADDING - dim.colourCircle.r; //
+    var maxY = canvasH - dim.frame.h + FRAME_PADDING + dim.colourCircle.r;
 
     if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
       return true;
