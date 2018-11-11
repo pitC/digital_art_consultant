@@ -66,13 +66,6 @@ export default {
     },
     style() {
       return "background-color: " + this.markedColour;
-    },
-    snapshotLabel() {
-      if (this.mode == PROCESSING_MODE) {
-        return "Crunching colours...";
-      } else {
-        return "Take snapshot";
-      }
     }
   },
   //  //
@@ -86,7 +79,14 @@ export default {
             <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
         </div>
     </div>
-    <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">{{snapshotLabel}}</button>
+    <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
+      <span v-if="isProcessing">
+        <i class="fa fa-spinner fa-spin fa-fw"></i> Crunching colours...
+      </span>
+      <span v-else>
+        Take snapshot
+      </span>
+    </button>
     <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Retake snapshot</button>
     <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Find art!</button>
   </div>
@@ -198,7 +198,7 @@ export default {
         var self = this;
         setTimeout(function() {
           self.initCanvas(video, true);
-        }, 1000);
+        }, 300);
       });
     }
   },
