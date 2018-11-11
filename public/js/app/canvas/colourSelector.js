@@ -13,6 +13,35 @@ function extractFromSwatch(swatch, label = null) {
 }
 // TODO: select two out of possibly 6 prominent colours
 function selectFromProminent(prominentColours) {
+  var maxVibrant = { population: 0 };
+  var maxMuted = { population: 0 };
+  var selectedColours = [];
+  for (var index in prominentColours) {
+    var colour = prominentColours[index];
+    if (colour.name.toLowerCase().includes("vibrant")) {
+      if (colour.population > maxVibrant.population) {
+        maxVibrant = colour;
+        // TODO: make a copy instead - use once the logic is final
+        // maxVibrant = Object.assign({}, colour);
+      }
+    } else {
+      if (colour.population > maxMuted.population) {
+        maxMuted = colour;
+        // TODO: make a copy instead - use once the logic is final
+        // maxMuted = Object.assign({}, colour);
+      }
+    }
+  }
+  if (maxMuted.population > maxVibrant.population) {
+    maxMuted.name = "Main";
+    maxVibrant.name = "Secondary";
+  } else {
+    maxVibrant.name = "Main";
+    maxMuted.name = "Secondary";
+  }
+  selectedColours.push(maxMuted);
+  selectedColours.push(maxVibrant);
+  // TODO: for now work only with changed labels - to verify the logic
   return prominentColours;
 }
 
