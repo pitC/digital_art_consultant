@@ -113,7 +113,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <div id="colour-pick" class="inl-bl"></div>
+            <div id="colour-pick" class="inl-bl w-100"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -152,7 +152,19 @@
         $("#colour-pick").colorpicker({
           color: "#ffaa00",
           container: true,
-          inline: true
+          inline: true,   customClass: 'colorpicker-2x',
+            sliders: {
+                saturation: {
+                    maxLeft: 200,
+                    maxTop: 200
+                },
+                hue: {
+                    maxTop: 200
+                },
+                alpha: {
+                    maxTop: 200
+                }
+            }
         });
       });
       </script>

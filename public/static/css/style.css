@@ -151,9 +151,27 @@ background-size: cover;
                 box-shadow:0 0 0 2px limeGreen,0 0 2px limeGreen;
             }
             
-         
+         /* Colorpicker */
             
-           
+            .colorpicker-2x .colorpicker-saturation {
+                width: 300px !important;
+                height: 300px !important;
+            }
+        
+            .colorpicker-2x .colorpicker-hue {
+            width: 30px;
+            height: 300px !important;
+            
+        }
+        
+            .colorpicker-2x .colorpicker-alpha {
+                display: none !important;
+            }
+        
+            .colorpicker-2x .colorpicker-color,
+            .colorpicker-2x .colorpicker-color div {
+                height: 30px;
+            }
             
             
     /*
