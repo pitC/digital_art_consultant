@@ -152,6 +152,7 @@ export default {
       }
     },
     onRetakeSnapshot: function(event) {
+      this.allParsedColours = [];
       this.interactiveCanvas.unfreeze();
       this.mode = VIDEO_PREVIEW_MODE;
     },

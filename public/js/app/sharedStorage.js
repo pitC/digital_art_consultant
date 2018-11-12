@@ -36,5 +36,7 @@ export default {
         callback(this.imgList, paletteUsed);
       });
     }
-  }
+  },
+
+  getImgDetails(id) {}
 };
