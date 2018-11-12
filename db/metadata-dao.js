@@ -3,7 +3,21 @@ var BSON = require("mongodb").BSONPure;
 var ObjectId = require("mongodb").ObjectID;
 var url = process.env.MONGODB_URI;
 const COLLECTION = "img-metadata";
+const BASE_FILE_URL = "http://goethe.cabaj.eu/staedel/";
+var initiated = false;
 var db;
+
+function buildIdObject(id) {
+  try {
+    return new ObjectId(id);
+  } catch (err) {
+    return id;
+  }
+}
+
+exports.getTargetURL = function(filename) {
+  return BASE_FILE_URL + filename;
+};
 
 exports.initDB = function(dropCollection, callback) {
   MongoClient.connect(
@@ -23,10 +37,12 @@ exports.initDB = function(dropCollection, callback) {
     }
   );
 };
-
-this.initDB(null, function() {
-  console.log("Database created/connected!");
-});
+if (!initiated) {
+  this.initDB(null, function() {
+    initiated = true;
+    console.log("Database created/connected: " + initiated);
+  });
+}
 
 exports.addObject = function(newObject, okCallback, errCallback) {
   if (newObject) {
@@ -47,6 +63,21 @@ exports.addObject = function(newObject, okCallback, errCallback) {
     });
   } else errCallback(null);
 };
+
+exports.findById = function(id, okCallback, errCallback) {
+  var self = this;
+  db.collection(COLLECTION, function(err, collection) {
+    collection.findOne({ _id: buildIdObject(id) }, function(err, item) {
+      if (err) {
+        errCallback(err);
+      } else {
+        item.fileURL = self.getTargetURL(item.filename);
+        okCallback(item);
+      }
+    });
+  });
+};
+
 // TODO: add specific criteria
 exports.findImages = function(criteria, limit, okCallback, errCallback) {
   db.collection(COLLECTION, function(err, collection) {

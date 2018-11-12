@@ -1,4 +1,5 @@
 const RECOMMEND_URL = "recommend";
+const IMAGE_URL = "image";
 export default {
   inputColours: [],
   imgList: [],
@@ -38,5 +39,24 @@ export default {
     }
   },
 
-  getImgDetails(id) {}
+  getImgDetails(id, callback) {
+    var imgInLocalList = false;
+    if (this.getImgList.length > 0) {
+      var image = this.imgList.find(obj => obj._id == id);
+      if (image) {
+        imgInLocalList = true;
+        callback(image);
+      }
+    }
+    if (!imgInLocalList) {
+      var url = `${IMAGE_URL}/${id}`;
+      axios.get(url).then(response => {
+        if (response.status == 200) {
+          callback(response.data);
+        } else {
+          callback(null);
+        }
+      });
+    }
+  }
 };
