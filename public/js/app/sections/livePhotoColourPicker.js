@@ -13,6 +13,17 @@ var VIDEO_CONSTRAINTS = {
   }
 };
 
+Vue.component("palette-item", {
+  template:
+    "<h3><span class='badge badge-primary' :style='style'>{{colour}} {{name}} ({{population}})</span></h3>",
+  computed: {
+    style() {
+      return "background-color: " + this.colour;
+    }
+  },
+  props: ["colour", "population", "name"]
+});
+
 export default {
   data: function() {
     return {
@@ -27,7 +38,8 @@ export default {
       scale: 1,
       markedColour: null,
       fullPalette: null,
-      mode: VIDEO_PREVIEW_MODE
+      mode: VIDEO_PREVIEW_MODE,
+      allParsedColours: []
     };
   },
   computed: {
@@ -89,6 +101,12 @@ export default {
     </button>
     <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Retake snapshot</button>
     <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Find art!</button>
+    <palette-item
+            v-for="swatch in allParsedColours"
+            v-bind:colour="swatch.colour"
+            v-bind:population="swatch.population"
+            v-bind:name="swatch.name"
+    ></palette-item>
   </div>
     `,
   methods: {
@@ -146,8 +164,9 @@ export default {
       this.mode = PROCESSING_MODE;
       var self = this;
 
-      this.interactiveCanvas.takeSnapshot(function() {
+      this.interactiveCanvas.takeSnapshot(function(parsedColours) {
         self.mode = COLOUR_PICK_MODE;
+        self.allParsedColours = parsedColours.all;
       });
     },
     onCommitColours: function(event) {

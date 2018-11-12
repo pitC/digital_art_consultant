@@ -12,6 +12,27 @@ function extractFromSwatch(swatch, label = null) {
   return colourInfo;
 }
 
+function sortByPop(colA, colB) {
+  if (parseInt(colA.population) > parseInt(colB.population)) {
+    return -1;
+  } else if (parseInt(colA.population) < parseInt(colB.population)) {
+    return 1;
+  } else return 0;
+}
+
+function processFullPalette(fullPalette, prominentColours) {
+  fullPalette.sort(sortByPop);
+  for (var index in fullPalette) {
+    var colour = fullPalette[index];
+    for (var prom in prominentColours) {
+      if (prominentColours[prom].colour === colour.colour) {
+        colour.name = prominentColours[prom].name;
+      }
+    }
+  }
+  return fullPalette;
+}
+
 function selectFromProminent(prominentColours) {
   var maxVibrant = { population: 0 };
   var maxMuted = { population: 0 };
@@ -33,11 +54,11 @@ function selectFromProminent(prominentColours) {
     }
   }
   if (maxMuted.population > maxVibrant.population) {
-    maxMuted.name = "Main";
-    maxVibrant.name = "Secondary";
+    maxMuted.name += " (M)";
+    maxVibrant.name += " (S)";
   } else {
-    maxVibrant.name = "Main";
-    maxMuted.name = "Secondary";
+    maxVibrant.name += " (M)";
+    maxMuted.name += " (S)";
   }
   selectedColours.push(maxMuted);
   selectedColours.push(maxVibrant);
@@ -65,7 +86,10 @@ function getColours(img, getAll, quality, colourNum) {
       var colourInfo = extractFromSwatch(fullSwatchPalette[swatch]);
       fullPalette.push(colourInfo);
     }
-    colours.all = fullPalette;
+    // TODO: bring it back when debug mode not needed
+    // colours.all = fullPalette;
+    // TEMP: process full palette for debug info
+    colours.all = processFullPalette(fullPalette, prominentColours);
   }
   return colours;
 }
@@ -81,6 +105,7 @@ export default {
   getAllColours: function(img, quality = SCAN_QUALITY, colourNum = COLOUR_NUM) {
     return getColours(img, true, quality, colourNum);
   },
+  // change list of swatches to map of colours with indes as a key - format required by nearestColour package
   getPaletteMap(colourList) {
     var fullPaletteObj = {};
     for (var index in colourList) {

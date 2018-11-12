@@ -65,9 +65,9 @@ export default class InteractiveCanvas {
       self.drawBackground();
       // a small delay so that canvas can show the background first
       setTimeout(function() {
-        self.initalizePalettes();
+        var parsedColours = self.initalizePalettes();
         self.drawInteractiveObjects();
-        onReadyCallback();
+        onReadyCallback(parsedColours);
       }, 100);
     });
   }
@@ -88,6 +88,7 @@ export default class InteractiveCanvas {
         this.addShape(colour.pos.x, colour.pos.y, key, swatch.name);
       }
     }
+    return parsedColours;
   }
 
   takeImgFromVideo(callback) {
