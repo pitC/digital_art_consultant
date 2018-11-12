@@ -1,3 +1,4 @@
+import RouteNames from "./../RouteNames.js";
 import { EventBus, EventDict } from "./../eventBus.js";
 
 Vue.component("calc-log-item", {
@@ -28,15 +29,24 @@ export default {
                     <calc-log-item v-for="(value,key) in calclog" v-bind:colour=key v-bind:scores=value></calc-log-item>
                     </table>
                     <button type="button" class="btn btn-secondary" v-on:click="onPreviewRequest">Preview</button>
+                    <button type="button" class="btn btn-secondary" v-on:click="onDetailsRequest">Details</button>
                 </div>
             </div>
 
   `,
-  props: ["fileurl", "title", "author", "reason", "calclog"],
+  props: ["fileurl", "title", "author", "reason", "calclog", "_id"],
+  computed: {
+    detailsLink() {
+      return RouteNames.IMAGE_DETAILS.replace(":id", this._id);
+    }
+  },
   methods: {
     onPreviewRequest: function(event) {
       var imgObject = document.querySelector(`[src="${this.fileurl}"]`);
       EventBus.$emit(EventDict.IMG_ACTIVATED_DOM, imgObject);
+    },
+    onDetailsRequest: function(event) {
+      this.$router.push({ path: `${this.detailsLink}` });
     }
   }
 };

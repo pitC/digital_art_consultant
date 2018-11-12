@@ -25,6 +25,7 @@ export default {
         for (var index in response.data.images) {
           var respImg = response.data.images[index];
           var img = {
+            _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
             reason: respImg.recommendationReason,

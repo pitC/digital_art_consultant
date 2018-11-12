@@ -32,6 +32,7 @@ export default {
           v-bind:title="img.title"
           v-bind:author="img.author"
           v-bind:reason="img.reason"
+          v-bind:_id="img._id"
         ></img-card>
     </div>
     <div v-else><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>

@@ -25,11 +25,11 @@ export default {
   template: `
   <div id="imageDetailsContainer" class="container">
     <div class="card" v-if="isImageLoaded">
-        <img class="card-img-top" :src="image.fileurl" alt="Card image cap">
+        <img class="card-img-top" :src="image.fileURL" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{image.title}}</h5>
             <p class="card-text">{{image.author}}</p>
-            <button type="button" class="btn btn-secondary" v-on:click="onClose">Close</button>
+            <button type="button" class="btn btn-secondary" v-on:click="onBackToList">Back to list</button>
         </div>
     </div>
     <div v-else>
@@ -40,8 +40,8 @@ export default {
   </div>
   `,
   methods: {
-    onClose: function(event) {
-      null;
+    onBackToList: function(event) {
+      this.$router.push(RouteNames.RESULT_LIST);
     }
   },
 
