@@ -41,7 +41,8 @@ export default {
       fullPalette: null,
       state: VIDEO_PREVIEW_MODE,
       uploadFallback: false,
-      allParsedColours: []
+      allParsedColours: [],
+      debug: false
     };
   },
   computed: {
@@ -113,34 +114,46 @@ export default {
         </div>
       </div>
     </div>
-    <p>{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
-   
-    <div ref="photoCanvasRow" class="row">
-        <div class="col">
-            <video ref="video" width="100%" autoplay v-bind:hidden="isVideoHidden"></video>
-            <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
-            <div ref="upload" width="100%" v-bind:hidden="isUploadHidden">
-            No camera access :(
-            </div>
+    <p class="bg-light" v-if="debug">{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
+    <div>
+        <video
+          id="video-el"
+          width="100%"
+          autoplay
+          
+          ref="video"
+          autoplay v-bind:hidden="isVideoHidden"
+        ></video>
+        <canvas width="100%" v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
+        <div class="bg-light" ref="upload" width="100%" v-bind:hidden="isUploadHidden">
+        No camera access :(
         </div>
     </div>
-    <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
-      <span v-if="isProcessing">
-        <i class="fa fa-spinner fa-spin fa-fw"></i> Crunching colours...
-      </span>
-      <span v-else>
-        Take snapshot
-      </span>
-    </button>
-    <button id="videoplay-btn" type="button" class="btn btn-outline-primary" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Retake snapshot</button>
-    <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing">Find art!</button>
-    <palette-item
+    <div class="container">
+      <div class="box box-5 fixed-bottom">
+        <div class="mt-auto mt-md-0">
+          <button id="snapshot-btn" type="button" class="btn lightblue btn-info btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
+            <span v-if="isProcessing">
+              <i class="fa fa-spinner fa-spin fa-fw"></i> Crunching colours...
+            </span>
+            <span v-else>
+              <i class="fas fa-camera"></i> Take a photo
+            </span>
+          </button>
+          <button id="find-art-btn" type="button" class="btn btn-success btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
+          <button id="videoplay-btn" type="button" class="btn lightblue btn-info btn-block" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+          </button>
+        </div>
+      </div>
+    </div>
+       <palette-item
             v-for="swatch in allParsedColours"
             v-bind:colour="swatch.colour"
             v-bind:population="swatch.population"
             v-bind:name="swatch.name"
     ></palette-item>
-  </div>
+  </div>    
+ 
     `,
   // TODO: finish manual upload
   methods: {
@@ -205,7 +218,9 @@ export default {
 
       this.interactiveCanvas.takeSnapshot(function(parsedColours) {
         self.state = COLOUR_PICK_MODE;
-        self.allParsedColours = parsedColours.all;
+        if (self.debug) {
+          self.allParsedColours = parsedColours.all;
+        }
       });
     },
     onCommitColours: function(event) {
