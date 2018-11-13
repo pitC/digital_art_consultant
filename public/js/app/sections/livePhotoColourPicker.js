@@ -5,6 +5,7 @@ import RouteNames from "./../RouteNames.js";
 const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
 const PROCESSING_MODE = "processing";
+const MANUAL_UPLOAD_MODE = "manual";
 
 var VIDEO_CONSTRAINTS = {
   audio: false,
@@ -38,20 +39,21 @@ export default {
       scale: 1,
       markedColour: null,
       fullPalette: null,
-      mode: VIDEO_PREVIEW_MODE,
+      state: VIDEO_PREVIEW_MODE,
+      uploadFallback: false,
       allParsedColours: []
     };
   },
   computed: {
     isVideoHidden() {
-      if (this.mode == VIDEO_PREVIEW_MODE) {
+      if (this.state == VIDEO_PREVIEW_MODE) {
         return false;
       } else {
         return true;
       }
     },
     isPreviewHidden() {
-      if (this.mode == COLOUR_PICK_MODE || this.mode == PROCESSING_MODE) {
+      if (this.state == COLOUR_PICK_MODE || this.state == PROCESSING_MODE) {
         return false;
       } else {
         return true;
@@ -59,7 +61,7 @@ export default {
     },
 
     isProcessing() {
-      if (this.mode == PROCESSING_MODE) {
+      if (this.state == PROCESSING_MODE) {
         return true;
       } else {
         return false;
@@ -67,10 +69,17 @@ export default {
     },
 
     isPreviewNotReady() {
-      if (this.mode == PROCESSING_MODE || this.mode == VIDEO_PREVIEW_MODE) {
+      if (this.state == PROCESSING_MODE || this.state == VIDEO_PREVIEW_MODE) {
         return true;
       } else {
         return false;
+      }
+    },
+    isUploadHidden() {
+      if (this.state == MANUAL_UPLOAD_MODE) {
+        return false;
+      } else {
+        return true;
       }
     },
     isPreviewReady() {
@@ -89,6 +98,9 @@ export default {
         <div class="col">
             <video ref="video" width="100%" autoplay v-bind:hidden="isVideoHidden"></video>
             <canvas v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
+            <div ref="upload" width="100%" v-bind:hidden="isUploadHidden">
+            No camera access :(
+            </div>
         </div>
     </div>
     <button id="snapshot-btn" type="button" class="btn btn-outline-primary" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
@@ -109,6 +121,7 @@ export default {
     ></palette-item>
   </div>
     `,
+  // TODO: finish manual upload
   methods: {
     onDblClick: function(event) {
       // TODO: decide if colour addition is supported or not
@@ -154,7 +167,11 @@ export default {
     onRetakeSnapshot: function(event) {
       this.allParsedColours = [];
       this.interactiveCanvas.unfreeze();
-      this.mode = VIDEO_PREVIEW_MODE;
+      if (this.uploadFallback) {
+        this.state = MANUAL_UPLOAD_MODE;
+      } else {
+        this.state = VIDEO_PREVIEW_MODE;
+      }
     },
     onTakeSnapshot: function(event) {
       var video = this.$refs.video;
@@ -162,11 +179,11 @@ export default {
       this.debugStr = `client: ${video.clientWidth}/${
         video.clientHeight
       } video:${video.videoWidth}/${video.videoHeight}`;
-      this.mode = PROCESSING_MODE;
+      this.state = PROCESSING_MODE;
       var self = this;
 
       this.interactiveCanvas.takeSnapshot(function(parsedColours) {
-        self.mode = COLOUR_PICK_MODE;
+        self.state = COLOUR_PICK_MODE;
         self.allParsedColours = parsedColours.all;
       });
     },
@@ -201,24 +218,31 @@ export default {
 
   mounted: function() {
     var video = this.$refs.video;
-    this.mode = PROCESSING_MODE;
+    this.state = PROCESSING_MODE;
+    var self = this;
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {
-        if ("srcObject" in video) {
-          video.srcObject = stream;
-        } else {
-          video.src = window.URL.createObjectURL(stream);
-        }
-        video.play();
-        this.mode = VIDEO_PREVIEW_MODE;
-        var self = this;
-        setTimeout(function() {
-          self.initCanvas(video, true);
-        }, 300);
-      });
+      navigator.mediaDevices
+        .getUserMedia(VIDEO_CONSTRAINTS)
+        .then(stream => {
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+          } else {
+            video.src = window.URL.createObjectURL(stream);
+          }
+          video.play();
+          this.state = VIDEO_PREVIEW_MODE;
+
+          setTimeout(function() {
+            self.initCanvas(video, true);
+          }, 300);
+        })
+        .catch(function(err) {
+          self.uploadFallback = true;
+          self.state = MANUAL_UPLOAD_MODE;
+        });
     }
   },
 
