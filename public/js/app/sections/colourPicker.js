@@ -2,7 +2,7 @@ import SharedStorage from "../sharedStorage.js";
 import RouteNames from "./../RouteNames.js";
 const MAIN_BT_DEFAULT_LABEL = "Set main colour";
 const SEC_BT_DEFAULT_LABEL = "Set secondary colour";
-
+const AVAILABLE_COLOUR_NUM = 2;
 export default {
   template: `
 <div class="container-fluid">
@@ -63,7 +63,7 @@ export default {
 
       <div class="box box-2">
         <div class="mt-auto mt-md-0">
-          <button type="button" class="btn lightblue btn-info btn-block" v-on:click="onCommitColours">
+          <button type="button" class="btn lightblue btn-info btn-block" :disabled="isCommitDisabled" v-on:click="onCommitColours">
             Find your art
           </button>
         </div>
@@ -136,6 +136,13 @@ export default {
       } else {
         return SEC_BT_DEFAULT_LABEL;
       }
+    },
+    isCommitDisabled() {
+      if (this.colours[0] || this.colours[1]) {
+        return false;
+      } else {
+        return true;
+      }
     }
   },
   methods: {
@@ -198,5 +205,14 @@ export default {
         inline: true
       });
     });
+
+    var storedColours = SharedStorage.inputColours;
+    var maxI =
+      storedColours.length > AVAILABLE_COLOUR_NUM
+        ? AVAILABLE_COLOUR_NUM
+        : storedColours.length;
+    for (var i = 0; i < maxI; i++) {
+      this.$set(this.colours, i, storedColours[i]);
+    }
   }
 };

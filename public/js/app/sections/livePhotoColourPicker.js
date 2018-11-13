@@ -140,7 +140,7 @@ export default {
             v-bind:population="swatch.population"
             v-bind:name="swatch.name"
     ></palette-item>
-  </>
+  </div>
     `,
   // TODO: finish manual upload
   methods: {
