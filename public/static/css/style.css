@@ -69,7 +69,12 @@ background-size: cover;
     .box-5 {
 	
 
-	}
+    }
+    
+    /* brand color to be changed */
+    .text-lightblue {
+        color: #7ec8fa;
+    }     
   .lightblue {
     background-color: #91ccf4;
     border-color: #91ccf4;
