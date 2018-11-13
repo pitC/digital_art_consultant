@@ -91,7 +91,28 @@ export default {
   },
   //  //
   template: `
-  <div id="photo-colour-picker" class="container" >
+  <div class="container-fluid">
+    <div class="flex-row">
+      <div class="d-flex bd-highlight bg-light sticky-top px-2">
+        <div class="p-2 bd-highlight">
+          <i class="fas fa-angle-left text-black-50"></i>
+        </div>
+        <div class="p-2 bd-highlight font-weight-bold text.dark">
+          Choose your color
+        </div>
+        <div class="ml-auto p-2 bd-highlight">
+          <i class="fas fa-palette text-black-50"></i>
+        </div>
+        <div class="p-2 bd-highlight">
+          <label class="switch">
+            <input type="checkbox" v-on:change="manualMode" checked/> <span class="slider"></span>
+          </label>
+        </div>
+        <div class="p-2 bd-highlight">
+          <i class="fas fa-info-circle text-black-50"></i>
+        </div>
+      </div>
+    </div>
     <p>{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
    
     <div ref="photoCanvasRow" class="row">
@@ -119,7 +140,7 @@ export default {
             v-bind:population="swatch.population"
             v-bind:name="swatch.name"
     ></palette-item>
-  </div>
+  </>
     `,
   // TODO: finish manual upload
   methods: {
@@ -213,6 +234,11 @@ export default {
           isVideo
         );
       }
+    },
+
+    manualMode: function(event) {
+      this.stopVideo();
+      this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
     }
   },
 

@@ -1,47 +1,142 @@
 import SharedStorage from "../sharedStorage.js";
 import RouteNames from "./../RouteNames.js";
+const MAIN_BT_DEFAULT_LABEL = "Set main colour";
+const SEC_BT_DEFAULT_LABEL = "Set secondary colour";
 
 export default {
   template: `
-        <div id="manual-input" class="container">
-            <div class="row">
-                <button type="button" class="btn btn-primary" v-on:click="selectMainColour">
-                    Pick main colour
-                </button>
-                <button type="button" class="btn btn-primary" v-on:click="selectSecColour">
-                    Pick secondary colour
-                </button>
-            </div>
-            <button id="find-art-btn" type="button" class="btn btn-outline-primary" v-on:click="onCommitColours">
-                Find art!
-            </button>
+<div class="container-fluid">
+  <div class="flex-row">
+    <div class="d-flex bd-highlight bg-light sticky-top px-2">
+      <div class="p-2 bd-highlight">
+        <i class="fas fa-angle-left text-black-50"></i>
+      </div>
+      <div class="p-2 bd-highlight font-weight-bold text.dark">
+        Choose your color
+      </div>
+      <div class="ml-auto p-2 bd-highlight">
+        <i class="fas fa-palette text-black-50"></i>
+      </div>
+      <div class="p-2 bd-highlight">
+        <label class="switch">
+          <input type="checkbox" v-on:change="photoMode" /> <span class="slider"></span>
+        </label>
+      </div>
+      <div class="p-2 bd-highlight">
+        <i class="fas fa-info-circle text-black-50"></i>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="box box-1">
+      <div class="btn-group mx-4" role="group" aria-label="Basic example">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-25 mb-3"
+          v-on:click="selectMainColour"
+          :style="mainColourBg"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-75 p-3 mb-3"
+          v-on:click="selectMainColour"
+        >
+          {{mainBtLabel}}
+        </button>
+      </div>
 
-            <div class="modal fade" id="colourPickModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                       <div class="modal-header">
-                            <h5 class="modal-title">Choose a colour</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="colour-pick" class="inl-bl"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" v-on:click="saveSelection">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="btn-group mx-4 mb-3" role="group" aria-label="Basic example">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-25 mb-3"
+          v-on:click="selectSecColour"
+          :style="secColourBg"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-75 p-3 mb-3"
+          v-on:click="selectSecColour"
+        >
+          {{secBtLabel}}
+        </button>
+      </div>
+
+      <div class="box box-2">
+        <div class="mt-auto mt-md-0">
+          <button type="button" class="btn lightblue btn-info btn-block" v-on:click="onCommitColours">
+            Find your art
+          </button>
         </div>
-        `,
+      </div>
+    </div>
+
+    <div class="modal fade" id="colourPickModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Choose a colour</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="colour-pick" class="inl-bl w-100"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              v-on:click="saveSelection"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    `,
   data: function() {
     return {
       colours: [null, null],
       selectedColour: 0
     };
+  },
+  computed: {
+    mainColourBg() {
+      return "background-color: " + this.colours[0];
+    },
+    secColourBg() {
+      return "background-color: " + this.colours[1];
+    },
+    mainBtLabel() {
+      if (this.colours[0]) {
+        return this.colours[0].toUpperCase();
+      } else {
+        return MAIN_BT_DEFAULT_LABEL;
+      }
+    },
+    secBtLabel() {
+      if (this.colours[1]) {
+        return this.colours[1].toUpperCase();
+      } else {
+        return SEC_BT_DEFAULT_LABEL;
+      }
+    }
   },
   methods: {
     selectMainColour: function(event) {
@@ -54,7 +149,7 @@ export default {
     },
     saveSelection: function(event) {
       var colour = $("#colour-pick").colorpicker("getValue", null);
-      this.colours[this.selectedColour] = colour;
+      this.$set(this.colours, this.selectedColour, colour);
       this.hideModal();
     },
     showModal() {
@@ -79,8 +174,8 @@ export default {
       this.$router.push(RouteNames.RESULT_LIST);
     },
     getManualColours: function() {
-      var mainColour = document.getElementById("main-colour-inp").value;
-      var secColour = document.getElementById("secondary-colour-inp").value;
+      var mainColour = this.colours[0] || "";
+      var secColour = this.colours[1] || "";
       var colours = [];
       if (mainColour.startsWith("#")) {
         colours.push(mainColour);
@@ -89,6 +184,9 @@ export default {
         colours.push(secColour);
       }
       return colours;
+    },
+    photoMode: function(event) {
+      this.$router.push(RouteNames.PHOTO_INPUT);
     }
   },
   mounted: function() {
@@ -99,10 +197,6 @@ export default {
         container: true,
         inline: true
       });
-      //   $("#main-colour-cp").colorpicker();
-      //   $("#secondary-colour-cp").colorpicker();
-      //   $("#main-colour-cp").on("change", self.onManualInput);
-      //   $("#secondary-colour-cp").on("change", self.onManualInput);
     });
   }
 };

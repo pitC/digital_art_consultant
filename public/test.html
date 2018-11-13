@@ -1,3 +1,101 @@
-<html>
-    test
-</html>
+<div class="container-fluid">
+  <div class="flex-row">
+    <div class="d-flex bd-highlight bg-light sticky-top px-2">
+      <div class="p-2 bd-highlight">
+        <i class="fas fa-angle-left text-black-50"></i>
+      </div>
+      <div class="p-2 bd-highlight font-weight-bold text.dark">
+        Choose your color
+      </div>
+      <div class="ml-auto p-2 bd-highlight">
+        <i class="fas fa-palette text-black-50"></i>
+      </div>
+      <div class="p-2 bd-highlight">
+        <label class="switch">
+          <input type="checkbox" /> <span class="slider"></span>
+        </label>
+      </div>
+      <div class="p-2 bd-highlight">
+        <i class="fas fa-info-circle text-black-50"></i>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="box box-1">
+      <div class="btn-group mx-4" role="group" aria-label="Basic example">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-25 mb-3"
+          v-on:click="selectMainColour"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-75 p-3 mb-3"
+          v-on:click="selectMainColour"
+        >
+          Choose first color
+        </button>
+      </div>
+
+      <div class="btn-group mx-4 mb-3" role="group" aria-label="Basic example">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-25 mb-3"
+          v-on:click="selectSecColour"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-75 p-3 mb-3"
+          v-on:click="selectSecColour"
+        >
+          Choose second color
+        </button>
+      </div>
+
+      <div class="box box-2">
+        <div class="mt-auto mt-md-0">
+          <button type="button" class="btn lightblue btn-info btn-block">
+            Find your art
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="colourPickModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Choose a colour</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="colour-pick" class="inl-bl w-100"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              v-on:click="saveSelection"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

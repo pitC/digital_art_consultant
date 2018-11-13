@@ -26,8 +26,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome live Photo picker",
-      "url": "http://localhost:3000/testerPhotoLive.html#/photo-input",
+      "name": "Launch Chrome final style",
+      "url": "http://localhost:3000/app.html#/colour-picker",
       "webRoot": "${workspaceFolder}/public"
     }
   ]
