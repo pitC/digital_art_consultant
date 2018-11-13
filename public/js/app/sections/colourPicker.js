@@ -70,38 +70,22 @@ export default {
       </div>
     </div>
 
-    <div class="modal fade" id="colourPickModal" tabindex="-1" role="dialog">
+    <div class="modal fade bd-example-modal-sm" id="colourPickModal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header border-0">
             <h5 class="modal-title">Choose a colour</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body mx-auto">
             <div id="colour-pick" class="inl-bl w-100"></div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              v-on:click="saveSelection"
-            >
-              Save changes
-            </button>
+          <div class="modal-footer border-0">
+            
+            <button type="button" class="btn lightblue btn-info btn-block" v-on:click="saveSelection">Save color</button>
+          </div>
           </div>
         </div>
       </div>
@@ -202,7 +186,20 @@ export default {
       $("#colour-pick").colorpicker({
         color: "#ffaa00",
         container: true,
-        inline: true
+        inline: true,
+        customClass: "colorpicker-2x",
+        sliders: {
+          saturation: {
+            maxLeft: 200,
+            maxTop: 200
+          },
+          hue: {
+            maxTop: 200
+          },
+          alpha: {
+            maxTop: 200
+          }
+        }
       });
     });
 
