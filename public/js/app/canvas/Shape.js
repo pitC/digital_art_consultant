@@ -12,7 +12,7 @@ const LABEL_RIGHT = "right";
 
 const FONT_STYLE = "14pt Helvetica";
 // TODO: consider orientation
-function getDimensions(frameX, frameY, frameW, frameH, scale = 1) {
+function getDimensions(frameX, frameY, frameW, frameH, orientation, scale = 1) {
   // frame X and Y are positions for top-left pixel
   var dimensions = {};
   dimensions.frame = {
@@ -23,8 +23,12 @@ function getDimensions(frameX, frameY, frameW, frameH, scale = 1) {
   };
   // for circle x is the center
   var radius = (frameH - 2 * FRAME_PADDING) / 2;
-  // calculated from the right border:
-  var circleX = frameX + frameW - FRAME_PADDING - radius;
+  if (orientation == LABEL_LEFT) {
+    // calculated from the right border:
+    var circleX = frameX + frameW - FRAME_PADDING - radius;
+  } else {
+    var circleX = frameX + FRAME_PADDING + radius;
+  }
   // calculated from the top border:
   var circleY = frameY + FRAME_PADDING + radius;
   dimensions.colourCircle = {
@@ -32,8 +36,12 @@ function getDimensions(frameX, frameY, frameW, frameH, scale = 1) {
     y: circleY * scale,
     r: radius * scale
   };
+  if (orientation == LABEL_LEFT) {
+    var textX = frameX + FRAME_PADDING;
+  } else {
+    var textX = frameX + FRAME_PADDING * 2 + radius * 2;
+  }
 
-  var textX = frameX + FRAME_PADDING;
   // y is bottom left part of text
   var textY = frameY + frameH / 2;
   dimensions.text = { x: textX * scale, y: textY * scale };
@@ -94,7 +102,14 @@ export default class Shape {
     }
   }
   drawAsShape(ctx, scale = 1) {
-    var dimensions = getDimensions(this.x, this.y, this.w, this.h, scale);
+    var dimensions = getDimensions(
+      this.x,
+      this.y,
+      this.w,
+      this.h,
+      this.orientation,
+      scale
+    );
     drawFrame(ctx, dimensions.frame, this.selected);
     drawColourCircle(ctx, dimensions.colourCircle, this.fill);
     drawText(ctx, dimensions.text, this.text);
@@ -129,9 +144,13 @@ export default class Shape {
   }
 
   moveAllowed(newX, newY, canvasW, canvasH) {
-    var dim = getDimensions(this.x, this.y, this.w, this.h);
+    var dim = getDimensions(this.x, this.y, this.w, this.h, this.orientation);
     var minX = dim.frame.x - dim.colourCircle.x;
-    var maxX = canvasW - dim.frame.w + dim.colourCircle.r;
+    if (this.orientation == LABEL_LEFT) {
+      var maxX = canvasW - dim.frame.w + dim.colourCircle.r;
+    } else {
+      var maxX = canvasW - dim.colourCircle.r - FRAME_PADDING;
+    }
     var minY = 0 - FRAME_PADDING - dim.colourCircle.r; //
     var maxY = canvasH - dim.frame.h + FRAME_PADDING + dim.colourCircle.r;
 
@@ -157,14 +176,26 @@ export default class Shape {
   }
 
   setColourSelectorPos(targetx, targety) {
-    var dim = getDimensions(this.x, this.y, this.w, this.h);
+    // if label would go out of the canvas - flip it to the right
+    if (targetx - this.w < 0) {
+      this.orientation = LABEL_RIGHT;
+    } else {
+      this.orientation = LABEL_LEFT;
+    }
+    var dim = getDimensions(targetx, targety, this.w, this.h, this.orientation);
     var colourCircleDim = dim.colourCircle;
     this.x = this.x - (colourCircleDim.x - this.x);
     this.y = this.y - (colourCircleDim.y - this.y);
   }
 
   getColourSelector() {
-    var dimensions = getDimensions(this.x, this.y, this.w, this.h);
+    var dimensions = getDimensions(
+      this.x,
+      this.y,
+      this.w,
+      this.h,
+      this.orientation
+    );
     return dimensions.colourCircle;
   }
 }

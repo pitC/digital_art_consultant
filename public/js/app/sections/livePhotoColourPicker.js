@@ -6,6 +6,7 @@ const VIDEO_PREVIEW_MODE = "video";
 const COLOUR_PICK_MODE = "colour";
 const PROCESSING_MODE = "processing";
 const MANUAL_UPLOAD_MODE = "manual";
+const WEBCAM_INIT = "init";
 
 var VIDEO_CONSTRAINTS = {
   audio: false,
@@ -62,7 +63,7 @@ export default {
     },
 
     isProcessing() {
-      if (this.state == PROCESSING_MODE) {
+      if (this.state == PROCESSING_MODE || this.state == WEBCAM_INIT) {
         return true;
       } else {
         return false;
@@ -70,7 +71,11 @@ export default {
     },
 
     isPreviewNotReady() {
-      if (this.state == PROCESSING_MODE || this.state == VIDEO_PREVIEW_MODE) {
+      if (
+        this.state == PROCESSING_MODE ||
+        this.state == VIDEO_PREVIEW_MODE ||
+        this.state == WEBCAM_INIT
+      ) {
         return true;
       } else {
         return false;
@@ -88,6 +93,17 @@ export default {
     },
     style() {
       return "background-color: " + this.markedColour;
+    },
+    snapshotBtLbl() {
+      if (this.state == WEBCAM_INIT) {
+        return "Starting webcam...";
+      } else if (this.state == PROCESSING_MODE) {
+        return "Crunching pixels...";
+      } else if (this.state == MANUAL_UPLOAD_MODE) {
+        return "Upload picture";
+      } else {
+        return "Take snapshot";
+      }
     }
   },
   //  //
@@ -95,9 +111,9 @@ export default {
   <div class="container-fluid">
     <div class="flex-row">
       <div class="d-flex bd-highlight bg-light sticky-top px-2">
-        <div class="p-2 bd-highlight">
+        <a class="p-2 bd-highlight" v-on:click="goBack">
           <i class="fas fa-angle-left text-black-50"></i>
-        </div>
+        </a>
         <div class="p-2 bd-highlight font-weight-bold text.dark">
           Choose your color
         </div>
@@ -134,10 +150,10 @@ export default {
         <div class="mt-auto mt-md-0">
           <button id="snapshot-btn" type="button" class="btn lightblue btn-info btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
             <span v-if="isProcessing">
-              <i class="fa fa-spinner fa-spin fa-fw"></i> Crunching colours...
+              <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
             </span>
             <span v-else>
-              <i class="fas fa-camera"></i> Take a photo
+              <i class="fas fa-camera"></i> {{snapshotBtLbl}}
             </span>
           </button>
           <button id="find-art-btn" type="button" class="btn btn-success btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
@@ -254,13 +270,23 @@ export default {
     manualMode: function(event) {
       this.stopVideo();
       this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
+    },
+    goBack: function(event) {
+      this.$router.go(-1);
     }
   },
 
   mounted: function() {
+    if (this.$route.query.hasOwnProperty("m")) {
+      if (this.$route.query.m == "debug") {
+        this.debug = true;
+      }
+    }
+
     var video = this.$refs.video;
-    this.state = PROCESSING_MODE;
+    this.state = WEBCAM_INIT;
     var self = this;
+
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {

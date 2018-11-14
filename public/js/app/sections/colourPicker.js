@@ -8,9 +8,9 @@ export default {
 <div class="container-fluid">
   <div class="flex-row">
     <div class="d-flex bd-highlight bg-light sticky-top px-2">
-      <div class="p-2 bd-highlight">
+      <a class="p-2 bd-highlight" v-on:click="goBack">
         <i class="fas fa-angle-left text-black-50"></i>
-      </div>
+      </a>
       <div class="p-2 bd-highlight font-weight-bold text.dark">
         Choose your color
       </div>
@@ -178,6 +178,9 @@ export default {
     },
     photoMode: function(event) {
       this.$router.push(RouteNames.PHOTO_INPUT);
+    },
+    goBack: function(event) {
+      this.$router.go(-1);
     }
   },
   mounted: function() {
