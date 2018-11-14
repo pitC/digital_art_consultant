@@ -40,6 +40,7 @@ background-size: cover;
 */
     
 
+  
 	.box {
 		text-align: center;
 		color: white;
@@ -70,7 +71,19 @@ background-size: cover;
 	
 
     }
+    .box-recommendation
+    {
+	
+        flex: 1;
     
+        color: #000000;
+    }
+    
+    .colorsnav
+    {
+        height: 3px;
+    
+    }     
     /* brand color to be changed */
     .text-lightblue {
         color: #7ec8fa;
