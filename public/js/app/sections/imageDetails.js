@@ -23,6 +23,17 @@ export default {
     }
   },
   template: `
+   <div class="container-fluid">
+    <div class="flex-row">
+      <div class="d-flex bd-highlight bg-light sticky-top px-2">
+        <a class="p-2 bd-highlight" v-on:click="onBackToList">
+          <i class="fas fa-angle-left text-black-50"></i>
+        </a>
+        <div class="p-2 bd-highlight font-weight-bold text.dark">
+          Image details
+        </div>
+      </div>
+    </div>
   <div id="imageDetailsContainer" class="container">
     <div class="card" v-if="isImageLoaded">
         <img class="card-img-top" :src="image.fileURL" alt="Card image cap">
@@ -38,10 +49,11 @@ export default {
     </div>
 
   </div>
+  </div>
   `,
   methods: {
     onBackToList: function(event) {
-      this.$router.push(RouteNames.RESULT_LIST);
+      this.$router.go(-1);
     }
   },
 
