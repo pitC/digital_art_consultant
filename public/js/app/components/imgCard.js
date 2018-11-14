@@ -21,20 +21,20 @@ export default {
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
                     <p class="card-text">{{author}}<br>{{reason}}</p>
-                    <table class="table table-bordered">
+                    <table v-if="debug" class="table table-bordered">
                     <tr>
                     <th>Src</th>
                     <th>Scores</th>
                     </tr>
                     <calc-log-item v-for="(value,key) in calclog" v-bind:colour=key v-bind:scores=value></calc-log-item>
                     </table>
-                    <button type="button" class="btn btn-secondary" v-on:click="onPreviewRequest">Preview</button>
+                    
                     <button type="button" class="btn btn-secondary" v-on:click="onDetailsRequest">Details</button>
                 </div>
             </div>
 
   `,
-  props: ["fileurl", "title", "author", "reason", "calclog", "_id"],
+  props: ["fileurl", "title", "author", "reason", "calclog", "_id", "debug"],
   computed: {
     detailsLink() {
       return RouteNames.IMAGE_DETAILS.replace(":id", this._id);
