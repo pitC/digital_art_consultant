@@ -5,16 +5,21 @@
   <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 
   <body style="margin : 0px; overflow: hidden;">
-    <a-scene>
+    <a-scene embedded arjs>
       <a-assets> <img id="transpImage" src="img/2085.png" /> </a-assets>
       <a-image
         src="#transpImage"
         npot="true"
-        rotation="275 0 0"
+        rotation="270 0 0"
         width="1.6"
         height="1"
       ></a-image>
-      <a-marker-camera preset="hiro"></a-marker-camera>
+      <!-- <a-marker-camera preset="hiro"></a-marker-camera> -->
+      <a-marker-camera
+        preset="custom"
+        type="pattern"
+        url="pattern-marker.patt"
+      ></a-marker-camera>
     </a-scene>
   </body>
 </html>
