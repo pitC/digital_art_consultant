@@ -147,7 +147,7 @@ export default {
     </div>
     <div class="container">
       <div class="box box-5 fixed-bottom">
-        <div class="mt-auto mt-md-0">
+        <div class="btn-group mt-auto w-100" role="group">
           <button id="snapshot-btn" type="button" class="btn lightblue btn-info btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
             <span v-if="isProcessing">
               <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
