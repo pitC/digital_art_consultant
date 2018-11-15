@@ -62,8 +62,8 @@ export default {
       </div>
 
       <div class="box box-2">
-        <div class="mt-auto mt-md-0">
-          <button type="button" class="btn lightblue btn-info btn-block" :disabled="isCommitDisabled" v-on:click="onCommitColours">
+        <div class="mt-auto mt-md-0 fixed-bottom">
+          <button type="button" class="btn lightblue btn-info btn-block rounded-0" :disabled="isCommitDisabled" v-on:click="onCommitColours">
             Find your art
           </button>
         </div>
