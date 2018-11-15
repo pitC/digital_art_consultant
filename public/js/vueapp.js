@@ -2,6 +2,8 @@
 import ImgCard from "./app/components/imgCard.js";
 import ColourInput from "./app/components/colourInput.js";
 import StaticPreview from "./app/components/staticPreview.js";
+import PhotoColourPicker from "./app/components/photoColourPicker.js";
+import LivePhotoColourPicker from "./app/components/livePhotoColourPicker.js";
 import AppStates from "./app/appStates.js";
 const RECOMMEND_URL = "recommend";
 const MANUAL_MODE = "manual";
@@ -9,19 +11,23 @@ const PHOTO_MODE = "photo";
 
 Vue.component("palette-item", {
   template:
-    "<h3><span class='badge badge-primary' :style='style'>{{colour}}</span></h3>",
+    "<h3><span class='badge badge-primary' :style='style'>{{colour}} ({{population}})</span></h3>",
   computed: {
     style() {
       return "background-color: " + this.colour;
     }
   },
-  props: ["colour"]
+  props: ["colour", "population"]
 });
 Vue.component("colour-input", ColourInput);
 
 Vue.component("static-preview", StaticPreview);
 
+Vue.component("live-photo-colour-picker", LivePhotoColourPicker);
+
 Vue.component("img-card", ImgCard);
+
+Vue.component("photo-colour-picker", PhotoColourPicker);
 
 var app = new Vue({
   el: "#vue-app",
@@ -37,8 +43,8 @@ var app = new Vue({
     };
   },
   methods: {
-    paletteUpdate: function(colours) {
-      this.paletteList = colours;
+    paletteUpdate: function(swatches) {
+      this.paletteList = swatches;
     },
     recommend: function(colours) {
       var enhanceVal = document.getElementById("mode-select").value;
@@ -55,7 +61,10 @@ var app = new Vue({
       axios.post(RECOMMEND_URL, request).then(response => {
         console.log(response.data);
         for (var index in response.data.paletteUsed) {
-          this.paletteList.push(response.data.paletteUsed[index]);
+          this.paletteList.push({
+            colour: response.data.paletteUsed[index],
+            population: null
+          });
         }
         for (var index in response.data.images) {
           var respImg = response.data.images[index];

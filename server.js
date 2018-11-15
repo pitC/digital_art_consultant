@@ -13,6 +13,7 @@ var express = require("express"),
   recommendationEngine = require("./app/recommendation-engine"),
   Validator = require("jsonschema").Validator,
   recommendSchema = require("./schemas/criteriaSchema.json");
+var metadataDao = require("./db/metadata-dao");
 
 var app = express();
 var validator = new Validator();
@@ -38,6 +39,26 @@ app.post("/recommend", function(req, res) {
 
 app.get("/selectors", function(req, res) {
   res.send(recommendationEngine.getSelectors());
+});
+
+app.get("/image/:id", function(req, res) {
+  var id = req.params.id;
+  metadataDao.findById(
+    id,
+    function(item) {
+      if (item) {
+        res.status(200);
+        res.send(item);
+      } else {
+        res.status(404);
+        res.send();
+      }
+    },
+    function(err) {
+      res.status(500);
+      res.send(err);
+    }
+  );
 });
 
 server = http.createServer(app);

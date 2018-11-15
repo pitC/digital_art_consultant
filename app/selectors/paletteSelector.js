@@ -1,6 +1,7 @@
 var colorUtils = require("./../colour-utils");
 const DISTANCE_LIMIT = 100;
-const BASE_FILE_URL = "http://goethe.cabaj.eu/staedel/";
+
+var metadataDao = require("./../../db/metadata-dao");
 
 function sortByDistance(imgA, imgB) {
   if (imgA.sortValue > imgB.sortValue) {
@@ -9,10 +10,6 @@ function sortByDistance(imgA, imgB) {
   if (imgA.sortValue < imgB.sortValue) {
     return -1;
   } else return 0;
-}
-
-function getTargetURL(filename) {
-  return BASE_FILE_URL + filename;
 }
 
 exports.selectImages = function(limit, criteria, candidateImages) {
@@ -40,7 +37,7 @@ exports.selectImages = function(limit, criteria, candidateImages) {
       img.sortValue = distance;
       img.calcLog = calcLog;
       img.recommendationReason = `Score: ${distance.toFixed(2)}`;
-      img.fileURL = getTargetURL(img.filename);
+      img.fileURL = metadataDao.getTargetURL(img.filename);
       selectedImages.push(img);
     }
   }

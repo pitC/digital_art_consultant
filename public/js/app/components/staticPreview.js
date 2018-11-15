@@ -96,7 +96,7 @@ export default {
 
   mounted: function() {
     EventBus.$on(EventDict.PHOTO_LOADED_DOM, photoObject => {
-      this.backgroundImg = photoObject;
+      this.backgroundImg = photoObject.img;
       this.previewHidden = true;
     });
 
