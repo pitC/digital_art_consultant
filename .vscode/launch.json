@@ -29,6 +29,15 @@
       "name": "Launch Chrome final style",
       "url": "http://localhost:3000/app.html#/colour-picker",
       "webRoot": "${workspaceFolder}/public"
+    },
+
+    {
+      "type": "android-webview",
+      "request": "attach",
+      "name": "Attach to Android WebView",
+      "application": "com.android.chrome",
+      "webRoot": "${workspaceFolder}/public",
+      "urlFilter": "http://localhost:3000/app.html#/colour-picker"
     }
   ]
 }

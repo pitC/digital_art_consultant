@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+  </head>
+
+  <body>
+    <a-scene vr-mode-ui="enabled:false"
+      ><a-assets> <img id="transpImage" src="../img/2085.png" /> </a-assets>
+
+      <a-image
+        src="#transpImage"
+        npot="true"
+        width="1.6"
+        height="1"
+        position="0 1.5923205925486443 -2.8896951671616433"
+        material=""
+        geometry=""
+      ></a-image>
+      <a-entity
+        position="-0.8516078879934923 1.6162200397155804 -2.85"
+        geometry="depth:0.1;width:0.1"
+        material="color:#ECECEC"
+        id="left-frame"
+      ></a-entity>
+      <a-entity
+        position="0 2.1203709574339804 -2.8511166046347225"
+        geometry="depth:0.1;height:0.1;width:1.8"
+        material="color:#ECECEC"
+        id="top-frame"
+      ></a-entity>
+      <a-entity
+        position="0 1.126 -2.85"
+        geometry="depth:0.1;height:0.1;width:1.8"
+        material="color:#ECECEC"
+        id="bottom-frame"
+      ></a-entity>
+      <a-entity
+        position="0.8441961799454462 1.585018086559569 -2.85"
+        geometry="depth:0.1;width:0.1"
+        material="color:#ECECEC"
+        id="right-frame"
+      ></a-entity>
+      <a-sky color="#84c6ff"></a-sky>
+    </a-scene>
+  </body>
+</html>

@@ -5,15 +5,19 @@
   <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 
   <body style="margin : 0px; overflow: hidden;">
-    <a-scene arjs>
-      <a-assets> <img id="transpImage" src="img/2085.png" /> </a-assets>
-      <a-image
-        src="#transpImage"
-        npot="true"
-        rotation="270 0 0"
-        width="1.6"
-        height="1"
-      ></a-image>
+    <a-scene embedded arjs="trackingMethod: best;">
+      
+        <a-assets> <img id="transpImage" src="img/2085.png" /> </a-assets>
+        <a-image
+          src="#transpImage"
+          npot="true"
+          rotation="270 0 0"
+          width="1.6"
+          height="1"
+        ></a-image>
+      
+      <a-anchor hit-testing-enabled="true"></a-anchor>
+      </a-anchor>
       <a-marker-camera preset="hiro"></a-marker-camera>
       <!--
         <a-marker-camera
