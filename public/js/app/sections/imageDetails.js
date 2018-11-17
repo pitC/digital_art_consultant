@@ -59,7 +59,7 @@ export default {
 
     onTryIt: function(event) {
       SharedStorage.putPreviewImg(this.image);
-      this.$router.push(RouteNames.RESULT_LIST);
+      this.$router.push(RouteNames.PREVIEW);
     }
   },
 

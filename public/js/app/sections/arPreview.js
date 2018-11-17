@@ -6,7 +6,7 @@ export default {
   data: function() {
     return {
       images: [],
-      currentImage: null,
+      currentImage: { filename: "" },
       renderMat: true,
       state: AppState.READY
     };
@@ -18,6 +18,9 @@ export default {
       } else {
         return true;
       }
+    },
+    imgPreviewSrc() {
+      return "/previews/staedel/" + this.currentImage.filename;
     }
   },
   template: `
@@ -113,9 +116,9 @@ export default {
     changeImage: function() {
       var artworkEl = document.querySelector("#artwork");
 
-      var currenImgSrc = artworkEl.getAttribute("src");
+      var currentImgSrc = artworkEl.getAttribute("src");
       var targetImgSrc = "";
-      if (currenImgSrc == "#srcImage1") {
+      if (currentImgSrc == "#srcImage1") {
         targetImgSrc = "#srcImage2";
       } else {
         targetImgSrc = "#srcImage1";
@@ -264,7 +267,7 @@ export default {
   mounted() {
     var self = this;
     this.images = SharedStorage.getPreviewImgList();
-    currentImage = this.images[0];
+    this.currentImage = this.images[0];
     AFRAME.registerComponent("scene-listener", {
       init: function() {
         console.log("init!");
@@ -272,7 +275,7 @@ export default {
         if (self.renderMat) {
           self.setMat("#artwork");
         }
-        adjustFrame(self.renderMat);
+        self.adjustFrame(self.renderMat);
       }
     });
   }
