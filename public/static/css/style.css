@@ -15,6 +15,24 @@ background-attachment: fixed;
 background-position: center center;
 background-size: cover;
 }
+
+.video {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.ar-container { margin: 0 auto; position: relative; }
+
 .container-fluid
 { padding: 0px;
     height: 100%;

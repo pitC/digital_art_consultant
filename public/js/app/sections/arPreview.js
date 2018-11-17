@@ -1,6 +1,14 @@
 import SharedStorage from "../sharedStorage.js";
 import RouteNames from "./../RouteNames.js";
 import AppState from "./../appStates.js";
+const VIDEO_READY = "video";
+
+var VIDEO_CONSTRAINTS = {
+  audio: false,
+  video: {
+    facingMode: "environment"
+  }
+};
 
 export default {
   data: function() {
@@ -20,6 +28,13 @@ export default {
       } else {
         return true;
       }
+    },
+    displayOverlay() {
+      if (this.state == VIDEO_READY) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   template: `
@@ -34,8 +49,18 @@ export default {
         </div>
       </div>
     </div>
-    <div>
-      <a-scene embedded vr-mode-ui="enabled:false" scene-listener style=" height: 700px; width: 1400px"><a-assets>
+    <div class="ar-container">
+        <video
+          id="video-el"
+          width="100%"
+          
+          autoplay
+          
+          ref="video"
+          
+        ></video>
+        
+      <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener style=" height: 700px; width: 1400px"><a-assets>
           <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
         </a-assets>
 
@@ -266,6 +291,7 @@ export default {
     var self = this;
     this.images = SharedStorage.getPreviewImgList();
     this.currentImage = this.images[0];
+    var video = this.$refs.video;
     AFRAME.registerComponent("scene-listener", {
       init: function() {
         console.log("init!");
@@ -274,6 +300,12 @@ export default {
           self.setMat("#artwork");
         }
         self.adjustFrame(self.renderMat);
+
+        var overlay = this.el.sceneEl;
+        var w = video.offsetWidth;
+        var h = video.offsetHeight;
+        overlay.width = w;
+        overlay.height = h;
       }
     });
 
@@ -284,10 +316,33 @@ export default {
       },
       init: function() {
         console.log("image init!");
-        var img = this;
 
         // self.changeImage();
       }
     });
+
+    // this.state = WEBCAM_INIT;
+    // var self = this;
+
+    // Get access to the camera!
+    // this.mode = VIDEO_PREVIEW_MODE;
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      // Not adding `{ audio: true }` since we only want video now
+      navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {
+        if ("srcObject" in video) {
+          video.srcObject = stream;
+        } else {
+          video.src = window.URL.createObjectURL(stream);
+        }
+        video.play();
+        this.state = VIDEO_READY;
+
+        // this.state = VIDEO_PREVIEW_MODE;
+
+        // setTimeout(function() {
+        //   self.initCanvas(video, true);
+        // }, 300);
+      });
+    }
   }
 };

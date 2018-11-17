@@ -1,14 +1,14 @@
-<<<<<<< HEAD
-=======
 @media (min-width: 576px) {
   .card-columns {
     column-count: 1;
   }
 }
-.lightblue {background-color: #90CCF4;
-border-color: #90CCF4}
-.lightblue:hover, .lightblue:active {
-  background-color: #5DA2D5;
-  border-color: #5DA2D5;
+.lightblue {
+  background-color: #90ccf4;
+  border-color: #90ccf4;
 }
->>>>>>> 082e24cebe631187b4ee8e8518d0c22f4dbda390
+.lightblue:hover,
+.lightblue:active {
+  background-color: #5da2d5;
+  border-color: #5da2d5;
+}
