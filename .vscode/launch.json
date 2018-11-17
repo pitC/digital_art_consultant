@@ -29,6 +29,13 @@
       "name": "Launch Chrome final style",
       "url": "http://localhost:3000/app.html#/colour-picker",
       "webRoot": "${workspaceFolder}/public"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug AR",
+      "url": "http://localhost:3000/static/ar/virtualScene.html",
+      "webRoot": "${workspaceFolder}/public"
     }
   ]
 }

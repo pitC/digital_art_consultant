@@ -114,18 +114,18 @@ background-size: cover;
         color: #7ec8fa;
     }     
   .lightblue {
-    background-color: #91ccf4;
-    border-color: #91ccf4;
+    background-color: #90CCF4;
+    border-color: #90CCF4;
     color: white;
 }
 .lightblue:hover {
-    background-color: #7ec8fa;
-    border-color: #7ec8fa;
+    background-color: #5DA2D5;
+    border-color: #5DA2D5;
     color: white;
 }
 .lightblue:active {
-    background-color: lightcyan;
-    border-color:lightcyan;
+    background-color: #5DA2D5;
+    border-color:#5DA2D5;
     color: white;
 }
 

@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  </head>
+
+  <body>
+    <button onclick="scaleUp()">+</button>
+    <button onclick="scaleDown()">-</button>
+    <!-- <button>Recenter</button> -->
+    <button onclick="changeImage()">Change img</button>
+    <a-scene embedded vr-mode-ui="enabled:false"
+      ><a-assets>
+        <img id="srcImage1" src="../img/2085.png" />
+        <img id="srcImage2" src="../img/1855.png" />
+      </a-assets>
+
+      <a-image
+        id="artwork"
+        src="#srcImage1"
+        npot="true"
+        width="1.6"
+        height="1"
+        position="0 1.5923205925486443 -2.88"
+        material=""
+        geometry=""
+      ></a-image>
+      <a-plane
+        id="mat"
+        width="1.8"
+        height="1.2"
+        position="0 1.5923205925486443 -2.89"
+        material="color:#ECECEC"
+      ></a-plane>
+      <a-entity
+        position="-0.8516078879934923 1.6162200397155804 -2.85"
+        geometry="depth:0.1;width:0.1"
+        material="color:#ECECEC"
+        id="left-frame"
+      ></a-entity>
+      <a-entity
+        position="0 2.1203709574339804 -2.8511166046347225"
+        geometry="depth:0.1;height:0.1;width:1.8"
+        material="color:#ECECEC"
+        id="top-frame"
+      ></a-entity>
+      <a-entity
+        position="0 1.126 -2.85"
+        geometry="depth:0.1;height:0.1;width:1.8"
+        material="color:#ECECEC"
+        id="bottom-frame"
+      ></a-entity>
+      <a-entity
+        position="0.8441961799454462 1.585018086559569 -2.85"
+        geometry="depth:0.1;width:0.1"
+        material="color:#ECECEC"
+        id="right-frame"
+      ></a-entity>
+      <a-sky color="#84c6ff"></a-sky>
+    </a-scene>
+  </body>
+  <script>
+    function changeImage() {
+      var artworkEl = document.querySelector("#artwork");
+
+      var currenImgSrc = artworkEl.getAttribute("src");
+      var targetImgSrc = "";
+      if (currenImgSrc == "#srcImage1") {
+        targetImgSrc = "#srcImage2";
+      } else {
+        targetImgSrc = "#srcImage1";
+      }
+
+      var imageAsset = document.querySelector(targetImgSrc);
+      var scale = imageAsset.naturalWidth / imageAsset.naturalHeight;
+
+      artworkEl.setAttribute("src", targetImgSrc);
+      var g = artworkEl.getAttribute("geometry");
+      g.width = 1 * scale;
+      g.height = 1;
+      artworkEl.setAttribute("geometry", g);
+
+      var mat = true;
+      if (mat) {
+        setMat("#artwork");
+      }
+      adjustFrame(mat);
+    }
+
+    function recenter() {}
+    function scaleUp() {
+      scale(0.1);
+    }
+    function scaleDown() {
+      scale(-0.1);
+    }
+    function setMat(artworkId) {
+      const MAT_PADDING = 0.2;
+      // put mat a big behind the artwork
+      const Z_DIFF = 0.01;
+      var srcEl = document.querySelector(artworkId);
+      var matEl = document.querySelector("#mat");
+      var g = srcEl.getAttribute("geometry");
+      var p = srcEl.getAttribute("position");
+
+      var mG = matEl.getAttribute("geometry");
+      mG.width = g.width + MAT_PADDING;
+      mG.height = g.height + MAT_PADDING;
+      matEl.setAttribute("geometry", mG);
+
+      var mP = matEl.getAttribute("position");
+      mP.x = p.x;
+      mP.y = p.y;
+      mP.z = p.z - Z_DIFF;
+      matEl.setAttribute("position", mP);
+    }
+    function scale(incr) {
+      const mat = true;
+      scalePlane("#artwork", incr);
+      if (mat) {
+        scalePlane("#mat", incr);
+      }
+      adjustFrame(mat);
+    }
+
+    function scalePlane(elId, incr) {
+      var el = document.querySelector(elId);
+      var g = el.getAttribute("geometry");
+      var scale = g.width / g.height;
+      g.height += incr;
+      g.width += incr * scale;
+      el.setAttribute("geometry", g);
+    }
+
+    function adjustFrame(mat) {
+      if (mat) {
+        var el = document.querySelector("#mat");
+      } else {
+        var el = document.querySelector("#artwork");
+      }
+      var g = el.getAttribute("geometry");
+      var p = el.getAttribute("position");
+
+      const Z_PADDING = 0.05;
+      const FRAME_DEPTH = 0.1;
+      const FRAME_WIDTH = 0.05;
+      var leftEdge = p.x - g.width / 2;
+      var rightEdge = p.x + g.width / 2;
+      var topEdge = p.y + g.height / 2;
+      var bottomEdge = p.y - g.height / 2;
+      var left = {
+        x: leftEdge - FRAME_WIDTH / 2,
+        y: p.y,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: g.height,
+        w: FRAME_WIDTH
+      };
+
+      var right = {
+        x: rightEdge + FRAME_WIDTH / 2,
+        y: p.y,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: g.height,
+        w: FRAME_WIDTH
+      };
+
+      var top = {
+        x: p.x,
+        y: topEdge + FRAME_WIDTH / 2,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: FRAME_WIDTH,
+        w: g.width + FRAME_WIDTH * 2
+      };
+
+      var bottom = {
+        x: p.x,
+        y: bottomEdge - FRAME_WIDTH / 2,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: FRAME_WIDTH,
+        w: g.width + FRAME_WIDTH * 2
+      };
+
+      setFrame("#left-frame", left);
+      setFrame("#top-frame", top);
+      setFrame("#bottom-frame", bottom);
+      setFrame("#right-frame", right);
+    }
+    function setFrame(sectionId, dimensions) {
+      var el = document.querySelector(sectionId);
+      var g = el.getAttribute("geometry");
+      var p = el.getAttribute("position");
+      g.width = dimensions.w;
+      g.height = dimensions.h;
+      g.depth = dimensions.d;
+      p.x = dimensions.x;
+      p.y = dimensions.y;
+      p.z = dimensions.z;
+      el.setAttribute("geometry", g);
+      el.setAttribute("position", p);
+    }
+  </script>
+</html>

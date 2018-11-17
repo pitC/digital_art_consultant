@@ -3,3 +3,9 @@
     column-count: 1;
   }
 }
+.lightblue {background-color: #90CCF4;
+border-color: #90CCF4}
+.lightblue:hover, .lightblue:active {
+  background-color: #5DA2D5;
+  border-color: #5DA2D5;
+}
