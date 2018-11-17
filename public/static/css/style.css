@@ -64,7 +64,17 @@ background-size: cover;
 }
 */
     
-
+.fade-in {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear;
+  }
+  
+  .fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+  }
   
 	.box {
 		text-align: center;
@@ -106,7 +116,7 @@ background-size: cover;
     
     .colorsnav
     {
-        height: 3px;
+        height: 4px;
     
     }     
     /* brand color to be changed */
@@ -114,18 +124,18 @@ background-size: cover;
         color: #7ec8fa;
     }     
   .lightblue {
-    background-color: #91ccf4;
-    border-color: #91ccf4;
+    background-color: #90CCF4;
+    border-color: #90CCF4;
     color: white;
 }
 .lightblue:hover {
-    background-color: #7ec8fa;
-    border-color: #7ec8fa;
+    background-color: #5DA2D5;
+    border-color: #5DA2D5;
     color: white;
 }
 .lightblue:active {
-    background-color: lightcyan;
-    border-color:lightcyan;
+    background-color: #5DA2D5;
+    border-color:#5DA2D5;
     color: white;
 }
 
