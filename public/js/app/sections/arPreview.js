@@ -6,7 +6,9 @@ export default {
   data: function() {
     return {
       images: [],
-      currentImage: { filename: "" },
+      currentImage: {
+        filename: "2085.png"
+      },
       renderMat: true,
       state: AppState.READY
     };
@@ -18,9 +20,6 @@ export default {
       } else {
         return true;
       }
-    },
-    imgPreviewSrc() {
-      return "/previews/staedel/" + this.currentImage.filename;
     }
   },
   template: `
@@ -36,12 +35,10 @@ export default {
       </div>
     </div>
     <div>
-      <a-scene embedded vr-mode-ui="enabled:false" scene-listener
-        ><a-assets>
-          <img id="srcImage1" src="/previews/staedel/2085.png" />
+      <a-scene embedded vr-mode-ui="enabled:false" scene-listener style=" height: 700px; width: 1400px"><a-assets>
+          <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
         </a-assets>
 
-        <a-sky color="#84c6ff"></a-sky>
         <a-entity
           id="camera"
           camera="active: true"
@@ -58,8 +55,7 @@ export default {
             width="1.6"
             height="1"
             position="0 0 -2.88"
-            material=""
-            geometry=""
+            image-listener
           ></a-image>
           <a-plane
             id="mat"
@@ -99,15 +95,17 @@ export default {
       <div class="box box-5 fixed-bottom">
         <div class="btn-group mt-auto w-100" role="group">
           
-          <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="far fa-plus-circle"></i> </button>
-          <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="far fa-arrows-alt"></i> Recenter</button>
-          <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-minus-circle"></i></button>
+          <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
+          <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> Recenter</button>
+          <button id="change-btn" type="button" class="btn lightblue btn-block" v-on:click="changeImage"><i class="fas fa-arrows-alt"></i> Change img</button>
+          <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
          
         </div>
       </div>
     </div>
   </div>
   `,
+  props: ["appstate"],
   methods: {
     onBackToList: function(event) {
       this.$router.go(-1);
@@ -119,7 +117,7 @@ export default {
       var currentImgSrc = artworkEl.getAttribute("src");
       var targetImgSrc = "";
       if (currentImgSrc == "#srcImage1") {
-        targetImgSrc = "#srcImage2";
+        targetImgSrc = "#srcImage1";
       } else {
         targetImgSrc = "#srcImage1";
       }
@@ -134,7 +132,7 @@ export default {
       artworkEl.setAttribute("geometry", g);
 
       if (this.renderMat) {
-        setMat("#artwork");
+        this.setMat("#artwork");
       }
       this.adjustFrame(this.renderMat);
     },
@@ -150,10 +148,10 @@ export default {
       framedArtworkEl.setAttribute("rotation", artworkR);
     },
     scaleUp: function() {
-      scale(0.1);
+      this.scale(0.1);
     },
     scaleDown: function() {
-      scale(-0.1);
+      this.scale(-0.1);
     },
     scale: function(incr) {
       const mat = true;
@@ -172,17 +170,17 @@ export default {
       el.setAttribute("geometry", g);
     },
     setMat: function(artworkId) {
-      const MAT_PADDING = 0.2;
+      var mat_padding = 0.2;
       // put mat a big behind the artwork
       const Z_DIFF = 0.01;
       var srcEl = document.querySelector(artworkId);
       var matEl = document.querySelector("#mat");
       var g = srcEl.getAttribute("geometry");
       var p = srcEl.getAttribute("position");
-
+      var mat_padding = 0.2 * g.width;
       var mG = matEl.getAttribute("geometry");
-      mG.width = g.width + MAT_PADDING;
-      mG.height = g.height + MAT_PADDING;
+      mG.width = g.width + mat_padding;
+      mG.height = g.height + mat_padding;
       matEl.setAttribute("geometry", mG);
 
       var mP = matEl.getAttribute("position");
@@ -202,8 +200,8 @@ export default {
       var p = el.getAttribute("position");
 
       const Z_PADDING = 0.05;
-      const FRAME_DEPTH = 0.1;
-      const FRAME_WIDTH = 0.05;
+      var FRAME_DEPTH = 0.1 * g.width;
+      var FRAME_WIDTH = 0.05 * g.width;
       var leftEdge = p.x - g.width / 2;
       var rightEdge = p.x + g.width / 2;
       var topEdge = p.y + g.height / 2;
@@ -276,6 +274,19 @@ export default {
           self.setMat("#artwork");
         }
         self.adjustFrame(self.renderMat);
+      }
+    });
+
+    AFRAME.registerComponent("image-listener", {
+      update: function() {
+        var img = this;
+        // self.changeImage();
+      },
+      init: function() {
+        console.log("image init!");
+        var img = this;
+
+        // self.changeImage();
       }
     });
   }

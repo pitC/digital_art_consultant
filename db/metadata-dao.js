@@ -3,7 +3,7 @@ var BSON = require("mongodb").BSONPure;
 var ObjectId = require("mongodb").ObjectID;
 var url = process.env.MONGODB_URI;
 const COLLECTION = "img-metadata";
-const BASE_FILE_URL = "http://goethe.cabaj.eu/staedel/";
+const BASE_FILE_URL = "/previews/staedel/";
 var initiated = false;
 var db;
 
