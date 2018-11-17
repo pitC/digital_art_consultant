@@ -60,7 +60,7 @@ export default {
           
         ></video>
         
-      <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener style=" height: 700px; width: 1400px"><a-assets>
+      <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener><a-assets>
           <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
         </a-assets>
 
