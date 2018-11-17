@@ -41,6 +41,7 @@ export default {
             <h5 class="card-title">{{image.title}}</h5>
             <p class="card-text">{{image.author}}</p>
             <button type="button" class="btn btn-secondary" v-on:click="onBackToList">Back to list</button>
+            <button type="button" class="btn btn-secondary" v-on:click="onTryIt">Try it!</button>
         </div>
     </div>
     <div v-else>
@@ -54,6 +55,11 @@ export default {
   methods: {
     onBackToList: function(event) {
       this.$router.go(-1);
+    },
+
+    onTryIt: function(event) {
+      SharedStorage.putPreviewImg(this.image);
+      this.$router.push(RouteNames.RESULT_LIST);
     }
   },
 

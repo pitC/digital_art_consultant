@@ -8,15 +8,43 @@ console.log(process.env.MONGODB_URI);
 
 var express = require("express"),
   path = require("path"),
-  http = require("http"),
   bodyParser = require("body-parser"),
+  http = require("http"),
   recommendationEngine = require("./app/recommendation-engine"),
   Validator = require("jsonschema").Validator,
   recommendSchema = require("./schemas/criteriaSchema.json");
+
 var metadataDao = require("./db/metadata-dao");
 
 var app = express();
 var validator = new Validator();
+
+// app.get("/img/:filename",function(req,res)){
+//   //then redirect
+//   req.redirect('http://goethe.cabaj.eu/staedel/');
+// }
+
+app.use("/previews/staedel/:filename", function(clientReq, clientRes, next) {
+  var targetPath = clientReq.originalUrl.replace("previews/", "");
+  var options = {
+    hostname: "goethe.cabaj.eu",
+    path: targetPath,
+    method: "GET"
+  };
+
+  var proxy = http.request(options, function(res) {
+    res.pipe(
+      clientRes,
+      { end: true }
+    );
+  });
+
+  clientReq.pipe(
+    proxy,
+    { end: true }
+  );
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));

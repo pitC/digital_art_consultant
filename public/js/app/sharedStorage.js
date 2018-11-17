@@ -3,10 +3,18 @@ const IMAGE_URL = "image";
 export default {
   inputColours: [],
   imgList: [],
+  previewImgList: [],
   recommendationValid: false,
   putInputColours: function(inpColours) {
     this.recommendationValid = false;
     this.inputColours = inpColours;
+  },
+  putPreviewImg: function(img) {
+    this.previewImgList = [];
+    this.previewImgList.push(img);
+  },
+  getPreviewImgList: function() {
+    return this.previewImgList;
   },
   getImgList(colours, callback) {
     if (this.recommendationValid) {

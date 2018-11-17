@@ -34,7 +34,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Debug AR",
-      "url": "http://localhost:3000/static/ar/virtualScene.html",
+      "url": "http://localhost:3000/app.html#/image/5bdc746783772a28ae17536a",
       "webRoot": "${workspaceFolder}/public"
     }
   ]
