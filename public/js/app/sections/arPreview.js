@@ -11,6 +11,11 @@ const INITIAL_ARTWORK_HEIGHT = 1.6;
 const INITIAL_CAM_DISTANCE = 0;
 const INITIAL_CAM_HEIGHT = 1.6;
 
+const IMAGE_PLACED = "placed";
+const IMAGE_REPLACING = "replacing";
+
+const TRIGGER_DISTANCE = -20;
+
 var VIDEO_CONSTRAINTS = {
   audio: false,
   video: {
@@ -26,9 +31,10 @@ export default {
       renderMat: true,
       state: AppState.READY,
       frameColour: "#fcf0d1",
-      matColour: "#fcf0d1C",
+      matColour: "#fcf0d1",
       debug: true,
-      debugStr: ""
+      debugStr: "",
+      previewMode: IMAGE_PLACED
     };
   },
   computed: {
@@ -57,9 +63,29 @@ export default {
     },
     cameraPosition() {
       return `0 ${INITIAL_CAM_HEIGHT} ${INITIAL_CAM_DISTANCE}`;
+    },
+
+    triggerPosition() {
+      return `0 ${INITIAL_CAM_HEIGHT} ${TRIGGER_DISTANCE} `;
+    },
+
+    showTrigger() {
+      if (this.previewMode == IMAGE_PLACED) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    triggerButtonLbl() {
+      if (this.previewMode == IMAGE_PLACED) {
+        return "Re-place";
+      } else {
+        return "Fire!";
+      }
     }
   },
-  
+
   template: `
    <div class="container-fluid">
     <div class="flex-row">
@@ -89,14 +115,22 @@ export default {
         </a-assets>
         <a-entity id="camera-controler" look-controls="enabled:true;hmdEnabled:false" wasd-controls>
         
-        <a-entity
-          id="camera"
-          camera="active: true"
-          look-controls="enabled:false;hmdEnabled:false"
-          :position="cameraPosition"
-          data-aframe-default-camera
-        >
-        </a-entity>
+          <a-entity
+            id="camera"
+            camera="active: true"
+            look-controls="enabled:false;hmdEnabled:false"
+            :position="cameraPosition"
+            data-aframe-default-camera
+          >
+          </a-entity>
+          <a-plane
+              v-if="showTrigger"
+              id="trigger"
+              width="2"
+              height="2"
+              :position="triggerPosition"
+              material="shader:flat;transparent:true;opacity:0.5;color:#ff0000;flatShading:true"
+            ></a-plane>
         </a-entity>
         <a-entity id="framedArtwork">
           
@@ -141,6 +175,7 @@ export default {
             :position="artworkPosition"
             image-listener
           ></a-image>
+        </a-entity>
           <a-entity
             id="lightDirect"
             light="intensity:0.6;castShadow:true"
@@ -149,7 +184,6 @@ export default {
           >
           </a-entity>
           <a-entity id="lightAmbient" light="color:#BBB;type:ambient"></a-entity>
-        </a-entity>
       </a-scene>
     </div>
     <div class="container">
@@ -158,7 +192,7 @@ export default {
           
           <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
           <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
-          <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> Recenter</button>
+          <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> {{triggerButtonLbl}}</button>
           <button id="closer-btn" type="button" class="btn btn-block" v-on:click="stepForward"><i class="fas fa-plus-circle"></i> </button>
           <button id="further-btn" type="button" class="btn btn-block" v-on:click="stepBack"><i class="fas fa-minus-circle"></i></button>
          
@@ -178,9 +212,14 @@ export default {
     },
 
     recenter: function() {
-      AframeNav.recenter();
-      this.dumpCanvasGeometry();
-      this.updateDebugStr();
+      if (this.previewMode == IMAGE_PLACED) {
+        this.previewMode = IMAGE_REPLACING;
+      } else {
+        AframeNav.recenter();
+        this.previewMode = IMAGE_PLACED;
+        this.dumpCanvasGeometry();
+        this.updateDebugStr();
+      }
     },
 
     scaleUp: function() {
@@ -192,11 +231,11 @@ export default {
       this.updateDebugStr();
     },
     stepForward: function() {
-      AframeNav.moveCam(-0.5);
+      AframeNav.moveCam(-0.5, this.renderMat);
       this.updateDebugStr();
     },
     stepBack: function() {
-      AframeNav.moveCam(+0.5);
+      AframeNav.moveCam(+0.5, this.renderMat);
       this.updateDebugStr();
     },
 

@@ -122,13 +122,8 @@ export default {
     }
     this.adjustFrame(renderMat);
   },
-
+  // TODO: recenter also lights
   recenter: function() {
-    // var cameraController = document.querySelector("#camera-controler");
-    // cameraController.setAttribute("look-controls", "false");
-    // cameraController.setAttribute("rotation", { x: 0, y: 0, z: 0 });
-    // cameraController.setAttribute("look-controls", "true");
-
     // var camera = document.querySelector("#camera");
     // camera.setAttribute("look-controls", "false");
     // camera.setAttribute("rotation", { x: 0, y: 0, z: 0 });
@@ -137,19 +132,22 @@ export default {
     var framedArtworkEl = document.querySelector("#framedArtwork");
 
     var camR = cameraEl.getAttribute("rotation");
+    var artworkR = framedArtworkEl.getAttribute("position");
     var artworkR = framedArtworkEl.getAttribute("rotation");
-
     artworkR.x = camR.x;
     artworkR.y = camR.y;
     artworkR.z = camR.z;
-
     framedArtworkEl.setAttribute("rotation", artworkR);
   },
-  moveCam: function(incr) {
-    var cameraEl = document.querySelector("#camera");
-    var p = cameraEl.getAttribute("position");
+  moveCam: function(incr, renderMat) {
+    var artworkEl = document.querySelector("#artwork");
+    var p = artworkEl.getAttribute("position");
     p.z += incr;
-    cameraEl.setAttribute("position", p);
+    artworkEl.setAttribute("position", p);
+    if (renderMat) {
+      this.setMat("#artwork");
+    }
+    this.adjustFrame(renderMat);
   },
 
   registerListener: function(listenerName, listenerObject) {
@@ -179,7 +177,9 @@ export default {
       var cR = elCntrl.getAttribute("rotation");
       return `Cam Pos: ${p.x.toFixed(2)}/${p.y.toFixed(2)}/${p.z.toFixed(
         2
-      )} Rot:${cR.x.toFixed(2)}(${r.x.toFixed(2)})/${cR.y.toFixed(2)}(${r.y.toFixed(2)})/${cR.z.toFixed(2)}(${r.z.toFixed(2)})`;
+      )} Rot:${cR.x.toFixed(2)}(${r.x.toFixed(2)})/${cR.y.toFixed(
+        2
+      )}(${r.y.toFixed(2)})/${cR.z.toFixed(2)}(${r.z.toFixed(2)})`;
     } else {
       return "";
     }

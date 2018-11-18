@@ -178,13 +178,36 @@
 
       <a-sky color="#84c6ff"></a-sky>
       <a-entity
-        id="camera"
-        camera="active: true"
-        look-controls
+        id="camera-controler"
+        look-controls="enabled:true;hmdEnabled:false"
         wasd-controls
-        position="0 0 0"
-        data-aframe-default-camera
-      ></a-entity>
+      >
+        <a-entity
+          id="camera"
+          camera="active: true"
+          look-controls="enabled:false;hmdEnabled:false"
+          position="0 0 0"
+          data-aframe-default-camera
+        >
+        </a-entity>
+        <a-plane
+          v-if="showTrigger"
+          id="trigger"
+          width="1"
+          height="1"
+          position="0 0 -4"
+        ></a-plane>
+        <a-plane
+          v-if="showTrigger"
+          id="trigger"
+          width="1"
+          height="1"
+          position="0 0 -4"
+          material="shader:flat;transparent:true;opacity:0.5;color:#ff0000;flatShading:true"
+          geometry=""
+        ></a-plane>
+      </a-entity>
+
       <a-entity id="framedArtwork">
         <a-image
           id="artwork"
