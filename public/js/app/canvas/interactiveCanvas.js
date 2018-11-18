@@ -72,7 +72,7 @@ export default class InteractiveCanvas {
       }, 100);
     });
   }
-
+  // FIXME: main as black is not detected
   initalizePalettes() {
     var parsedColours = ColourSelector.getAllColours(this.canvas);
     var prominentColours = parsedColours.prominent;
@@ -139,10 +139,16 @@ export default class InteractiveCanvas {
       swatches[swatch.name] = swatch;
     }
     // order matters.. for now
-    colours.push(swatches[ColourTypes.MAIN].colour);
-    colours.push(swatches[ColourTypes.SECONDARY].colour);
-    colours.push(swatches[ColourTypes.CONTRAST].colour);
-
+    // TODO: refactor
+    if (swatches[ColourTypes.MAIN]) {
+      colours.push(swatches[ColourTypes.MAIN].colour);
+    }
+    if (swatches[ColourTypes.SECONDARY]) {
+      colours.push(swatches[ColourTypes.SECONDARY].colour);
+    }
+    if (swatches[ColourTypes.CONTRAST]) {
+      colours.push(swatches[ColourTypes.CONTRAST].colour);
+    }
     return colours;
   }
 
