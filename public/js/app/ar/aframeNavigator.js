@@ -122,15 +122,27 @@ export default {
     }
     this.adjustFrame(renderMat);
   },
-  // FIXME: fix it - after too far move, the recenter looks broken
+
   recenter: function() {
-    var cameraEl = document.querySelector("#camera");
+    // var cameraController = document.querySelector("#camera-controler");
+    // cameraController.setAttribute("look-controls", "false");
+    // cameraController.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+    // cameraController.setAttribute("look-controls", "true");
+
+    // var camera = document.querySelector("#camera");
+    // camera.setAttribute("look-controls", "false");
+    // camera.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+    // camera.setAttribute("look-controls", "true");
+    var cameraEl = document.querySelector("#camera-controler");
     var framedArtworkEl = document.querySelector("#framedArtwork");
+
     var camR = cameraEl.getAttribute("rotation");
     var artworkR = framedArtworkEl.getAttribute("rotation");
+
     artworkR.x = camR.x;
     artworkR.y = camR.y;
     artworkR.z = camR.z;
+
     framedArtworkEl.setAttribute("rotation", artworkR);
   },
   moveCam: function(incr) {
@@ -138,5 +150,38 @@ export default {
     var p = cameraEl.getAttribute("position");
     p.z += incr;
     cameraEl.setAttribute("position", p);
+  },
+
+  registerListener: function(listenerName, listenerObject) {
+    var componentExists = AFRAME.components.hasOwnProperty(listenerName);
+    if (!componentExists) {
+      AFRAME.registerComponent(listenerName, listenerObject);
+    }
+  },
+
+  getImageDimensions: function() {
+    var el = document.querySelector("#artwork");
+    if (el) {
+      var g = el.getAttribute("geometry");
+      var p = el.getAttribute("position");
+      return `Img Pos: ${p.x.toFixed(2)}/${p.y.toFixed(2)}/${p.z.toFixed(
+        2
+      )} Geom:${g.width.toFixed(2)}/${g.height.toFixed(2)}`;
+    } else return "";
+  },
+
+  getCamera: function() {
+    var el = document.querySelector("#camera");
+    var elCntrl = document.querySelector("#camera-controler");
+    if (el && elCntrl) {
+      var p = el.getAttribute("position");
+      var r = el.getAttribute("rotation");
+      var cR = elCntrl.getAttribute("rotation");
+      return `Cam Pos: ${p.x.toFixed(2)}/${p.y.toFixed(2)}/${p.z.toFixed(
+        2
+      )} Rot:${cR.x.toFixed(2)}(${r.x.toFixed(2)})/${cR.y.toFixed(2)}(${r.y.toFixed(2)})/${cR.z.toFixed(2)}(${r.z.toFixed(2)})`;
+    } else {
+      return "";
+    }
   }
 };

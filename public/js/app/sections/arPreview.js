@@ -3,6 +3,13 @@ import RouteNames from "./../RouteNames.js";
 import AppState from "./../appStates.js";
 import AframeNav from "./../ar/aframeNavigator.js";
 const VIDEO_READY = "video";
+const AFRAME_SCENE_LISTENER = "scene-listener";
+const AFRAME_IMAGE_LISTENER = "image-listener";
+const INITIAL_ARTWORK_DISTANCE = -4;
+const INITIAL_ARTWORK_HEIGHT = 1.6;
+
+const INITIAL_CAM_DISTANCE = 0;
+const INITIAL_CAM_HEIGHT = 1.6;
 
 var VIDEO_CONSTRAINTS = {
   audio: false,
@@ -19,7 +26,9 @@ export default {
       renderMat: true,
       state: AppState.READY,
       frameColour: "#fcf0d1",
-      matColour: "#fcf0d1C"
+      matColour: "#fcf0d1C",
+      debug: true,
+      debugStr: ""
     };
   },
   computed: {
@@ -42,8 +51,15 @@ export default {
     },
     frameMaterial() {
       return "color:" + this.frameColour;
+    },
+    artworkPosition() {
+      return `0 ${INITIAL_ARTWORK_HEIGHT} ${INITIAL_ARTWORK_DISTANCE}`;
+    },
+    cameraPosition() {
+      return `0 ${INITIAL_CAM_HEIGHT} ${INITIAL_CAM_DISTANCE}`;
     }
   },
+  
   template: `
    <div class="container-fluid">
     <div class="flex-row">
@@ -56,6 +72,7 @@ export default {
         </div>
       </div>
     </div>
+    <p class="bg-light" v-if="debug">{{debugStr}}</p>
     <div class="ar-container">
         <video
           id="video-el"
@@ -70,15 +87,17 @@ export default {
       <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener><a-assets>
           <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
         </a-assets>
-
+        <a-entity id="camera-controler" look-controls="enabled:true;hmdEnabled:false" wasd-controls>
+        
         <a-entity
           id="camera"
           camera="active: true"
-          look-controls
-          wasd-controls
-          position="0 0 0"
+          look-controls="enabled:false;hmdEnabled:false"
+          :position="cameraPosition"
           data-aframe-default-camera
-        ></a-entity>
+        >
+        </a-entity>
+        </a-entity>
         <a-entity id="framedArtwork">
           
           <a-plane
@@ -119,9 +138,17 @@ export default {
             npot="true"
             width="1.6"
             height="1"
-            position="0 0 -2.88"
+            :position="artworkPosition"
             image-listener
           ></a-image>
+          <a-entity
+            id="lightDirect"
+            light="intensity:0.6;castShadow:true"
+            position="0 1 1"
+            rotation=""
+          >
+          </a-entity>
+          <a-entity id="lightAmbient" light="color:#BBB;type:ambient"></a-entity>
         </a-entity>
       </a-scene>
     </div>
@@ -132,8 +159,6 @@ export default {
           <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
           <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
           <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> Recenter</button>
-          <button id="change-btn" type="button" class="btn lightblue btn-block" v-on:click="changeImage"><i class="fas fa-arrows-alt"></i> Change img</button>
-          
           <button id="closer-btn" type="button" class="btn btn-block" v-on:click="stepForward"><i class="fas fa-plus-circle"></i> </button>
           <button id="further-btn" type="button" class="btn btn-block" v-on:click="stepBack"><i class="fas fa-minus-circle"></i></button>
          
@@ -155,19 +180,24 @@ export default {
     recenter: function() {
       AframeNav.recenter();
       this.dumpCanvasGeometry();
+      this.updateDebugStr();
     },
 
     scaleUp: function() {
       AframeNav.scale(0.1, this.renderMat);
+      this.updateDebugStr();
     },
     scaleDown: function() {
       AframeNav.scale(-0.1, this.renderMat);
+      this.updateDebugStr();
     },
     stepForward: function() {
       AframeNav.moveCam(-0.5);
+      this.updateDebugStr();
     },
     stepBack: function() {
       AframeNav.moveCam(+0.5);
+      this.updateDebugStr();
     },
 
     // left for debug
@@ -182,6 +212,11 @@ export default {
         `CANVAS - w:${canvas.width} h:${canvas.height} ratio: ${canvas.width /
           canvas.height}`
       );
+    },
+
+    updateDebugStr: function() {
+      this.debugStr =
+        AframeNav.getImageDimensions() + " " + AframeNav.getCamera();
     }
   },
 
@@ -190,7 +225,8 @@ export default {
     this.images = SharedStorage.getPreviewImgList();
     this.currentImage = this.images[0];
     var video = this.$refs.video;
-    AFRAME.registerComponent("scene-listener", {
+
+    AframeNav.registerListener(AFRAME_SCENE_LISTENER, {
       init: function() {
         var overlay = this.el.sceneEl;
         var w = video.offsetWidth;
@@ -201,7 +237,7 @@ export default {
       update: function() {}
     });
 
-    AFRAME.registerComponent("image-listener", {
+    AframeNav.registerListener(AFRAME_IMAGE_LISTENER, {
       update: function() {
         var img = this.el;
         var g = img.getAttribute("geometry");
@@ -211,12 +247,9 @@ export default {
         if (imgAsset) {
           AframeNav.adjustImageDimensions(self.renderMat);
         }
+        self.updateDebugStr();
       },
-      init: function() {
-        console.log("image init!");
-
-        // self.changeImage();
-      }
+      init: function() {}
     });
 
     // this.state = WEBCAM_INIT;
