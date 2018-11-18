@@ -267,6 +267,15 @@ export default {
     updateDebugStr: function() {
       this.debugStr =
         AframeNav.getImageDimensions() + " " + AframeNav.getCamera();
+    },
+    stopVideo: function() {
+      var video = this.$refs.video;
+      video.pause();
+      if ("srcObject" in video) {
+        video.srcObject.getTracks()[0].stop();
+      } else {
+        video.src.stop();
+      }
     }
   },
 
@@ -322,5 +331,9 @@ export default {
         };
       });
     }
+  },
+  beforeRouteLeave: function(to, from, next) {
+    this.stopVideo();
+    next();
   }
 };

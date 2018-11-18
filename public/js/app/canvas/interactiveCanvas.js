@@ -1,5 +1,6 @@
 import Shape from "./Shape.js";
 import ColourSelector from "./colourSelector.js";
+import ColourTypes from "./ColourTypes.js";
 
 const DEFAULT_SHAPE_WIDTH = 150;
 const DEFAULT_SHAPE_HEIGHT = 40;
@@ -85,7 +86,7 @@ export default class InteractiveCanvas {
       var colour = foundColours[key];
       var swatch = prominentColours.find(o => o.colour === key);
       if (colour.pos) {
-        this.addShape(colour.pos.x, colour.pos.y, key, swatch.name);
+        this.addShape(colour.pos.x, colour.pos.y, key, swatch);
       }
     }
     return parsedColours;
@@ -126,16 +127,22 @@ export default class InteractiveCanvas {
         colourSelectorPos.x,
         colourSelectorPos.y
       );
-      this.selected.fill = colour;
+      this.selected.setColour(colour);
     }
   }
 
   getShapeColours() {
+    var swatches = {};
     var colours = [];
     for (var index in this.shapes) {
-      var colour = this.shapes[index].fill;
-      colours.push(colour);
+      var swatch = this.shapes[index].swatch;
+      swatches[swatch.name] = swatch;
     }
+    // order matters.. for now
+    colours.push(swatches[ColourTypes.MAIN].colour);
+    colours.push(swatches[ColourTypes.SECONDARY].colour);
+    colours.push(swatches[ColourTypes.CONTRAST].colour);
+
     return colours;
   }
 
@@ -165,14 +172,14 @@ export default class InteractiveCanvas {
     return scale;
   }
 
-  addShape(x, y, colour, label) {
+  addShape(x, y, colour, swatch) {
     var newShape = new Shape(
       x,
       y,
       DEFAULT_SHAPE_WIDTH,
       DEFAULT_SHAPE_HEIGHT,
       colour,
-      label
+      swatch
     );
     //set the colour selector as the given position instead of top-left corner
     newShape.setColourSelectorPos(x, y);

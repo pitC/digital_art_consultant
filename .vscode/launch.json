@@ -26,8 +26,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome final style",
-      "url": "http://localhost:3000/app.html#/colour-picker",
+      "name": "Launch Chrome Photo Picker",
+      "url": "http://localhost:3000/app.html#/photo-input?m=debug",
       "webRoot": "${workspaceFolder}/public"
     },
     {

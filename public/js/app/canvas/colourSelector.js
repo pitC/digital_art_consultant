@@ -1,3 +1,5 @@
+import ColourTypes from "./ColourTypes.js";
+
 const COLOUR_NUM = 64;
 // number of pixels to be scipped on iteration
 const SCAN_QUALITY = 5;
@@ -53,17 +55,22 @@ function selectFromProminent(prominentColours) {
       }
     }
   }
-  if (maxMuted.population > maxVibrant.population) {
-    maxMuted.name += " (M)";
-    maxVibrant.name += " (S)";
-  } else {
-    maxVibrant.name += " (M)";
-    maxMuted.name += " (S)";
-  }
+  // TODO: remove this debug data
+  // TODO: for now work only with changed labels - to verify the logic
+  // if (maxMuted.population > maxVibrant.population) {
+
+  //   maxMuted.name += " (M)";
+  //   maxVibrant.name += " (S)";
+  // } else {
+  //   maxVibrant.name += " (M)";
+  //   maxMuted.name += " (S)";
+  // }
+  // return prominentColours;
+  maxMuted.name = ColourTypes.SECONDARY;
+  maxVibrant.name = ColourTypes.CONTRAST;
   selectedColours.push(maxMuted);
   selectedColours.push(maxVibrant);
-  // TODO: for now work only with changed labels - to verify the logic
-  return prominentColours;
+  return selectedColours;
 }
 
 function getColours(img, getAll, quality, colourNum) {
@@ -86,11 +93,14 @@ function getColours(img, getAll, quality, colourNum) {
       var colourInfo = extractFromSwatch(fullSwatchPalette[swatch]);
       fullPalette.push(colourInfo);
     }
-    // TODO: bring it back when debug mode not needed
-    // colours.all = fullPalette;
-    // TEMP: process full palette for debug info
+
     colours.all = processFullPalette(fullPalette, prominentColours);
   }
+
+  var mainColour = colours.all[0];
+  mainColour.name = ColourTypes.MAIN;
+  colours.prominent.push(mainColour);
+
   return colours;
 }
 

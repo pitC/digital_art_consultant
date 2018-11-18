@@ -78,7 +78,7 @@ export default class Shape {
   // This is a very simple and unsafe constructor.
   // All we're doing is checking if the values exist.
   // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
-  constructor(x, y, w, h, fill, text = "COLOUR") {
+  constructor(x, y, w, h, fill, swatch) {
     this.x = x || 0;
     this.y = y || 0;
     this.w = w || 1;
@@ -88,7 +88,8 @@ export default class Shape {
     this.selectedYoffset = 0;
     this.selected = false;
     this.image = null;
-    this.text = text;
+    this.text = swatch.name || "Colour";
+    this.swatch = swatch;
     this.orientation = LABEL_LEFT;
   }
   setImage(image) {
@@ -186,6 +187,11 @@ export default class Shape {
     var colourCircleDim = dim.colourCircle;
     this.x = this.x - (colourCircleDim.x - this.x);
     this.y = this.y - (colourCircleDim.y - this.y);
+  }
+
+  setColour(colour) {
+    this.fill = colour;
+    this.swatch.colour = colour;
   }
 
   getColourSelector() {
