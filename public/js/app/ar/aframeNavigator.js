@@ -132,7 +132,7 @@ export default {
     var framedArtworkEl = document.querySelector("#framedArtwork");
 
     var camR = cameraEl.getAttribute("rotation");
-    var artworkR = framedArtworkEl.getAttribute("position");
+
     var artworkR = framedArtworkEl.getAttribute("rotation");
     artworkR.x = camR.x;
     artworkR.y = camR.y;

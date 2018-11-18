@@ -6,15 +6,16 @@ const VIDEO_READY = "video";
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
 const INITIAL_ARTWORK_DISTANCE = -4;
-const INITIAL_ARTWORK_HEIGHT = 1.6;
+const INITIAL_ARTWORK_HEIGHT = 2;
 
 const INITIAL_CAM_DISTANCE = 0;
 const INITIAL_CAM_HEIGHT = 1.6;
 
 const IMAGE_PLACED = "placed";
 const IMAGE_REPLACING = "replacing";
+const IMAGE_INITIAL_PLACING = "initial";
 
-const TRIGGER_DISTANCE = -20;
+const TRIGGER_DISTANCE = -1;
 
 var VIDEO_CONSTRAINTS = {
   audio: false,
@@ -34,7 +35,7 @@ export default {
       matColour: "#fcf0d1",
       debug: true,
       debugStr: "",
-      previewMode: IMAGE_PLACED
+      previewMode: IMAGE_INITIAL_PLACING
     };
   },
   computed: {
@@ -77,11 +78,21 @@ export default {
       }
     },
 
+    showArtwork() {
+      if (this.previewMode == IMAGE_INITIAL_PLACING) {
+        return "false";
+      } else {
+        return "true";
+      }
+    },
+
     triggerButtonLbl() {
       if (this.previewMode == IMAGE_PLACED) {
         return "Re-place";
-      } else {
+      } else if (this.previewMode == IMAGE_REPLACING) {
         return "Fire!";
+      } else {
+        return "PLACE IMG";
       }
     }
   },
@@ -126,13 +137,13 @@ export default {
           <a-plane
               v-if="showTrigger"
               id="trigger"
-              width="2"
-              height="2"
+              width="0.5"
+              height="0.5"
               :position="triggerPosition"
               material="shader:flat;transparent:true;opacity:0.5;color:#ff0000;flatShading:true"
             ></a-plane>
         </a-entity>
-        <a-entity id="framedArtwork">
+        <a-entity id="framedArtwork" :visible="showArtwork">
           
           <a-plane
             v-if="renderMat"
