@@ -15,6 +15,9 @@ const IMAGE_PLACED = "placed";
 const IMAGE_REPLACING = "replacing";
 const IMAGE_INITIAL_PLACING = "initial";
 
+const DEFAULT_FRAME_COLOUR = "#fcf0d1";
+const DEFAULT_MAT_COLOUR = "#fcf0d1";
+
 const TRIGGER_DISTANCE = -1;
 
 var VIDEO_CONSTRAINTS = {
@@ -31,14 +34,34 @@ export default {
       currentImage: null,
       renderMat: true,
       state: AppState.READY,
-      frameColour: "#fcf0d1",
-      matColour: "#fcf0d1",
       debug: true,
       debugStr: "",
       previewMode: IMAGE_INITIAL_PLACING
     };
   },
   computed: {
+    frameColour() {
+      if (this.currentImage) {
+        return (
+          this.currentImage.colours.prominent["DarkVibrant"] ||
+          DEFAULT_FRAME_COLOUR
+        );
+      } else {
+        return DEFAULT_FRAME_COLOUR;
+      }
+    },
+    matColour() {
+      if (this.currentImage) {
+        // return (
+        //   this.currentImage.colours.prominent["LightVibrant"] ||
+        //   DEFAULT_MAT_COLOUR
+        // );
+        return DEFAULT_MAT_COLOUR;
+      } else {
+        return DEFAULT_MAT_COLOUR;
+      }
+    },
+
     isImageLoaded() {
       if (this.state == AppState.SERVER_PROCESSING) {
         return false;

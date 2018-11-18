@@ -38,7 +38,8 @@ export default {
             author: respImg.author,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
-            calclog: respImg.calcLog
+            calclog: respImg.calcLog,
+            colours: respImg.colours
           };
           this.imgList.push(img);
         }

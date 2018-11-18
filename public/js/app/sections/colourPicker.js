@@ -193,7 +193,10 @@ export default {
 
       SharedStorage.putInputColours(selectedColours);
       console.log(selectedColours);
-      this.$router.push(RouteNames.RESULT_LIST);
+      this.$router.push({
+        path: RouteNames.RESULT_LIST,
+        query: this.$route.query
+      });
     },
     getManualColours: function() {
       var mainColour = this.colours[0] || "";
