@@ -1,46 +1,340 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <script src="../../dist/js/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/merge-images"></script>
   </head>
+  <script>
+    AFRAME.registerComponent("scene-listener", {
+      init: function() {
+        console.log("init!");
+        var mat = true;
+        if (mat) {
+          setMat("#artwork");
+        }
+        adjustFrame(mat);
+      }
+    });
+    function changeImage() {
+      var artworkEl = document.querySelector("#artwork");
 
-  <body>
-    <a-scene vr-mode-ui="enabled:false"
-      ><a-assets> <img id="transpImage" src="../img/2085.png" /> </a-assets>
+      var currenImgSrc = artworkEl.getAttribute("src");
+      var targetImgSrc = "";
+      if (currenImgSrc == "#srcImage1") {
+        targetImgSrc = "#srcImage2";
+      } else {
+        targetImgSrc = "#srcImage1";
+      }
 
-      <a-image
-        src="#transpImage"
-        npot="true"
-        width="1.6"
-        height="1"
-        position="0 1.5923205925486443 -2.8896951671616433"
-        material=""
-        geometry=""
-      ></a-image>
-      <a-entity
-        position="-0.8516078879934923 1.6162200397155804 -2.85"
-        geometry="depth:0.1;width:0.1"
-        material="color:#ECECEC"
-        id="left-frame"
-      ></a-entity>
-      <a-entity
-        position="0 2.1203709574339804 -2.8511166046347225"
-        geometry="depth:0.1;height:0.1;width:1.8"
-        material="color:#ECECEC"
-        id="top-frame"
-      ></a-entity>
-      <a-entity
-        position="0 1.126 -2.85"
-        geometry="depth:0.1;height:0.1;width:1.8"
-        material="color:#ECECEC"
-        id="bottom-frame"
-      ></a-entity>
-      <a-entity
-        position="0.8441961799454462 1.585018086559569 -2.85"
-        geometry="depth:0.1;width:0.1"
-        material="color:#ECECEC"
-        id="right-frame"
-      ></a-entity>
-      <a-sky color="#84c6ff"></a-sky>
-    </a-scene>
+      var imageAsset = document.querySelector(targetImgSrc);
+      var scale = imageAsset.naturalWidth / imageAsset.naturalHeight;
+
+      artworkEl.setAttribute("src", targetImgSrc);
+      var g = artworkEl.getAttribute("geometry");
+      g.width = 1 * scale;
+      g.height = 1;
+      artworkEl.setAttribute("geometry", g);
+
+      var mat = true;
+      if (mat) {
+        setMat("#artwork");
+      }
+      adjustFrame(mat);
+    }
+
+    function recenter() {
+      var cameraEl = document.querySelector("#camera");
+      var framedArtworkEl = document.querySelector("#framedArtwork");
+
+      var camR = cameraEl.getAttribute("rotation");
+      var artworkR = framedArtworkEl.getAttribute("rotation");
+
+      artworkR.x = camR.x;
+      artworkR.y = camR.y;
+      artworkR.z = camR.z;
+
+      framedArtworkEl.setAttribute("rotation", artworkR);
+    }
+    function scaleUp() {
+      scale(0.1);
+    }
+    function scaleDown() {
+      scale(-0.1);
+    }
+    function setMat(artworkId) {
+      // put mat a big behind the artwork
+      const Z_DIFF = 0.05;
+      var srcEl = document.querySelector(artworkId);
+      var matEl = document.querySelector("#mat");
+      var g = srcEl.getAttribute("geometry");
+      var p = srcEl.getAttribute("position");
+
+      var mG = matEl.getAttribute("geometry");
+      var padding = 0.2 * g.width;
+      mG.width = g.width + padding;
+      mG.height = g.height + padding;
+
+      matEl.setAttribute("geometry", mG);
+
+      var mP = matEl.getAttribute("position");
+      mP.x = p.x;
+      mP.y = p.y;
+      mP.z = p.z - Z_DIFF;
+      matEl.setAttribute("position", mP);
+    }
+    function scale(incr) {
+      const mat = true;
+      scalePlane("#artwork", incr);
+      // if (mat) {
+      //   scalePlane("#mat", incr);
+      // }
+      // adjustFrame(mat);
+      if (mat) {
+        setMat("#artwork");
+      }
+      adjustFrame(mat);
+    }
+
+    function scalePlane(elId, incr) {
+      var el = document.querySelector(elId);
+      var g = el.getAttribute("geometry");
+      var scale = g.width / g.height;
+      g.height += incr;
+      g.width += incr * scale;
+      el.setAttribute("geometry", g);
+    }
+
+    function adjustFrame(mat) {
+      if (mat) {
+        var el = document.querySelector("#mat");
+      } else {
+        var el = document.querySelector("#artwork");
+      }
+      var g = el.getAttribute("geometry");
+      var p = el.getAttribute("position");
+
+      const Z_PADDING = 0.05;
+      const FRAME_DEPTH = 0.1 * g.width;
+      const FRAME_WIDTH = 0.02 * g.width;
+      var leftEdge = p.x - g.width / 2;
+      var rightEdge = p.x + g.width / 2;
+      var topEdge = p.y + g.height / 2;
+      var bottomEdge = p.y - g.height / 2;
+      var left = {
+        x: leftEdge - FRAME_WIDTH / 2,
+        y: p.y,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: g.height,
+        w: FRAME_WIDTH
+      };
+
+      var right = {
+        x: rightEdge + FRAME_WIDTH / 2,
+        y: p.y,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: g.height,
+        w: FRAME_WIDTH
+      };
+
+      var top = {
+        x: p.x,
+        y: topEdge + FRAME_WIDTH / 2,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: FRAME_WIDTH,
+        w: g.width + FRAME_WIDTH * 2
+      };
+
+      var bottom = {
+        x: p.x,
+        y: bottomEdge - FRAME_WIDTH / 2,
+        z: p.z + Z_PADDING,
+        d: FRAME_DEPTH,
+        h: FRAME_WIDTH,
+        w: g.width + FRAME_WIDTH * 2
+      };
+
+      setFrame("#left-frame", left);
+      setFrame("#top-frame", top);
+      setFrame("#bottom-frame", bottom);
+      setFrame("#right-frame", right);
+    }
+    function setFrame(sectionId, dimensions) {
+      var el = document.querySelector(sectionId);
+      var g = el.getAttribute("geometry");
+      var p = el.getAttribute("position");
+      g.width = dimensions.w;
+      g.height = dimensions.h;
+      g.depth = dimensions.d;
+      p.x = dimensions.x;
+      p.y = dimensions.y;
+      p.z = dimensions.z;
+      el.setAttribute("geometry", g);
+      el.setAttribute("position", p);
+    }
+
+    function zoomIn() {
+      zoomBy(1);
+    }
+    function zoomOut() {
+      zoomBy(-1);
+    }
+    function zoomBy(incr) {
+      var cameraEl = document.querySelector("#camera");
+      var p = cameraEl.getAttribute("position");
+      p.z += incr;
+      cameraEl.setAttribute("position", p);
+    }
+    function takeScreenshot(){
+      
+      let aScene = document
+        .querySelector("a-scene")
+        .components.screenshot.getCanvas("perspective");
+      let frame = captureVideoFrame("video", "png");
+      aScene = resizeCanvas(aScene, frame.width, frame.height);
+      frame = frame.dataUri;
+      mergeImages([frame, aScene]).then(b64 => {
+        let link = document.createElement('a');
+        link.setAttribute("download", "AR.png");
+        link.setAttribute("href", b64);
+        link.click();
+      });
+      }
+      
+      function resizeCanvas(origCanvas, width, height) {
+          let resizedCanvas = document.createElement("canvas");
+          let resizedContext = resizedCanvas.getContext("2d");
+
+          resizedCanvas.height = width;
+          resizedCanvas.width = height;
+
+          resizedContext.drawImage(origCanvas, 0, 0, width, height);
+          return resizedCanvas.toDataURL();
+        }
+
+       function captureVideoFrame(video, format, width, height) {
+          if (typeof video === 'string') {
+            video = document.querySelector(video);
+          }
+
+          format = format || 'jpeg';
+
+          if (!video || (format !== 'png' && format !== 'jpeg')) {
+            return false;
+          }
+
+          var canvas = document.createElement("CANVAS");
+
+          canvas.width = width || video.videoWidth;
+          canvas.height = height || video.videoHeight;
+          canvas.getContext('2d').drawImage(video, 0, 0);
+          var dataUri = canvas.toDataURL('image/' + format);
+          var data = dataUri.split(',')[1];
+          var mimeType = dataUri.split(';')[0].slice(5)
+
+          var bytes = window.atob(data);
+          var buf = new ArrayBuffer(bytes.length);
+          var arr = new Uint8Array(buf);
+
+          for (var i = 0; i < bytes.length; i++) {
+            arr[i] = bytes.charCodeAt(i);
+          }
+
+          var blob = new Blob([arr], { type: mimeType });
+          return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
+        };
+      
+    
+  </script>
+  <body id="scrArea">
+    <div style="position: fixed; z-index:1; top:10px; left: 50%;  ">
+      <button onclick="scaleUp()">img+</button>
+      <button onclick="scaleDown()">img-</button>
+      <button onclick="zoomIn()">cam+</button>
+      <button onclick="zoomOut()">cam-</button>
+      <button onclick="recenter()">Recenter</button>
+      <button onclick="changeImage()">Change img</button>
+      <button onclick="takeScreenshot()">Screenshot</button>
+    </div>
+
+    <div>
+      <a-scene embedded vr-mode-ui="enabled:false" scene-listener arjs
+        ><a-assets>
+          <img id="srcImage1" src="../img/2085.png" />
+          <img id="srcImage2" src="../img/1855.png" />
+        </a-assets>
+
+        
+        </a-entity>
+        <a-entity id="framedArtwork" position="0 1 0">
+          <a-image
+            id="artwork"
+            src="#srcImage1"
+            npot="true"
+            width="1.6"
+            height="1"
+            position="0 0 -7"
+            material=""
+            geometry=""
+          ></a-image>
+          <a-plane
+            id="mat"
+            width="1.8"
+            height="1.2"
+            position="0 1.5923205925486443 -2.89"
+            material="color:#ECECEC"
+          ></a-plane>
+          <a-entity
+            position="-0.8516078879934923 1.6162200397155804 -2.85"
+            geometry="depth:0.1;width:0.1"
+            material="color:#ECECEC"
+            id="left-frame"
+          ></a-entity>
+          <a-entity
+            position="0 2.1203709574339804 -2.8511166046347225"
+            geometry="depth:0.1;height:0.1;width:1.8"
+            material="color:#ECECEC"
+            id="top-frame"
+          ></a-entity>
+          <a-entity
+            position="0 1.126 -2.85"
+            geometry="depth:0.1;height:0.1;width:1.8"
+            material="color:#ECECEC"
+            id="bottom-frame"
+          ></a-entity>
+          <a-entity
+            position="0.8441961799454462 1.585018086559569 -2.85"
+            geometry="depth:0.1;width:0.1"
+            material="color:#ECECEC"
+            id="right-frame"
+          ></a-entity>
+          <a-entity
+            id="lamp"
+            light="intensity:0.6;castShadow:true"
+            position="0 1 1"
+            rotation=""
+          >
+          </a-entity>
+          <a-entity light="color:#BBB;type:ambient"></a-entity>
+        </a-entity>
+        <a-entity id="camera" camera look-controls></a-entity>
+      </a-scene>
+    </div>
   </body>
+  <!--
+    <script>
+      navigator.mediaDevices
+        .getUserMedia({ audio: false, video: true })
+        .then(stream => {
+          let $video = document.querySelector("video");
+          $video.srcObject = stream;
+          $video.onloadedmetadata = () => {
+            $video.play();
+          };
+        });
+    </script>
+  -->
 </html>

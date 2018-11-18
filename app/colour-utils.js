@@ -88,6 +88,46 @@ exports.enhancePalette = function(colours, callback) {
     callback(returnPalette);
   });
 };
+//
+exports.getWeightedAverageDistance = function(
+  inputColours,
+  sourceColours,
+  weights
+) {
+  var minDistance = DELTA_MAX_DISTANCE;
+  var sumDistance = 0;
+  var calcLog = {};
+  for (inpIndex in inputColours) {
+    minDistance = DELTA_MAX_DISTANCE;
+    var inputColour = inputColours[inpIndex];
+    var weight = weights[inpIndex];
+    for (srcIndex in sourceColours) {
+      var sourceColour = sourceColours[srcIndex];
+      var currDistance = DELTA_MAX_DISTANCE;
+      if (inputColour !== null && sourceColour !== null) {
+        currDistance = this.getDistance(inputColour, sourceColour);
+      }
+      if (calcLog[sourceColour]) {
+        calcLog[sourceColour].push(currDistance.toFixed(0));
+      } else {
+        calcLog[sourceColour] = [currDistance.toFixed(0)];
+      }
+      if (currDistance < minDistance) {
+        minDistance = currDistance;
+      }
+    }
+    var minDistanceWeighted = minDistance * weight;
+
+    sumDistance = sumDistance + minDistanceWeighted;
+  }
+  if (inputColours.length > 0) {
+    var weightSum = weights.reduce((a, b) => a + b, 0);
+    var averageDistance = sumDistance / weightSum;
+    return [averageDistance, calcLog];
+  } else {
+    return [DELTA_MAX_DISTANCE, calcLog];
+  }
+};
 
 exports.getAverageDistance = function(inputColours, sourceColours) {
   var minDistance = DELTA_MAX_DISTANCE;

@@ -3,10 +3,18 @@ const IMAGE_URL = "image";
 export default {
   inputColours: [],
   imgList: [],
+  previewImgList: [],
   recommendationValid: false,
   putInputColours: function(inpColours) {
     this.recommendationValid = false;
     this.inputColours = inpColours;
+  },
+  putPreviewImg: function(img) {
+    this.previewImgList = [];
+    this.previewImgList.push(img);
+  },
+  getPreviewImgList: function() {
+    return this.previewImgList;
   },
   getImgList(colours, callback) {
     if (this.recommendationValid) {
@@ -30,7 +38,8 @@ export default {
             author: respImg.author,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
-            calclog: respImg.calcLog
+            calclog: respImg.calcLog,
+            colours: respImg.colours
           };
           this.imgList.push(img);
         }

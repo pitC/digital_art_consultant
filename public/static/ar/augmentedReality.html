@@ -1,6 +1,7 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
   </head>
   <script>
     AFRAME.registerComponent("scene-listener", {
@@ -59,7 +60,7 @@
     function setMat(artworkId) {
       const MAT_PADDING = 0.2;
       // put mat a big behind the artwork
-      const Z_DIFF = 0.01;
+      const Z_DIFF = 0.05;
       var srcEl = document.querySelector(artworkId);
       var matEl = document.querySelector("#mat");
       var g = srcEl.getAttribute("geometry");
@@ -165,93 +166,67 @@
       el.setAttribute("position", p);
     }
   </script>
-  <body>
-    <button onclick="scaleUp()">+</button>
-    <button onclick="scaleDown()">-</button>
-    <button onclick="recenter()">Recenter</button>
-    <button onclick="changeImage()">Change img</button>
-    <a-scene embedded vr-mode-ui="enabled:false" scene-listener
-      ><a-assets>
-        <img id="srcImage1" src="/previews/staedel/2085.png" />
-        <img id="srcImage2" src="/previews/staedel/1855.png" />
-      </a-assets>
 
-      <a-sky color="#84c6ff"></a-sky>
-      <a-entity
-        id="camera-controler"
-        look-controls="enabled:true;hmdEnabled:false"
-        wasd-controls
-      >
-        <a-entity
-          id="camera"
-          camera="active: true"
-          look-controls="enabled:false;hmdEnabled:false"
-          position="0 0 0"
-          data-aframe-default-camera
-        >
-        </a-entity>
-        <a-plane
-          v-if="showTrigger"
-          id="trigger"
-          width="1"
-          height="1"
-          position="0 0 -4"
-        ></a-plane>
-        <a-plane
-          v-if="showTrigger"
-          id="trigger"
-          width="1"
-          height="1"
-          position="0 0 -4"
-          material="shader:flat;transparent:true;opacity:0.5;color:#ff0000;flatShading:true"
-          geometry=""
-        ></a-plane>
-      </a-entity>
-
-      <a-entity id="framedArtwork">
-        <a-image
-          id="artwork"
-          src="#srcImage1"
-          npot="true"
-          width="1.6"
-          height="1"
-          position="0 0 -2.88"
-          material=""
-          geometry=""
-        ></a-image>
-        <a-plane
-          id="mat"
-          width="1.8"
-          height="1.2"
-          position="0 1.5923205925486443 -2.89"
-          material="color:#ECECEC"
-        ></a-plane>
-        <a-entity
-          position="-0.8516078879934923 1.6162200397155804 -2.85"
-          geometry="depth:0.1;width:0.1"
-          material="color:#ECECEC"
-          id="left-frame"
-        ></a-entity>
-        <a-entity
-          position="0 2.1203709574339804 -2.8511166046347225"
-          geometry="depth:0.1;height:0.1;width:1.8"
-          material="color:#ECECEC"
-          id="top-frame"
-        ></a-entity>
-        <a-entity
-          position="0 1.126 -2.85"
-          geometry="depth:0.1;height:0.1;width:1.8"
-          material="color:#ECECEC"
-          id="bottom-frame"
-        ></a-entity>
-        <a-entity
-          position="0.8441961799454462 1.585018086559569 -2.85"
-          geometry="depth:0.1;width:0.1"
-          material="color:#ECECEC"
-          id="right-frame"
-        ></a-entity>
-      </a-entity>
-    </a-scene>
+  <body style="margin : 0px; overflow: hidden;">
+    <div>
+      <button onclick="scaleUp()">+</button>
+      <button onclick="scaleDown()">-</button>
+      <button onclick="recenter()">Recenter</button>
+      <button onclick="changeImage()">Change img</button>
+    </div>
+    <div>
+      <a-scene embedded vr-mode-ui="enabled:false" scene-listener arjs
+        ><a-assets>
+          <img id="srcImage1" src="../img/2085.png" />
+          <img id="srcImage2" src="../img/1855.png" />
+        </a-assets>
+        <a-marker preset="hiro">
+          <a-entity id="framedArtwork" rotation="285 0 0" position="0 0 0">
+            <a-image
+              id="artwork"
+              src="#srcImage1"
+              npot="true"
+              width="1.6"
+              height="1"
+              position="0 0 -2.88"
+              material=""
+              geometry=""
+            ></a-image>
+            <a-plane
+              id="mat"
+              width="1.8"
+              height="1.2"
+              position="0 1.5923205925486443 -2.89"
+              material="color:#ECECEC"
+            ></a-plane>
+            <a-entity
+              position="-0.8516078879934923 1.6162200397155804 -2.85"
+              geometry="depth:0.1;width:0.1"
+              material="color:#ECECEC"
+              id="left-frame"
+            ></a-entity>
+            <a-entity
+              position="0 2.1203709574339804 -2.8511166046347225"
+              geometry="depth:0.1;height:0.1;width:1.8"
+              material="color:#ECECEC"
+              id="top-frame"
+            ></a-entity>
+            <a-entity
+              position="0 1.126 -2.85"
+              geometry="depth:0.1;height:0.1;width:1.8"
+              material="color:#ECECEC"
+              id="bottom-frame"
+            ></a-entity>
+            <a-entitylo
+              position="0.8441961799454462 1.585018086559569 -2.85"
+              geometry="depth:0.1;width:0.1"
+              material="color:#ECECEC"
+              id="right-frame"
+            ></a-entity>
+          </a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+      </a-scene>
+    </div>
   </body>
-  <script></script>
 </html>

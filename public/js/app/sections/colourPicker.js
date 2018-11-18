@@ -2,7 +2,8 @@ import SharedStorage from "../sharedStorage.js";
 import RouteNames from "./../RouteNames.js";
 const MAIN_BT_DEFAULT_LABEL = "Set main colour";
 const SEC_BT_DEFAULT_LABEL = "Set secondary colour";
-const AVAILABLE_COLOUR_NUM = 2;
+const CONTRAST_BT_DEFAULT_LABEL = "Set contrast colour";
+const AVAILABLE_COLOUR_NUM = 3;
 export default {
   template: `
 <div class="container-fluid">
@@ -61,6 +62,22 @@ export default {
         </button>
       </div>
 
+      <div class="btn-group mx-4 mb-3" role="group" aria-label="Basic example">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-25 mb-3"
+          v-on:click="selectContrastColour"
+          :style="contrastColourBg"
+        ></button>
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg w-75 p-3 mb-3"
+          v-on:click="selectContrastColour"
+        >
+          {{contrastBtLabel}}
+        </button>
+      </div>
+
       <div class="box box-2">
         <div class="mt-auto mt-md-0 fixed-bottom">
           <button type="button" class="btn lightblue btn-info btn-block rounded-0" :disabled="isCommitDisabled" v-on:click="onCommitColours">
@@ -96,7 +113,7 @@ export default {
     `,
   data: function() {
     return {
-      colours: [null, null],
+      colours: [null, null, null],
       selectedColour: 0
     };
   },
@@ -106,6 +123,9 @@ export default {
     },
     secColourBg() {
       return "background-color: " + this.colours[1];
+    },
+    contrastColourBg() {
+      return "background-color: " + this.colours[2];
     },
     mainBtLabel() {
       if (this.colours[0]) {
@@ -121,8 +141,15 @@ export default {
         return SEC_BT_DEFAULT_LABEL;
       }
     },
+    contrastBtLabel() {
+      if (this.colours[2]) {
+        return this.colours[2].toUpperCase();
+      } else {
+        return CONTRAST_BT_DEFAULT_LABEL;
+      }
+    },
     isCommitDisabled() {
-      if (this.colours[0] || this.colours[1]) {
+      if (this.colours[0] || this.colours[1] || this.colours[2]) {
         return false;
       } else {
         return true;
@@ -136,6 +163,10 @@ export default {
     },
     selectSecColour: function(event) {
       this.selectColour(1);
+      this.showModal();
+    },
+    selectContrastColour: function(event) {
+      this.selectColour(2);
       this.showModal();
     },
     saveSelection: function(event) {
@@ -162,17 +193,24 @@ export default {
 
       SharedStorage.putInputColours(selectedColours);
       console.log(selectedColours);
-      this.$router.push(RouteNames.RESULT_LIST);
+      this.$router.push({
+        path: RouteNames.RESULT_LIST,
+        query: this.$route.query
+      });
     },
     getManualColours: function() {
       var mainColour = this.colours[0] || "";
       var secColour = this.colours[1] || "";
+      var contrastColour = this.colours[2] || "";
       var colours = [];
       if (mainColour.startsWith("#")) {
         colours.push(mainColour);
       }
       if (secColour.startsWith("#")) {
         colours.push(secColour);
+      }
+      if (contrastColour.startsWith("#")) {
+        colours.push(contrastColour);
       }
       return colours;
     },
