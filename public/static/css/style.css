@@ -35,7 +35,7 @@ background-size: cover;
 
 .container-fluid
 { padding: 0px;
-    height: 100%;
+    height: 90%;
     display: flex;
 	flex-direction: column;
   
@@ -137,6 +137,20 @@ background-size: cover;
         height: 4px;
     
     }     
+
+
+    .indexnavi{
+
+    background-color: #f8f9fa;
+   opacity: 0.3; 
+   filter: alpha(opacity=30);
+}
+
+a.indexnavi:link {
+    
+   color:#FFFFFF !important;
+} 
+    
     /* brand color to be changed */
     .text-lightblue {
         color: #7ec8fa;
