@@ -328,6 +328,9 @@ color: white;
      column-gap: 0.5rem;
      margin: 10px;
  }
+ .card{
+     border: none;
+ }
             
     /*
 .container-fluid {
