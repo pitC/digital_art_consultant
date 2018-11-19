@@ -48,7 +48,7 @@ background-size: cover;
 
 @media (min-width: 576px) {
     .card-columns {
-        column-count: 2;
+        column-count: 1;
     }
 }
 
@@ -60,7 +60,7 @@ background-size: cover;
 
 @media (min-width: 992px) {
     .card-columns {
-        column-count: 2;
+        column-count: 3;
     }
 }
 
@@ -309,16 +309,25 @@ color: white;
 }
 @media all and (max-width: 1199px) {
     .col-sm-6 {max-width: 25%;} 
+ 
  }           
 @media all and (max-width: 991px) {
-    .col-sm-6 {max-width: 33.3%;} 
+    .col-sm-6 {max-width: 33.3%;}
+ 
  }           
 @media all and (max-width: 768px) {
-    .col-sm-6 {max-width: 50%;} 
+    .col-sm-6 {max-width: 50%;}
+ 
  }           
 @media all and (max-width: 575px) {
-    .col-sm-6 {max-width: 100%;} 
- }          
+    .col-sm-6 {max-width: 100%;}
+
+ }   
+ 
+ .card-columns{
+     column-gap: 0.5rem;
+     margin: 10px;
+ }
             
     /*
 .container-fluid {
