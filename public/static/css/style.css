@@ -330,6 +330,7 @@ color: white;
  }
  .card{
      border: none;
+     min-width: 300px;
  }
             
     /*
