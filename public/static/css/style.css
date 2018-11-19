@@ -297,7 +297,28 @@ color: white;
         .colorpicker-2x .colorpicker-color div {
            height: 30px;
         }
-            
+
+
+/*card custom layout*/
+.col-sm-6 {
+    padding: 10px 3px 0px 3px;
+}
+.row {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+@media all and (max-width: 1199px) {
+    .col-sm-6 {max-width: 25%;} 
+ }           
+@media all and (max-width: 991px) {
+    .col-sm-6 {max-width: 33.3%;} 
+ }           
+@media all and (max-width: 768px) {
+    .col-sm-6 {max-width: 50%;} 
+ }           
+@media all and (max-width: 575px) {
+    .col-sm-6 {max-width: 100%;} 
+ }          
             
     /*
 .container-fluid {
