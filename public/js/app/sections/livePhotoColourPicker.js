@@ -136,7 +136,7 @@ export default {
           id="video-el"
           width="100%"
           autoplay
-          
+          playsinline
           ref="video"
           autoplay v-bind:hidden="isVideoHidden"
         ></video>

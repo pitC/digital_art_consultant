@@ -137,7 +137,7 @@ export default {
         <video
           id="video-el"
           width="100%"
-          
+          playsinline
           autoplay
           
           ref="video"
