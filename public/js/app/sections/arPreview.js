@@ -7,7 +7,7 @@ const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
 const AFRAME_CLICKABLE = "clickable-trigger";
 const AFRAME_DRAGGABLE = "draggable";
-const INITIAL_ARTWORK_DISTANCE = -2;
+const INITIAL_ARTWORK_DISTANCE = -4;
 const INITIAL_ARTWORK_HEIGHT = 2;
 
 const INITIAL_CAM_DISTANCE = 0;
@@ -39,7 +39,8 @@ export default {
       debug: true,
       debugStr: "",
       previewMode: IMAGE_INITIAL_PLACING,
-      attachAnimation: false
+      attachAnimation: false,
+      headsetConnected: false
     };
   },
   computed: {
@@ -125,11 +126,13 @@ export default {
       }
     },
     lockIndicatorIcon() {
-      if (this.previewMode == IMAGE_PLACED) {
+      if (this.previewMode == IMAGE_PLACED && this.headsetConnected) {
         return "#srcLock";
+      } else if (this.previewMode == IMAGE_PLACED && !this.headsetConnected) {
+        return "#srcUnlock";
       } else if (this.previewMode == IMAGE_REPLACING) {
         return "#srcUnlock";
-      }
+      } else return "#srcLock";
     }
   },
 
@@ -280,7 +283,7 @@ export default {
           
           <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
           <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
-          
+          <button id="screenshot-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
         </div>
       </div>
     </div>
@@ -364,7 +367,7 @@ export default {
     this.images = SharedStorage.getPreviewImgList();
     this.currentImage = this.images[0];
     var video = this.$refs.video;
-    const headsetConnected = AFRAME.utils.device.checkHeadsetConnected(); // Samsung: true; Lap: false
+    this.headsetConnected = AFRAME.utils.device.checkHeadsetConnected(); // Samsung: true; Lap: false
     const isMobile = AFRAME.utils.device.isMobile(); //Samsung: true; Lap: false
     const isGearVR = AFRAME.utils.device.isGearVR();
 
