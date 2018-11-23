@@ -155,28 +155,28 @@ a.indexnavi:link {
     .text-lightblue {
         color: #90CCF4;
     }     
-  .lightblue {
+  .custom-standard {
     background-color: #90CCF4;
     border-color: #90CCF4;
     color: white;
 }
-.lightblue:hover {
+.custom-standard:hover {
     background-color: #5DA2D5;
     border-color: #5DA2D5;
     color: white;
 }
-.lightblue:active {
+.custom-standard:active {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
-.lightblue:focus {
+.custom-standard:focus {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
 
-.lightblue:after {
+.custom-standard:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
@@ -329,8 +329,9 @@ color: white;
  
  .card-columns{
      column-gap: 0.5rem;
-     margin: 10px;
- }
+        margin: 0.5rem 0.5rem 55px 0.5rem;
+    }
+
  .card{
      border: none;
  }
