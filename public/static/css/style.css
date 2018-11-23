@@ -334,6 +334,9 @@ color: white;
  .card{
      border: none;
  }
+.card-body{
+     padding: 1.25rem 1.25rem 0.5rem 1.25rem;
+    }
             
     /*
 .container-fluid {
