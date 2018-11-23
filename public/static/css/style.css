@@ -155,55 +155,55 @@ a.indexnavi:link {
     .text-lightblue {
         color: #90CCF4;
     }     
-  .lightblue {
+  .custom-standard {
     background-color: #90CCF4;
     border-color: #90CCF4;
     color: white;
 }
-.lightblue:hover {
+.custom-standard:hover {
     background-color: #5DA2D5;
     border-color: #5DA2D5;
     color: white;
 }
-.lightblue:active {
+.custom-standard:active {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
-.lightblue:focus {
+.custom-standard:focus {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
 
-.lightblue:after {
+.custom-standard:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
 }
     
-.red {
+.custom-action {
 background-color: #F78888;
 border-color: #F78888;
 color: white;
 }
-.red:hover {
+.custom-action:hover {
 background-color: #FF5858;
 border-color: #FF5858;
 color: white;
 }
-.red:active {
+.custom-action:active {
 background-color: #FF5858;
 border-color:#FF5858;
 color: white;
 }
-.red:focus {
+.custom-action:focus {
 background-color: #FF5858;
 border-color:#FF5858;
 color: white;
 }
 
-.red:after {
+.custom-action:after {
 background-color: FF5858;
 border-color:FF5858;
 color: white;
@@ -329,12 +329,23 @@ color: white;
  
  .card-columns{
      column-gap: 0.5rem;
-     margin: 10px;
- }
+        margin: 0.5rem 0.5rem 55px 0.5rem;
+    }
+
  .card{
      border: none;
  }
+.card-body{
+     padding: 1.25rem 1.25rem 0.5rem 1.25rem;
+    }
             
+    /* Blockquote*/
+    .blockquote-footer{
+        color: #F78888;
+    }
+    blockquote p {
+        font-weight: 100;
+    }
     /*
 .container-fluid {
     height: 100vh;
