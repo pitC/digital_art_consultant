@@ -5,6 +5,7 @@ export default {
       this.scalePlane("#mat", incr);
     }
     this.adjustFrame(renderMat);
+    this.adjustLockIndicator();
   },
   scalePlane: function(elId, incr) {
     var el = document.querySelector(elId);
@@ -124,6 +125,15 @@ export default {
     this.adjustLockIndicator();
   },
 
+  resetLockIndicatorOpacity() {
+    const LOCK_OPACITY = 0.7;
+    var indicator = document.querySelector("#lockIndicator");
+
+    var material = indicator.getAttribute("material");
+    material.opacity = LOCK_OPACITY;
+    indicator.setAttribute("material", material);
+  },
+
   adjustLockIndicator() {
     // place lock indicator in the top upper corner
     const PADDING = 0;
@@ -183,11 +193,18 @@ export default {
     this.adjustFrame(renderMat);
   },
 
+  resetScene: function() {
+    var scene = document.querySelector("a-scene");
+    scene.reload();
+  },
+
   registerListener: function(listenerName, listenerObject) {
     var componentExists = AFRAME.components.hasOwnProperty(listenerName);
-    if (!componentExists) {
-      AFRAME.registerComponent(listenerName, listenerObject);
+    if (componentExists) {
+      delete AFRAME.components[listenerName];
     }
+
+    AFRAME.registerComponent(listenerName, listenerObject);
   },
 
   getImageDimensions: function() {

@@ -38,7 +38,8 @@ export default {
       state: AppState.READY,
       debug: true,
       debugStr: "",
-      previewMode: IMAGE_INITIAL_PLACING
+      previewMode: IMAGE_INITIAL_PLACING,
+      attachAnimation: false
     };
   },
   computed: {
@@ -108,10 +109,10 @@ export default {
     },
 
     showArtwork() {
-      if (this.previewMode == IMAGE_INITIAL_PLACING) {
-        return "false";
-      } else {
+      if (this.previewMode == IMAGE_PLACED) {
         return "true";
+      } else {
+        return "false";
       }
     },
 
@@ -128,16 +129,6 @@ export default {
         return "#srcLock";
       } else if (this.previewMode == IMAGE_REPLACING) {
         return "#srcUnlock";
-      }
-    },
-
-    triggerButtonLbl() {
-      if (this.previewMode == IMAGE_PLACED) {
-        return "Re-place";
-      } else if (this.previewMode == IMAGE_REPLACING) {
-        return "Fire!";
-      } else {
-        return "PLACE IMG";
       }
     }
   },
@@ -245,7 +236,7 @@ export default {
           
           <a-image
             :visible="showLockIndicator"
-            
+            geometry="primitive: plane"
             id="lockIndicator"
             :src="lockIndicatorIcon"
             npot="true"
@@ -289,14 +280,13 @@ export default {
           
           <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
           <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
-          <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> {{triggerButtonLbl}}</button>
-         
+          
         </div>
       </div>
     </div>
   </div>
   `,
-
+  // < a - animation v -if= "attachAnimation" attribute = "material.opacity" delay = "0" dur = "3000" to = "0" ></a - animation >
   props: ["appstate"],
   methods: {
     onBackToList: function(event) {
@@ -310,13 +300,16 @@ export default {
     recenter: function() {
       if (this.previewMode == IMAGE_PLACED) {
         this.previewMode = IMAGE_REPLACING;
+        this.attachAnimation = false;
+        AframeNav.resetLockIndicatorOpacity();
       } else {
         AframeNav.recenter();
         this.previewMode = IMAGE_PLACED;
-        var lockInd = document.querySelector("#lockIndicatorGrp");
-        lockInd.emit("fade");
+        // var lockInd = document.querySelector("#lockIndicator");
+        // lockInd.emit("fade");
         this.dumpCanvasGeometry();
         this.updateDebugStr();
+        this.attachAnimation = true;
       }
     },
 
@@ -374,6 +367,8 @@ export default {
     const headsetConnected = AFRAME.utils.device.checkHeadsetConnected(); // Samsung: true; Lap: false
     const isMobile = AFRAME.utils.device.isMobile(); //Samsung: true; Lap: false
     const isGearVR = AFRAME.utils.device.isGearVR();
+
+    this.previewMode = IMAGE_INITIAL_PLACING;
 
     AframeNav.registerListener(AFRAME_SCENE_LISTENER, {
       init: function() {
@@ -437,6 +432,7 @@ export default {
   },
   beforeRouteLeave: function(to, from, next) {
     this.stopVideo();
+
     next();
   }
 };
