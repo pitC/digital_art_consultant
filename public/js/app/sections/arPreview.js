@@ -244,11 +244,11 @@ export default {
             height="0.2"
             position="0 0 0 "
             material = "opacity:0.7"
+            animation="property:material.opacity;delay:0;dur:3000;startEvents:fade;to:0"
           >
           
           
           </a-image>
-          
           
           
 
@@ -286,7 +286,7 @@ export default {
     </div>
   </div>
   `,
-  // < a - animation v -if= "attachAnimation" attribute = "material.opacity" delay = "0" dur = "3000" to = "0" ></a - animation >
+
   props: ["appstate"],
   methods: {
     onBackToList: function(event) {
@@ -305,8 +305,8 @@ export default {
       } else {
         AframeNav.recenter();
         this.previewMode = IMAGE_PLACED;
-        // var lockInd = document.querySelector("#lockIndicator");
-        // lockInd.emit("fade");
+        var lockInd = document.querySelector("#lockIndicator");
+        lockInd.emit("fade");
         this.dumpCanvasGeometry();
         this.updateDebugStr();
         this.attachAnimation = true;
@@ -386,7 +386,6 @@ export default {
         var el = this.el;
         el.addEventListener("click", function() {
           self.recenter();
-          console.log("Clicked!");
         });
       }
     });
