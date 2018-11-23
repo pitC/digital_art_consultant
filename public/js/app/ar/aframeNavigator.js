@@ -121,6 +121,39 @@ export default {
       this.setMat("#artwork");
     }
     this.adjustFrame(renderMat);
+    this.adjustLockIndicator();
+  },
+
+  adjustLockIndicator() {
+    // place lock indicator in the top upper corner
+    const PADDING = 0;
+    var topFrame = document.querySelector("#top-frame");
+    var g = topFrame.getAttribute("geometry");
+    var p = topFrame.getAttribute("position");
+
+    var indicator = document.querySelector("#lockIndicator");
+
+    var indG = indicator.getAttribute("geometry");
+
+    var indicatorP = {
+      x: p.x + g.width / 2 + indG.width / 2 + PADDING,
+      y: p.y + g.height / 2 + indG.height + PADDING,
+      z: p.z
+    };
+    indicator.setAttribute("position", indicatorP);
+  },
+
+  adjustPreviewImage: function() {
+    var artworkEl = document.querySelector("#trigger");
+
+    var currentImgSrc = artworkEl.getAttribute("src");
+
+    var imageAsset = document.querySelector(currentImgSrc);
+    var scale = imageAsset.naturalWidth / imageAsset.naturalHeight;
+    var g = artworkEl.getAttribute("geometry");
+    g.width = g.width * scale;
+    g.height = g.height;
+    artworkEl.setAttribute("geometry", g);
   },
   // TODO: recenter also lights
   recenter: function() {

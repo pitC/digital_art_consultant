@@ -5,7 +5,9 @@ import AframeNav from "./../ar/aframeNavigator.js";
 const VIDEO_READY = "video";
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
-const INITIAL_ARTWORK_DISTANCE = -4;
+const AFRAME_CLICKABLE = "clickable-trigger";
+const AFRAME_DRAGGABLE = "draggable";
+const INITIAL_ARTWORK_DISTANCE = -2;
 const INITIAL_ARTWORK_HEIGHT = 2;
 
 const INITIAL_CAM_DISTANCE = 0;
@@ -18,7 +20,7 @@ const IMAGE_INITIAL_PLACING = "initial";
 const DEFAULT_FRAME_COLOUR = "#fcf0d1";
 const DEFAULT_MAT_COLOUR = "#fcf0d1";
 
-const TRIGGER_DISTANCE = -1;
+const TRIGGER_DISTANCE = INITIAL_ARTWORK_DISTANCE + 0.2;
 
 var VIDEO_CONSTRAINTS = {
   audio: false,
@@ -90,7 +92,11 @@ export default {
     },
 
     triggerPosition() {
-      return `0 ${INITIAL_CAM_HEIGHT} ${TRIGGER_DISTANCE} `;
+      return `0 ${INITIAL_ARTWORK_HEIGHT} ${TRIGGER_DISTANCE} `;
+    },
+
+    triggeLockrPosition() {
+      return `0 ${INITIAL_ARTWORK_HEIGHT} ${TRIGGER_DISTANCE + 0.1} `;
     },
 
     showTrigger() {
@@ -106,6 +112,22 @@ export default {
         return "false";
       } else {
         return "true";
+      }
+    },
+
+    showLockIndicator() {
+      if (
+        this.previewMode == IMAGE_PLACED ||
+        this.previewMode == IMAGE_REPLACING
+      ) {
+        return "true";
+      }
+    },
+    lockIndicatorIcon() {
+      if (this.previewMode == IMAGE_PLACED) {
+        return "#srcLock";
+      } else if (this.previewMode == IMAGE_REPLACING) {
+        return "#srcUnlock";
       }
     },
 
@@ -143,28 +165,48 @@ export default {
           ref="video"
           
         ></video>
-        
-      <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener><a-assets>
+    
+      <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener cursor="rayOrigin: mouse;fuse:false; fuseTimeout: 0"><a-assets>
           <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
+          <img id="srcLock" src="/dist/img/lockedIcon.png" crossorigin="anonymous"/>
+          <img id="srcUnlock" src="/dist/img/unlockedIcon.png" crossorigin="anonymous"/>
         </a-assets>
-        <a-entity id="camera-controler" look-controls="enabled:true;hmdEnabled:false" wasd-controls>
+        <a-entity id="camera-controler" look-controls="enabled:true;hmdEnabled:false;touchEnabled:false" wasd-controls>
         
           <a-entity
             id="camera"
             camera="active: true"
-            look-controls="enabled:false;hmdEnabled:false"
+            look-controls="enabled:false;hmdEnabled:false;touchEnabled:false"
             :position="cameraPosition"
             data-aframe-default-camera
+            
           >
+          
           </a-entity>
-          <a-plane
-              v-if="showTrigger"
-              id="trigger"
-              width="0.5"
-              height="0.5"
-              :position="triggerPosition"
-              material="shader:flat;transparent:true;opacity:0.5;color:#ff0000;flatShading:true"
-            ></a-plane>
+           <a-image
+            v-if="showTrigger"
+            clickable-trigger
+            id="trigger"
+            src="#srcImage1"
+            npot="true"
+            width="1"
+            height="1"
+            image-listener
+            :position="triggerPosition"
+            material = "transparent:false;opacity:0.5"
+          ></a-image>
+          <a-image
+            v-if="showTrigger"
+            clickable-trigger
+            id="triggerLock"
+            src="#srcLock"
+            npot="true"
+            width="0.7"
+            height="0.7"
+            :position="triggeLockrPosition"
+            material = "opacity:0.7"
+          ></a-image>
+
         </a-entity>
         <a-entity id="framedArtwork" :visible="showArtwork">
           
@@ -200,9 +242,30 @@ export default {
             :material="frameMaterial"
             id="right-frame"
           ></a-entity>
+          
+          <a-image
+            :visible="showLockIndicator"
+            
+            id="lockIndicator"
+            :src="lockIndicatorIcon"
+            npot="true"
+            width="0.2"
+            height="0.2"
+            position="0 0 0 "
+            material = "opacity:0.7"
+          >
+          
+          
+          </a-image>
+          
+          
+          
+
           <a-image
             id="artwork"
+            click-drag
             src="#srcImage1"
+            clickable-trigger
             npot="true"
             width="1.6"
             height="1"
@@ -227,14 +290,13 @@ export default {
           <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
           <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
           <button id="recenter-btn" type="button" class="btn lightblue btn-block" v-on:click="recenter"><i class="fas fa-arrows-alt"></i> {{triggerButtonLbl}}</button>
-          <button id="closer-btn" type="button" class="btn btn-block" v-on:click="stepForward"><i class="fas fa-plus-circle"></i> </button>
-          <button id="further-btn" type="button" class="btn btn-block" v-on:click="stepBack"><i class="fas fa-minus-circle"></i></button>
          
         </div>
       </div>
     </div>
   </div>
   `,
+
   props: ["appstate"],
   methods: {
     onBackToList: function(event) {
@@ -251,6 +313,8 @@ export default {
       } else {
         AframeNav.recenter();
         this.previewMode = IMAGE_PLACED;
+        var lockInd = document.querySelector("#lockIndicatorGrp");
+        lockInd.emit("fade");
         this.dumpCanvasGeometry();
         this.updateDebugStr();
       }
@@ -307,6 +371,9 @@ export default {
     this.images = SharedStorage.getPreviewImgList();
     this.currentImage = this.images[0];
     var video = this.$refs.video;
+    const headsetConnected = AFRAME.utils.device.checkHeadsetConnected(); // Samsung: true; Lap: false
+    const isMobile = AFRAME.utils.device.isMobile(); //Samsung: true; Lap: false
+    const isGearVR = AFRAME.utils.device.isGearVR();
 
     AframeNav.registerListener(AFRAME_SCENE_LISTENER, {
       init: function() {
@@ -319,21 +386,34 @@ export default {
       update: function() {}
     });
 
+    AframeNav.registerListener(AFRAME_CLICKABLE, {
+      init: function() {
+        var el = this.el;
+        el.addEventListener("click", function() {
+          self.recenter();
+          console.log("Clicked!");
+        });
+      }
+    });
+
     AframeNav.registerListener(AFRAME_IMAGE_LISTENER, {
       update: function() {
         var img = this.el;
-        var g = img.getAttribute("geometry");
-        var p = img.getAttribute("position");
         var srcEl = img.getAttribute("src");
         var imgAsset = document.querySelector(srcEl);
         if (imgAsset) {
-          AframeNav.adjustImageDimensions(self.renderMat);
+          if (img.id == "artwork") {
+            AframeNav.adjustImageDimensions(self.renderMat);
+            self.updateDebugStr();
+          } else {
+            AframeNav.adjustPreviewImage();
+          }
         }
-        self.updateDebugStr();
       },
       init: function() {}
     });
 
+    // registerAframeClickDragComponent(window.AFRAME);
     // this.state = WEBCAM_INIT;
     // var self = this;
 
