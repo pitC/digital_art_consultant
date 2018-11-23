@@ -182,28 +182,28 @@ a.indexnavi:link {
     color: white;
 }
     
-.red {
+.custom-action {
 background-color: #F78888;
 border-color: #F78888;
 color: white;
 }
-.red:hover {
+.custom-action:hover {
 background-color: #FF5858;
 border-color: #FF5858;
 color: white;
 }
-.red:active {
+.custom-action:active {
 background-color: #FF5858;
 border-color:#FF5858;
 color: white;
 }
-.red:focus {
+.custom-action:focus {
 background-color: #FF5858;
 border-color:#FF5858;
 color: white;
 }
 
-.red:after {
+.custom-action:after {
 background-color: FF5858;
 border-color:FF5858;
 color: white;
