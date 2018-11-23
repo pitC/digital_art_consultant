@@ -55,32 +55,38 @@ export default {
             v-bind:colour="colour"
           ></inp-colour-item>
       </div>
-    </div>
-  <div class="container">
-    <div id="recommendation-results" class="d-flex flex-row">
-      <div id="images" class="card-group" v-if="isListReady">
-          <img-card
-            v-for="img in imgList"
-            v-bind:calclog="img.calclog"
-            v-bind:fileurl="img.fileURL"
-            v-bind:title="img.title"
-            v-bind:author="img.author"
-            v-bind:reason="img.reason"
-            v-bind:_id="img._id"
-            v-bind:debug="debug"
-          ></img-card>
+    
+      <div class="card-columns" v-if="isListReady">
+        <img-card
+          v-for="img in imgList"
+          
+          :calclog="img.calclog"
+          :fileurl="img.fileURL"
+          :title="img.title"
+          :author="img.author"
+          :reason="img.reason"
+          :_id="img._id"
+          :year="img.year"
+          :museum="img.museum"
+          :debug="debug"
+          @preview-requested="onPreviewRequest"
+        ></img-card>
       </div>
       <div class="box p-2" v-else>
         <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-  </div>
 </div>
   `,
   methods: {
     goBack: function(event) {
       this.$router.go(-1);
+    },
+    onPreviewRequest: function(id) {
+      var img = this.imgList.find(o => o._id == id);
+      SharedStorage.putPreviewImg(img);
+      this.$router.push(RouteNames.PREVIEW);
     }
   },
   mounted: function() {

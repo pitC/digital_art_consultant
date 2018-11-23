@@ -36,6 +36,9 @@ export default {
             _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
+            year: respImg.year,
+            //HACK: museum hardcoded for now
+            museum: "Städel Museum",
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,
