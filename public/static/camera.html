@@ -46,7 +46,7 @@
 
       <div class="box box-4">
         <!-- <p></p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
-        <video id="video-el" width="100%" autoplay style="padding-bottom: 30px;"></video>
+        <video id="video-el" width="100%" playsinline autoplay style="padding-bottom: 30px;"></video>
       </div>
       <div class="container">
       <div class="box box-5 fixed-bottom">
@@ -100,9 +100,22 @@
       };
       // Get access to the camera!
       // this.mode = VIDEO_PREVIEW_MODE;
+      navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         // Not adding `{ audio: true }` since we only want video now
         navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+          } else {
+            video.src = window.URL.createObjectURL(stream);
+          }
+          video.play();
+        });
+      }
+      else{
+        navigator.getWebcam(VIDEO_CONSTRAINTS,
+        function(stream){
           if ("srcObject" in video) {
             video.srcObject = stream;
           } else {
