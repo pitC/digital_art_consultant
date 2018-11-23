@@ -339,6 +339,13 @@ color: white;
      padding: 1.25rem 1.25rem 0.5rem 1.25rem;
     }
             
+    /* Blockquote*/
+    .blockquote-footer{
+        color: #F78888;
+    }
+    blockquote p {
+        font-weight: 100;
+    }
     /*
 .container-fluid {
     height: 100vh;
