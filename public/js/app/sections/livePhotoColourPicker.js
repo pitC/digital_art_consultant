@@ -141,11 +141,15 @@ export default {
           autoplay v-bind:hidden="isVideoHidden"
         ></video>
         <canvas width="100%" v-bind:hidden="isPreviewHidden" ref="photoCanvas" @mousedown="onDown" @touchstart="onDown" @mousemove="onMove" @touchmove="onMove" @mouseup="onUp" @touchend="onUp" ></canvas>
-        <div class="bg-light" ref="upload" width="100%" v-bind:hidden="isUploadHidden">
-        No camera access :(
-        </div>
+        
     </div>
     <div class="container">
+      <div class="box box-1" v-bind:hidden="isUploadHidden">
+         <div class="alert alert-warning" role="alert">
+            Unfortunately we can’t access your camera. But don’t worry, you can
+            still <button type="button" v-on:click="manualMode" class="btn btn-link">Select colours manually</button>
+          </div>
+      </div>
       <div class="box box-5 fixed-bottom">
         <div class="btn-group mt-auto w-100" role="group">
           <button id="snapshot-btn" type="button" class="btn lightblue btn-info btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
@@ -251,9 +255,12 @@ export default {
 
     stopVideo: function() {
       var video = this.$refs.video;
+
       video.pause();
       if ("srcObject" in video) {
-        video.srcObject.getTracks()[0].stop();
+        if (video.srcObject) {
+          video.srcObject.getTracks()[0].stop();
+        }
       } else {
         video.src.stop();
       }
@@ -270,8 +277,12 @@ export default {
     },
 
     manualMode: function(event) {
-      this.stopVideo();
-      this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
+      // if upload is shown, we haven't accessed camera so nothing to stop
+      if (this.isUploadHidden) {
+        this.stopVideo();
+      } else {
+        this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
+      }
     },
     goBack: function(event) {
       this.$router.go(-1);
