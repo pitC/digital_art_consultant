@@ -17,6 +17,10 @@ exports.selectImages = function(limit, criteria, candidateImages) {
   var selectedImages = [];
 
   var inputColours = criteria.colours;
+  var blacklist = [];
+  if (criteria.blacklist) {
+    blacklist = criteria.blacklist;
+  }
 
   for (index in candidateImages) {
     var img = candidateImages[index];
@@ -34,13 +38,16 @@ exports.selectImages = function(limit, criteria, candidateImages) {
       imgColours,
       WEIGHTS
     );
-    var distanceLimit = criteria.distanceLimit | DISTANCE_LIMIT;
+    var distanceLimit = criteria.distanceLimit || DISTANCE_LIMIT;
     if (distance < distanceLimit) {
       img.sortValue = distance;
       img.calcLog = calcLog;
       img.recommendationReason = `Score: ${distance.toFixed(2)}`;
       img.fileURL = metadataDao.getTargetURL(img.filename);
-      selectedImages.push(img);
+      var imgId = img._id.toString();
+      if (!blacklist.includes(imgId)) {
+        selectedImages.push(img);
+      }
     }
   }
   selectedImages.sort(sortByDistance);

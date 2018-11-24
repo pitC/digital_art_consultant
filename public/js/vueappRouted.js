@@ -5,6 +5,7 @@ import ImageDetails from "./app/sections/imageDetails.js";
 import ArPreview from "./app/sections/arPreview.js";
 import Checkout from "./app/sections/checkout.js";
 import RouteNames from "./app/RouteNames.js";
+import Question from "./app/sections/question.js";
 
 const routes = [
   { path: RouteNames.PHOTO_INPUT, component: LivePhotoColourPicker },
@@ -12,7 +13,8 @@ const routes = [
   { path: RouteNames.COLOUR_PICKER_INPUT, component: ColourPicker },
   { path: RouteNames.IMAGE_DETAILS, component: ImageDetails },
   { path: RouteNames.PREVIEW, component: ArPreview },
-  { path: RouteNames.CHECKOUT, component: Checkout }
+  { path: RouteNames.CHECKOUT, component: Checkout },
+  { path: RouteNames.QUESTION, component: Question }
 ];
 
 const router = new VueRouter({

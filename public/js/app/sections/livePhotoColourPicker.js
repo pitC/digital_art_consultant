@@ -302,7 +302,6 @@ export default {
     // Get access to the camera!
     // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      // Not adding `{ audio: true }` since we only want video now
       navigator.mediaDevices
         .getUserMedia(VIDEO_CONSTRAINTS)
         .then(stream => {
@@ -322,6 +321,8 @@ export default {
           self.uploadFallback = true;
           self.state = MANUAL_UPLOAD_MODE;
         });
+    } else {
+      self.state = MANUAL_UPLOAD_MODE;
     }
   },
 

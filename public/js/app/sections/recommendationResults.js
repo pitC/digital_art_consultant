@@ -21,7 +21,8 @@ export default {
       inputColours: [],
       imgList: [],
       state: AppState.READY,
-      debug: false
+      debug: false,
+      showQuestion: true
     };
   },
   computed: {
@@ -71,6 +72,19 @@ export default {
           :debug="debug"
           @preview-requested="onPreviewRequest"
         ></img-card>
+        <div v-if="showQuestion" class="card">
+          <div class="card-body">
+            <h2>
+              <i class="fa fa-question-circle-o fa-5x" aria-hidden="true"></i>
+            </h2>
+            <p>
+              Still haven't found what you're looking for?
+            </p>
+            <div class="button-container">
+              <button type="button" class="btn custom-action" v-on:click="goToQuestion"><i class="fa fa-pencil-square-o"></i> Answer some questions</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="box p-2" v-else>
         <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
@@ -87,6 +101,11 @@ export default {
       var img = this.imgList.find(o => o._id == id);
       SharedStorage.putPreviewImg(img);
       this.$router.push(RouteNames.PREVIEW);
+    },
+    goToQuestion: function() {
+      var blacklist = this.imgList.map(o => o._id);
+      SharedStorage.putBlacklist(blacklist);
+      this.$router.push(RouteNames.QUESTION);
     }
   },
   mounted: function() {
@@ -105,5 +124,7 @@ export default {
       self.imgList = imgList;
       self.state = AppState.READY;
     });
+
+    this.showQuestion = SharedStorage.areQuestionsLeft();
   }
 };
