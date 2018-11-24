@@ -18,7 +18,7 @@ Vue.component("calc-log-item", {
 export default {
   template: `
   
-    <div class="card">
+    <div class="card text-center">
       <img :src="fileurl" alt="Card image cap" class="card-img-top img-fluid">
       <div class="card-body">
         <h4 class="card-title">{{title}}</h4>

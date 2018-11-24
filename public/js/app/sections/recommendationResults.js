@@ -72,10 +72,10 @@ export default {
           :debug="debug"
           @preview-requested="onPreviewRequest"
         ></img-card>
-        <div v-if="showQuestion" class="card">
+        <div v-if="showQuestion" class="card text-center">
           <div class="card-body">
-            <span class="h2">
-            <i class="far fa-question-circle"></i>
+            <span class="h1">
+            <i class="far fa-meh"></i>
             </span>
             <p>
               Still haven't found what you're looking for?
