@@ -74,14 +74,14 @@ export default {
         ></img-card>
         <div v-if="showQuestion" class="card">
           <div class="card-body">
-            <h2>
-              <i class="fa fa-question-circle-o fa-5x" aria-hidden="true"></i>
-            </h2>
+            <span class="h2">
+            <i class="far fa-question-circle"></i>
+            </span>
             <p>
               Still haven't found what you're looking for?
             </p>
             <div class="button-container">
-              <button type="button" class="btn custom-action" v-on:click="goToQuestion"><i class="fa fa-pencil-square-o"></i> Answer some questions</button>
+              <button type="button" class="btn custom-action" v-on:click="goToQuestion"><i class="fas fa-pencil-alt"></i> Answer some questions</button>
             </div>
           </div>
         </div>
