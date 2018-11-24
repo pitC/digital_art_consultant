@@ -34,7 +34,7 @@ var VIDEO_CONSTRAINTS = {
 };
 
 export default {
-  data: function() {
+  data: function () {
     return {
       images: [],
       currentImage: null,
@@ -298,58 +298,40 @@ export default {
     <div class="container">
       <div class="box box-5 fixed-bottom">
 
-      <div class="btn-toolbar mt-auto w-100 btn-group-lg" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">
-      <button id="smaller-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
-      </div>
-      <div class="btn-group mr-2" role="group" aria-label="Second group">
-      <button id="screenshot-btn" type="button" class="btn btn-block custom-action border-0" v-on:click="goToCheckout" :disabled="buttonsDisabled">
-      <span v-if="isTakingScreenshot">
-        <i class="fa fa-spinner fa-spin fa-fw"></i>Taking snapshot..
-      </span>
-      <span v-else>
-        <i class="fas fa-check"></i>Like it!
-      </span>
-      </button>
-      </div>
-      <div class="btn-group" role="group" aria-label="Third group">
-      <button id="larger-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
-      </div>
-    </div>
 
-    </div>
-    </div>
 
-    <!--
-        <div class="btn-group mt-auto w-100 btn-group-lg" role="group">
+    <div class="btn-group w-100 btn-group-justified btn-group-lg" role="group">
           
-          <button id="smaller-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
-          <button id="larger-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
-          <button id="screenshot-btn" type="button" class="btn btn-block custom-action border-0" v-on:click="goToCheckout" :disabled="buttonsDisabled">
-          <span v-if="isTakingScreenshot">
-            <i class="fa fa-spinner fa-spin fa-fw"></i>Taking snapshot..
-          </span>
-          <span v-else>
-            <i class="fas fa-check"></i>Like it!
-          </span>
-          </button>
-        </div>
+    <button id="larger-btn" type="button" class="btn custom-standard mr-3 rounded-right" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
+ 
+   
+   <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+   <span v-if="isTakingScreenshot">
+     <i class="fa fa-spinner fa-spin fa-fw"></i> Taking snapshot...
+   </span>
+   <span v-else>
+     <i class="fas fa-check"></i> This is it!
+   </span>
+   </button>
+  
+ <button id="smaller-btn" type="button" class="btn custom-standard ml-3 rounded-left" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
+ </div>
       </div>
     </div>
-  </div> -->
+  
   `,
 
   props: ["appstate"],
   methods: {
-    onBackToList: function(event) {
+    onBackToList: function (event) {
       this.$router.go(-1);
     },
 
-    changeImage: function() {
+    changeImage: function () {
       AframeNav.adjustImageDimensions(this.renderMat);
     },
 
-    recenter: function() {
+    recenter: function () {
       if (this.previewMode == IMAGE_PLACED) {
         this.previewMode = IMAGE_REPLACING;
         this.attachAnimation = false;
@@ -365,16 +347,16 @@ export default {
       }
     },
 
-    goToCheckout: function() {
+    goToCheckout: function () {
       this.state = TAKING_SCREENSHOT;
       var self = this;
       var video = this.$refs.video;
       // a small delay so that the button can reload and start spinning
-      setTimeout(function() {
+      setTimeout(function () {
         var canvas = document
           .querySelector("a-scene")
           .components.screenshot.getCanvas("perspective");
-        CanvasUtils.combineVideoOverlay(video, canvas, function(videoScr) {
+        CanvasUtils.combineVideoOverlay(video, canvas, function (videoScr) {
           var screenshot = videoScr.src;
           SharedStorage.putCheckoutImg(self.currentImage, screenshot);
           self.state = VIDEO_READY;
@@ -382,43 +364,43 @@ export default {
         });
       }, 100);
     },
-    scaleUp: function() {
+    scaleUp: function () {
       AframeNav.scale(0.1, this.renderMat);
       this.updateDebugStr();
     },
-    scaleDown: function() {
+    scaleDown: function () {
       AframeNav.scale(-0.1, this.renderMat);
       this.updateDebugStr();
     },
     // not exposed in UI in final version
-    stepForward: function() {
+    stepForward: function () {
       AframeNav.moveCam(-0.5, this.renderMat);
       this.updateDebugStr();
     },
-    stepBack: function() {
+    stepBack: function () {
       AframeNav.moveCam(+0.5, this.renderMat);
       this.updateDebugStr();
     },
 
     // left for debug
-    dumpCanvasGeometry: function() {
+    dumpCanvasGeometry: function () {
       var canvas = document.querySelector("canvas.a-canvas");
       console.log(
         `CLIENT - w:${canvas.clientWidth} h:${
-          canvas.clientHeight
+        canvas.clientHeight
         } ratio:${canvas.clientWidth / canvas.clientHeight}`
       );
       console.log(
         `CANVAS - w:${canvas.width} h:${canvas.height} ratio: ${canvas.width /
-          canvas.height}`
+        canvas.height}`
       );
     },
 
-    updateDebugStr: function() {
+    updateDebugStr: function () {
       this.debugStr =
         AframeNav.getImageDimensions() + " " + AframeNav.getCamera();
     },
-    stopVideo: function() {
+    stopVideo: function () {
       var video = this.$refs.video;
       video.pause();
       if ("srcObject" in video) {
@@ -446,27 +428,27 @@ export default {
     this.previewMode = IMAGE_INITIAL_PLACING;
 
     AframeNav.registerListener(AFRAME_SCENE_LISTENER, {
-      init: function() {
+      init: function () {
         var overlay = this.el.sceneEl;
         var w = video.offsetWidth;
         var h = video.offsetHeight;
         overlay.width = w;
         overlay.height = h;
       },
-      update: function() {}
+      update: function () { }
     });
 
     AframeNav.registerListener(AFRAME_CLICKABLE, {
-      init: function() {
+      init: function () {
         var el = this.el;
-        el.addEventListener("click", function() {
+        el.addEventListener("click", function () {
           self.recenter();
         });
       }
     });
 
     AframeNav.registerListener(AFRAME_IMAGE_LISTENER, {
-      update: function() {
+      update: function () {
         var img = this.el;
         var srcEl = img.getAttribute("src");
         var imgAsset = document.querySelector(srcEl);
@@ -479,7 +461,7 @@ export default {
           }
         }
       },
-      init: function() {}
+      init: function () { }
     });
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
@@ -491,13 +473,13 @@ export default {
         }
         video.play();
 
-        video.onplaying = function() {
+        video.onplaying = function () {
           self.state = VIDEO_READY;
         };
       });
     }
   },
-  beforeRouteLeave: function(to, from, next) {
+  beforeRouteLeave: function (to, from, next) {
     this.stopVideo();
 
     next();
