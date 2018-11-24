@@ -15,7 +15,14 @@ background-attachment: fixed;
 background-position: center center;
 background-size: cover;
 }
-
+@media only screen and (orientation:landscape){
+    #turn{ display:block; }
+    #container{ display:none; }
+  }
+  @media only screen and (orientation:portrait){
+    #turn{ display:none; }
+    #container{ display:block; }
+  }
 .video {
   width: 100%;
   height: auto;
@@ -152,31 +159,31 @@ a.indexnavi:link {
 } 
     
     /* brand color to be changed */
-    .text-lightblue {
+    .text-custom-submit {
         color: #90CCF4;
     }     
-  .custom-standard {
+  .custom-submit {
     background-color: #90CCF4;
     border-color: #90CCF4;
     color: white;
 }
-.custom-standard:hover {
+.custom-submit:hover {
     background-color: #5DA2D5;
     border-color: #5DA2D5;
     color: white;
 }
-.custom-standard:active {
+.custom-submit:active {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
-.custom-standard:focus {
+.custom-submit:focus {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
 
-.custom-standard:after {
+.custom-submit:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
@@ -208,11 +215,8 @@ background-color: FF5858;
 border-color:FF5858;
 color: white;
 }
-/* Custom button  */
+/* Custom button height */
 .btn {padding: .75rem .75rem;
-}
-.button-container{
-    text-align: center;
 }
 .greenborder {
     border: green solid 3px;}
@@ -329,23 +333,12 @@ color: white;
  
  .card-columns{
      column-gap: 0.5rem;
-        margin: 0.5rem 0.5rem 55px 0.5rem;
-    }
-
+     margin: 10px;
+ }
  .card{
      border: none;
  }
-.card-body{
-     padding: 1.25rem 1.25rem 0.5rem 1.25rem;
-    }
             
-    /* Blockquote*/
-    .blockquote-footer{
-        color: #F78888;
-    }
-    blockquote p {
-        font-weight: 100;
-    }
     /*
 .container-fluid {
     height: 100vh;
@@ -386,24 +379,24 @@ flex-direction: column;
     min-height: 100%;
   }
   
-  .lightblue {
+  .custom-submit {
     background-color: #91ccf4;
     border-color: #91ccf4;
     color: white;
 }
-.lightblue:hover {
+.custom-submit:hover {
     background-color: #7ec8fa;
     border-color: #7ec8fa;
     color: white;
 }
-.lightblue:active {
+.custom-submit:active {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
 }
 
 
-.lightblue:after {
+.custom-submit:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
