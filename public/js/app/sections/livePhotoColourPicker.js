@@ -280,9 +280,8 @@ export default {
       // if upload is shown, we haven't accessed camera so nothing to stop
       if (this.isUploadHidden) {
         this.stopVideo();
-      } else {
-        this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
       }
+      this.$router.push(RouteNames.COLOUR_PICKER_INPUT);
     },
     goBack: function(event) {
       this.$router.go(-1);

@@ -27,7 +27,7 @@ export default {
       if (this.image.shopURL) {
         return true;
       } else {
-        return true;
+        return false;
       }
     }
   },
@@ -55,7 +55,8 @@ export default {
                         <i class="fas fa-university"></i> {{image.museum}}
                     </p>
                     <div class="button-container">
-                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Go shopping</a>
+                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-share-alt"></i>Share</a>
+                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
                     </div>
                 </div>
             </div>

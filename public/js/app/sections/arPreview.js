@@ -40,7 +40,7 @@ export default {
       currentImage: null,
       renderMat: true,
       state: AppState.READY,
-      debug: true,
+      debug: false,
       debugStr: "",
       previewMode: IMAGE_INITIAL_PLACING,
       attachAnimation: false,
@@ -406,6 +406,11 @@ export default {
   },
 
   mounted() {
+    if (this.$route.query.hasOwnProperty("m")) {
+      if (this.$route.query.m == "debug") {
+        this.debug = true;
+      }
+    }
     var self = this;
     this.images = SharedStorage.getPreviewImgList();
     this.currentImage = this.images[0];
