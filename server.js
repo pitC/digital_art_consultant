@@ -12,7 +12,22 @@ var express = require("express"),
   http = require("http"),
   recommendationEngine = require("./app/recommendation-engine"),
   Validator = require("jsonschema").Validator,
-  recommendSchema = require("./schemas/criteriaSchema.json");
+  recommendSchema = require("./schemas/criteriaSchema.json"),
+  questionnaire = require("./app/interview/questionnaire.json");
+
+var questionSet = [];
+
+Object.keys(questionnaire).forEach(function(key, index) {
+  var qId = key;
+  var qText = questionnaire[key].text;
+  var qAnswers = questionnaire[key]["answers"].map(o => o.answer);
+  qObj = {
+    id: qId,
+    question: qText,
+    answers: qAnswers
+  };
+  questionSet.push(qObj);
+});
 
 var metadataDao = require("./db/metadata-dao");
 
@@ -50,6 +65,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("port", process.env.PORT || 3000);
+
+app.get("/questions", function(req, res) {
+  res.send(questionSet);
+});
 
 app.post("/recommend", function(req, res) {
   var criteria = req.body;

@@ -1,0 +1,43 @@
+{
+  "Q1": {
+    "text": "Which room?",
+    "answers": [
+      {
+        "answer": "Kitchen",
+        "target-metadata": [
+          {
+            "category": "C1",
+            "values": ["value 1", "value 2"]
+          },
+          {
+            "category": "C2",
+            "values": ["value 1", "value 2"]
+          }
+        ]
+      },
+      {
+        "answer": "Living room",
+        "target-metadata": [
+          {
+            "category": "C1",
+            "values": ["value 1", "value 2"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q2": {
+    "text": "Which artist?",
+    "answers": [
+      {
+        "answer": "Rubens",
+        "target-metadata": [
+          {
+            "category": "C3",
+            "values": ["v1", "v2"]
+          }
+        ]
+      }
+    ]
+  }
+}
