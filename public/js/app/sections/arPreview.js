@@ -3,7 +3,10 @@ import RouteNames from "./../RouteNames.js";
 import AppState from "./../appStates.js";
 import AframeNav from "./../ar/aframeNavigator.js";
 import CanvasUtils from "./../canvas/canvasUtils.js";
+
 const VIDEO_READY = "video";
+const TAKING_SCREENSHOT = "scrshot";
+
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
 const AFRAME_CLICKABLE = "clickable-trigger";
@@ -75,7 +78,7 @@ export default {
       }
     },
     displayOverlay() {
-      if (this.state == VIDEO_READY) {
+      if (this.state == VIDEO_READY || this.state == TAKING_SCREENSHOT) {
         return true;
       } else {
         return false;
@@ -98,7 +101,7 @@ export default {
       return `0 ${INITIAL_ARTWORK_HEIGHT} ${TRIGGER_DISTANCE} `;
     },
 
-    triggeLockrPosition() {
+    triggeLockPosition() {
       return `0 ${INITIAL_ARTWORK_HEIGHT} ${TRIGGER_DISTANCE + 0.1} `;
     },
 
@@ -134,6 +137,20 @@ export default {
       } else if (this.previewMode == IMAGE_REPLACING) {
         return "#srcUnlock";
       } else return "#srcLock";
+    },
+    buttonsDisabled() {
+      if (this.state == VIDEO_READY && this.previewMode == IMAGE_PLACED) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isTakingScreenshot() {
+      if (this.state == TAKING_SCREENSHOT) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
 
@@ -198,7 +215,7 @@ export default {
             npot="true"
             width="0.7"
             height="0.7"
-            :position="triggeLockrPosition"
+            :position="triggeLockPosition"
             material = "opacity:0.7"
           ></a-image>
 
@@ -282,9 +299,16 @@ export default {
       <div class="box box-5 fixed-bottom">
         <div class="btn-group mt-auto w-100" role="group">
           
-          <button id="smaller-btn" type="button" class="btn lightblue" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
-          <button id="larger-btn" type="button" class="btn lightblue" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
-          <button id="screenshot-btn" type="button" class="btn btn-block custom-action" v-on:click="goToCheckout"><i class="fas fa-check"></i>Like it!</button>
+          <button id="smaller-btn" type="button" class="btn lightblue" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
+          <button id="larger-btn" type="button" class="btn lightblue" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
+          <button id="screenshot-btn" type="button" class="btn btn-block custom-action" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+          <span v-if="isTakingScreenshot">
+            <i class="fa fa-spinner fa-spin fa-fw"></i>Taking snapshot..
+          </span>
+          <span v-else>
+            <i class="fas fa-check"></i>Like it!
+          </span>
+          </button>
         </div>
       </div>
     </div>
@@ -318,17 +342,21 @@ export default {
     },
 
     goToCheckout: function() {
-      //TODO: take screenshot
+      this.state = TAKING_SCREENSHOT;
       var self = this;
-      var canvas = document
-        .querySelector("a-scene")
-        .components.screenshot.getCanvas("perspective");
       var video = this.$refs.video;
-      CanvasUtils.combineVideoOverlay(video, canvas, function(videoScr) {
-        var screenshot = videoScr.src;
-        SharedStorage.putCheckoutImg(self.currentImage, screenshot);
-        self.$router.push(RouteNames.CHECKOUT);
-      });
+      // a small delay so that the button can reload and start spinning
+      setTimeout(function() {
+        var canvas = document
+          .querySelector("a-scene")
+          .components.screenshot.getCanvas("perspective");
+        CanvasUtils.combineVideoOverlay(video, canvas, function(videoScr) {
+          var screenshot = videoScr.src;
+          SharedStorage.putCheckoutImg(self.currentImage, screenshot);
+          self.state = VIDEO_READY;
+          self.$router.push(RouteNames.CHECKOUT);
+        });
+      }, 100);
     },
     scaleUp: function() {
       AframeNav.scale(0.1, this.renderMat);
