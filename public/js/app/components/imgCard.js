@@ -22,9 +22,9 @@ export default {
       <img :src="fileurl" alt="Card image cap" class="card-img-top img-fluid">
       <div class="card-body">
         <h4 class="card-title">{{title}}</h4>
-        <p class="card-text">{{author}}<br/>{{year}}<br/><i class="fas fa-university"></i> {{museum}}</p>
+        <p class="card-text">{{author}}<br/><i class="far fa-calendar"></i> {{year}}<br/><i class="fas fa-university"></i> {{museum}}</p>
         <div class="button-container">
-          <button type="button" class="btn custom-action" v-on:click="onPreviewRequest"><i class="far fa-image"></i> Place it!</button></button>
+          <button type="button" class="btn custom-action" v-on:click="onPreviewRequest"><i class="far fa-image"></i> See it on your wall</button></button>
         </div>
         <p v-if="debug">{{reason}}</p>
         <table v-if="debug" class="table table-bordered">
