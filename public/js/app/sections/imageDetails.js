@@ -25,16 +25,26 @@ export default {
   },
   template: `
    <div class="container-fluid">
-    <div class="flex-row">
-      <div class="d-flex bd-highlight bg-light sticky-top px-2">
-        <a class="p-2 bd-highlight" v-on:click="onBackToList">
-          <i class="fas fa-angle-left text-black-50"></i>
-        </a>
-        <div class="p-2 bd-highlight font-weight-bold text.dark">
-          Image details
-        </div>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="/">Digital Art Consultant</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Impressum</a>
+          </li>
+        </ul>
       </div>
-    </div>
+    </nav>
   <div id="imageDetailsContainer" class="container">
     <div class="card" v-if="isImageLoaded">
         <img class="card-img-top" :src="image.fileURL" alt="Card image cap">

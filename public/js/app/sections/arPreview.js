@@ -34,7 +34,7 @@ var VIDEO_CONSTRAINTS = {
 };
 
 export default {
-  data: function () {
+  data: function() {
     return {
       images: [],
       currentImage: null,
@@ -156,16 +156,26 @@ export default {
 
   template: `
    <div class="container-fluid">
-    <div class="flex-row">
-      <div class="d-flex bd-highlight bg-light sticky-top px-2">
-        <a class="p-2 bd-highlight" v-on:click="onBackToList">
-          <i class="fas fa-angle-left text-black-50"></i>
-        </a>
-        <div class="p-2 bd-highlight font-weight-bold text.dark">
-          Preview
-        </div>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="/">Digital Art Consultant</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Impressum</a>
+          </li>
+        </ul>
       </div>
-    </div>
+    </nav>
     <p class="bg-light" v-if="debug">{{debugStr}}</p>
     <div class="ar-container">
         <video
@@ -323,15 +333,15 @@ export default {
 
   props: ["appstate"],
   methods: {
-    onBackToList: function (event) {
+    onBackToList: function(event) {
       this.$router.go(-1);
     },
 
-    changeImage: function () {
+    changeImage: function() {
       AframeNav.adjustImageDimensions(this.renderMat);
     },
 
-    recenter: function () {
+    recenter: function() {
       if (this.previewMode == IMAGE_PLACED) {
         this.previewMode = IMAGE_REPLACING;
         this.attachAnimation = false;
@@ -347,16 +357,16 @@ export default {
       }
     },
 
-    goToCheckout: function () {
+    goToCheckout: function() {
       this.state = TAKING_SCREENSHOT;
       var self = this;
       var video = this.$refs.video;
       // a small delay so that the button can reload and start spinning
-      setTimeout(function () {
+      setTimeout(function() {
         var canvas = document
           .querySelector("a-scene")
           .components.screenshot.getCanvas("perspective");
-        CanvasUtils.combineVideoOverlay(video, canvas, function (videoScr) {
+        CanvasUtils.combineVideoOverlay(video, canvas, function(videoScr) {
           var screenshot = videoScr.src;
           SharedStorage.putCheckoutImg(self.currentImage, screenshot);
           self.state = VIDEO_READY;
@@ -364,43 +374,43 @@ export default {
         });
       }, 100);
     },
-    scaleUp: function () {
+    scaleUp: function() {
       AframeNav.scale(0.1, this.renderMat);
       this.updateDebugStr();
     },
-    scaleDown: function () {
+    scaleDown: function() {
       AframeNav.scale(-0.1, this.renderMat);
       this.updateDebugStr();
     },
     // not exposed in UI in final version
-    stepForward: function () {
+    stepForward: function() {
       AframeNav.moveCam(-0.5, this.renderMat);
       this.updateDebugStr();
     },
-    stepBack: function () {
+    stepBack: function() {
       AframeNav.moveCam(+0.5, this.renderMat);
       this.updateDebugStr();
     },
 
     // left for debug
-    dumpCanvasGeometry: function () {
+    dumpCanvasGeometry: function() {
       var canvas = document.querySelector("canvas.a-canvas");
       console.log(
         `CLIENT - w:${canvas.clientWidth} h:${
-        canvas.clientHeight
+          canvas.clientHeight
         } ratio:${canvas.clientWidth / canvas.clientHeight}`
       );
       console.log(
         `CANVAS - w:${canvas.width} h:${canvas.height} ratio: ${canvas.width /
-        canvas.height}`
+          canvas.height}`
       );
     },
 
-    updateDebugStr: function () {
+    updateDebugStr: function() {
       this.debugStr =
         AframeNav.getImageDimensions() + " " + AframeNav.getCamera();
     },
-    stopVideo: function () {
+    stopVideo: function() {
       var video = this.$refs.video;
       video.pause();
       if ("srcObject" in video) {
@@ -428,27 +438,27 @@ export default {
     this.previewMode = IMAGE_INITIAL_PLACING;
 
     AframeNav.registerListener(AFRAME_SCENE_LISTENER, {
-      init: function () {
+      init: function() {
         var overlay = this.el.sceneEl;
         var w = video.offsetWidth;
         var h = video.offsetHeight;
         overlay.width = w;
         overlay.height = h;
       },
-      update: function () { }
+      update: function() {}
     });
 
     AframeNav.registerListener(AFRAME_CLICKABLE, {
-      init: function () {
+      init: function() {
         var el = this.el;
-        el.addEventListener("click", function () {
+        el.addEventListener("click", function() {
           self.recenter();
         });
       }
     });
 
     AframeNav.registerListener(AFRAME_IMAGE_LISTENER, {
-      update: function () {
+      update: function() {
         var img = this.el;
         var srcEl = img.getAttribute("src");
         var imgAsset = document.querySelector(srcEl);
@@ -461,7 +471,7 @@ export default {
           }
         }
       },
-      init: function () { }
+      init: function() {}
     });
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
@@ -473,13 +483,13 @@ export default {
         }
         video.play();
 
-        video.onplaying = function () {
+        video.onplaying = function() {
           self.state = VIDEO_READY;
         };
       });
     }
   },
-  beforeRouteLeave: function (to, from, next) {
+  beforeRouteLeave: function(to, from, next) {
     this.stopVideo();
 
     next();
