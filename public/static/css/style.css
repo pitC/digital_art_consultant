@@ -17,11 +17,11 @@ background-size: cover;
 }
 @media only screen and (orientation:landscape){
     #turn{ display:block; }
-    #container{ display:none; }
+    #vue-app{ display:none; }
   }
   @media only screen and (orientation:portrait){
     #turn{ display:none; }
-    #container{ display:block; }
+    #vue-app{ display:initial; }
   }
 .video {
   width: 100%;
@@ -162,28 +162,28 @@ a.indexnavi:link {
     .text-custom-submit {
         color: #90CCF4;
     }     
-  .custom-submit {
+  .custom-standard {
     background-color: #90CCF4;
     border-color: #90CCF4;
     color: white;
 }
-.custom-submit:hover {
+.custom-standard:hover {
     background-color: #5DA2D5;
     border-color: #5DA2D5;
     color: white;
 }
-.custom-submit:active {
+.custom-standard:active {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
-.custom-submit:focus {
+.custom-standard:focus {
     background-color: #5DA2D5;
     border-color:#5DA2D5;
     color: white;
 }
 
-.custom-submit:after {
+.custom-standard:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
@@ -379,24 +379,24 @@ flex-direction: column;
     min-height: 100%;
   }
   
-  .custom-submit {
+  .custom-standard {
     background-color: #91ccf4;
     border-color: #91ccf4;
     color: white;
 }
-.custom-submit:hover {
+.custom-standard:hover {
     background-color: #7ec8fa;
     border-color: #7ec8fa;
     color: white;
 }
-.custom-submit:active {
+.custom-standard:active {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
 }
 
 
-.custom-submit:after {
+.custom-standard:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
