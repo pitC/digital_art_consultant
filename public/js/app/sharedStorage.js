@@ -1,9 +1,15 @@
 const RECOMMEND_URL = "recommend";
 const IMAGE_URL = "image";
+const QUESTIONS_URL = "questions";
+const MAX_QUESTION_CNT = 3;
 export default {
   inputColours: [],
   imgList: [],
   previewImgList: [],
+  imgWhitelist: [],
+  imgBlacklist: [],
+  questionSet: [],
+  answerList: [],
   recommendationValid: false,
   checkoutImg: {
     image: null,
@@ -11,6 +17,7 @@ export default {
   },
   putInputColours: function(inpColours) {
     this.recommendationValid = false;
+    this.resetAnswers();
     this.inputColours = inpColours;
   },
   putPreviewImg: function(img) {
@@ -30,11 +37,15 @@ export default {
   getPreviewImgList: function() {
     return this.previewImgList;
   },
-  getImgList(colours, callback) {
+  getImgList: function(colours, callback) {
     if (this.recommendationValid) {
       callback(this.imgList);
     } else {
-      var request = { colours: colours };
+      var request = {
+        colours: colours,
+        answers: this.answerList,
+        blacklist: this.imgBlacklist
+      };
       var paletteUsed = [];
       axios.post(RECOMMEND_URL, request).then(response => {
         this.imgList.splice(0, this.imgList.length);
@@ -68,7 +79,7 @@ export default {
     }
   },
 
-  getImgDetails(id, callback) {
+  getImgDetails: function(id, callback) {
     var imgInLocalList = false;
     if (this.getImgList.length > 0) {
       var image = this.imgList.find(obj => obj._id == id);
@@ -87,5 +98,55 @@ export default {
         }
       });
     }
+  },
+
+  resetAnswers: function() {
+    this.answerList = [];
+    this.questionSet = [];
+  },
+
+  getRandomQuestion: function(callback) {
+    var self = this;
+    function pickRandom(cb) {
+      var index = Math.floor(Math.random() * self.questionSet.length);
+      var randomQuestion = self.questionSet[index];
+      cb(randomQuestion);
+    }
+
+    if (this.questionSet.length == 0) {
+      this.resetAnswers();
+      axios.get(QUESTIONS_URL).then(response => {
+        if (response.status == 200) {
+          this.questionSet = response.data;
+          pickRandom(callback);
+        } else {
+          callback(null);
+        }
+      });
+    } else {
+      pickRandom(callback);
+    }
+  },
+
+  putAnswer: function(questionId, answer) {
+    var answerObj = {};
+    answerObj[questionId] = answer;
+    this.answerList.push(answerObj);
+    var index = this.questionSet.findIndex(o => o.id == questionId);
+    this.questionSet.splice(index, 1);
+    this.recommendationValid = false;
+  },
+
+  areQuestionsLeft: function() {
+    var answerCnt = this.answerList.length;
+    if (answerCnt < MAX_QUESTION_CNT) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  putBlacklist: function(images) {
+    this.imgBlacklist.push.apply(this.imgBlacklist, images);
   }
 };

@@ -23,6 +23,15 @@
             "values": ["value 1", "value 2"]
           }
         ]
+      },
+      {
+        "answer": "Bedroom",
+        "target-metadata": [
+          {
+            "category": "C1",
+            "values": ["value 1", "value 2"]
+          }
+        ]
       }
     ]
   },
@@ -31,6 +40,38 @@
     "answers": [
       {
         "answer": "Rubens",
+        "target-metadata": [
+          {
+            "category": "C3",
+            "values": ["v1", "v2"]
+          }
+        ]
+      },
+      {
+        "answer": "Picasso",
+        "target-metadata": [
+          {
+            "category": "C3",
+            "values": ["v1", "v2"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q3": {
+    "text": "How do you feel today?",
+    "answers": [
+      {
+        "answer": "Excited",
+        "target-metadata": [
+          {
+            "category": "C3",
+            "values": ["v1", "v2"]
+          }
+        ]
+      },
+      {
+        "answer": "Sad",
         "target-metadata": [
           {
             "category": "C3",
