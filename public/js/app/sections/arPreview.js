@@ -297,11 +297,35 @@ export default {
     </div>
     <div class="container">
       <div class="box box-5 fixed-bottom">
-        <div class="btn-group mt-auto w-100" role="group">
+
+      <div class="btn-toolbar mt-auto w-100 btn-group-lg" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+      <button id="smaller-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+      <button id="screenshot-btn" type="button" class="btn btn-block custom-action border-0" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+      <span v-if="isTakingScreenshot">
+        <i class="fa fa-spinner fa-spin fa-fw"></i>Taking snapshot..
+      </span>
+      <span v-else>
+        <i class="fas fa-check"></i>Like it!
+      </span>
+      </button>
+      </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+      <button id="larger-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
+      </div>
+    </div>
+
+    </div>
+    </div>
+
+    <!--
+        <div class="btn-group mt-auto w-100 btn-group-lg" role="group">
           
-          <button id="smaller-btn" type="button" class="btn lightblue" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
-          <button id="larger-btn" type="button" class="btn lightblue" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
-          <button id="screenshot-btn" type="button" class="btn btn-block custom-action" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+          <button id="smaller-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
+          <button id="larger-btn" type="button" class="btn custom-standard border-0" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
+          <button id="screenshot-btn" type="button" class="btn btn-block custom-action border-0" v-on:click="goToCheckout" :disabled="buttonsDisabled">
           <span v-if="isTakingScreenshot">
             <i class="fa fa-spinner fa-spin fa-fw"></i>Taking snapshot..
           </span>
@@ -312,7 +336,7 @@ export default {
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   `,
 
   props: ["appstate"],
