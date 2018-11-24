@@ -2,6 +2,7 @@ import SharedStorage from "../sharedStorage.js";
 import RouteNames from "./../RouteNames.js";
 import AppState from "./../appStates.js";
 import AframeNav from "./../ar/aframeNavigator.js";
+import CanvasUtils from "./../canvas/canvasUtils.js";
 const VIDEO_READY = "video";
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
@@ -317,10 +318,17 @@ export default {
     },
 
     goToCheckout: function() {
-      var screenshot = null;
       //TODO: take screenshot
-      SharedStorage.putCheckoutImg(this.currentImage, screenshot);
-      this.$router.push(RouteNames.CHECKOUT);
+      var self = this;
+      var canvas = document
+        .querySelector("a-scene")
+        .components.screenshot.getCanvas("perspective");
+      var video = this.$refs.video;
+      CanvasUtils.combineVideoOverlay(video, canvas, function(videoScr) {
+        var screenshot = videoScr.src;
+        SharedStorage.putCheckoutImg(self.currentImage, screenshot);
+        self.$router.push(RouteNames.CHECKOUT);
+      });
     },
     scaleUp: function() {
       AframeNav.scale(0.1, this.renderMat);
