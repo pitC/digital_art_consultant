@@ -1,6 +1,6 @@
-html,
+
 body {
-	height: 100%;
+min-height: 100vh;
 width: 100%;
 margin:0;
 padding:0;
@@ -15,6 +15,22 @@ background-attachment: fixed;
 background-position: center center;
 background-size: cover;
 }
+@media only screen and (orientation:landscape){
+    #turn{ display:block; }
+    #vue-app{ display:none; }
+  }
+  @media only screen and (orientation:portrait){
+    #turn{ display:none; }
+    #vue-app{ display:initial; }
+  }
+
+
+
+  #turn
+  {
+   
+   color: #FFFFFF;
+  }
 
 .video {
   width: 100%;
@@ -152,7 +168,7 @@ a.indexnavi:link {
 } 
     
     /* brand color to be changed */
-    .text-lightblue {
+    .text-custom-submit {
         color: #90CCF4;
     }     
   .custom-standard {
@@ -208,11 +224,8 @@ background-color: FF5858;
 border-color:FF5858;
 color: white;
 }
-/* Custom button  */
+/* Custom button height */
 .btn {padding: .75rem .75rem;
-}
-.button-container{
-    text-align: center;
 }
 .greenborder {
     border: green solid 3px;}
@@ -329,23 +342,12 @@ color: white;
  
  .card-columns{
      column-gap: 0.5rem;
-        margin: 0.5rem 0.5rem 55px 0.5rem;
-    }
-
+     margin: 10px;
+ }
  .card{
      border: none;
  }
-.card-body{
-     padding: 1.25rem 1.25rem 0.5rem 1.25rem;
-    }
             
-    /* Blockquote*/
-    .blockquote-footer{
-        color: #F78888;
-    }
-    blockquote p {
-        font-weight: 100;
-    }
     /*
 .container-fluid {
     height: 100vh;
@@ -386,24 +388,24 @@ flex-direction: column;
     min-height: 100%;
   }
   
-  .lightblue {
+  .custom-standard {
     background-color: #91ccf4;
     border-color: #91ccf4;
     color: white;
 }
-.lightblue:hover {
+.custom-standard:hover {
     background-color: #7ec8fa;
     border-color: #7ec8fa;
     color: white;
 }
-.lightblue:active {
+.custom-standard:active {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
 }
 
 
-.lightblue:after {
+.custom-standard:after {
     background-color: lightcyan;
     border-color:lightcyan;
     color: white;
