@@ -247,7 +247,7 @@ export default {
             height="0.2"
             position="0 0 0 "
             material = "opacity:0.7"
-            animation="property:material.opacity;delay:0;dur:3000;startEvents:fade;to:0"
+            animation="property:material.opacity;delay:2000;dur:1500;startEvents:fade;to:0"
           >
           
           
@@ -281,9 +281,9 @@ export default {
       <div class="box box-5 fixed-bottom">
         <div class="btn-group mt-auto w-100" role="group">
           
-          <button id="smaller-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
-          <button id="larger-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
-          <button id="screenshot-btn" type="button" class="btn lightblue btn-block" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
+          <button id="smaller-btn" type="button" class="btn lightblue" v-on:click="scaleUp"><i class="fas fa-plus-circle"></i> </button>
+          <button id="larger-btn" type="button" class="btn lightblue" v-on:click="scaleDown"><i class="fas fa-minus-circle"></i></button>
+          <button id="screenshot-btn" type="button" class="btn btn-block custom-action" v-on:click="goToCheckout"><i class="fas fa-check"></i>Like it!</button>
         </div>
       </div>
     </div>
@@ -316,6 +316,12 @@ export default {
       }
     },
 
+    goToCheckout: function() {
+      var screenshot = null;
+      //TODO: take screenshot
+      SharedStorage.putCheckoutImg(this.currentImage, screenshot);
+      this.$router.push(RouteNames.CHECKOUT);
+    },
     scaleUp: function() {
       AframeNav.scale(0.1, this.renderMat);
       this.updateDebugStr();
@@ -324,6 +330,7 @@ export default {
       AframeNav.scale(-0.1, this.renderMat);
       this.updateDebugStr();
     },
+    // not exposed in UI in final version
     stepForward: function() {
       AframeNav.moveCam(-0.5, this.renderMat);
       this.updateDebugStr();
@@ -409,13 +416,6 @@ export default {
       },
       init: function() {}
     });
-
-    // registerAframeClickDragComponent(window.AFRAME);
-    // this.state = WEBCAM_INIT;
-    // var self = this;
-
-    // Get access to the camera!
-    // this.mode = VIDEO_PREVIEW_MODE;
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
       navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {

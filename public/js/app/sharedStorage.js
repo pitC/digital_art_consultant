@@ -5,6 +5,10 @@ export default {
   imgList: [],
   previewImgList: [],
   recommendationValid: false,
+  checkoutImg: {
+    image: null,
+    screenshot: null
+  },
   putInputColours: function(inpColours) {
     this.recommendationValid = false;
     this.inputColours = inpColours;
@@ -13,6 +17,16 @@ export default {
     this.previewImgList = [];
     this.previewImgList.push(img);
   },
+
+  putCheckoutImg: function(seletedImage, screenshot) {
+    this.checkoutImg.image = seletedImage;
+    this.checkoutImg.screenshot = screenshot;
+  },
+
+  getCheckoutImg: function() {
+    return this.checkoutImg;
+  },
+
   getPreviewImgList: function() {
     return this.previewImgList;
   },
@@ -37,8 +51,10 @@ export default {
             title: respImg.title,
             author: respImg.author,
             year: respImg.year,
-            //HACK: museum hardcoded for now
+            //TODO: get museum from server
             museum: "Städel Museum",
+            //TODO: get shop url from server,
+            shopURL: null,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,

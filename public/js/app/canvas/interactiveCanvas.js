@@ -91,7 +91,7 @@ export default class InteractiveCanvas {
     }
     return parsedColours;
   }
-
+  // TODO: refactor to use canvasUtils method instead
   takeImgFromVideo(callback) {
     const canvas = document.createElement("canvas");
     var scale = 1;
