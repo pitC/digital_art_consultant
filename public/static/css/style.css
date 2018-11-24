@@ -23,6 +23,16 @@ background-size: cover;
     #turn{ display:none; }
     #vue-app{ display:initial; }
   }
+
+
+
+  #turn
+  {
+    width: 100%;
+    height: 100%;
+   color: #FFFFFF;
+  }
+
 .video {
   width: 100%;
   height: auto;

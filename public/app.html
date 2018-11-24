@@ -38,8 +38,13 @@
   </head>
 
   <body>
-      <div id="turn">
-          Please rotate your device!
+      <div id="turn" class="d-flex flex-column justify-content-center align-items-center p-5">
+          <h1>Landscape detected</h1> 
+          
+          <h4>(and by this we mean your phone)</h4>
+             <span class="h1 p-3"><i class="fas fa-sync-alt"></i></span>
+          <p>This content is best experienced with your device in portrait mode</p><p>Please rotate your phone for optimal display. Thank you.</p>
+       
         </div>
     <!-- must be span, otherwise whole styling gets screwed up -->
     <span id="vue-app"><router-view></router-view></span>
