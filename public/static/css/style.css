@@ -369,12 +369,14 @@ border-radius: .25rem;
 .card-checkout{
     height: 88vh;
 }
-.card-checkout div {
+.card-checkout div.wrapper-checkout {
     background-color: #000000;
+    text-align: center;
 }
 .card-checkout div img {
     margin: auto;
     height: 50vh;
+    width: auto;
 }
  /*questions*/
  .question {
