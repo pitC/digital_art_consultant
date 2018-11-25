@@ -12,7 +12,8 @@ export default {
         filename: "",
         shopURL: ""
       },
-      screenshot: null
+      screenshot: null,
+      sharingSupported: false
     };
   },
   computed: {
@@ -66,6 +67,8 @@ export default {
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
+
+                        <button v-if="sharingSupported" v-on:click="share" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Share</button>
                         <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
                     </div>
                 </div>
@@ -74,9 +77,17 @@ export default {
     </div>
   `,
   methods: {
+    getImagePermalink() {
+      var protocol = window.location.protocol;
+      var host = window.location.host;
+      var pathname = window.location.pathname.split("#")[0];
+      var imgDetails = RouteNames.IMAGE_DETAILS.replace(":id", this.image._id);
+      var url = `${protocol}//${host}${pathname}#${imgDetails}`;
+      return url;
+    },
     share: function() {
       //TODO: get it working
-      var url = this.screenshot;
+      var url = this.getImagePermalink();
       navigator.share({
         title: "share test",
         text: "Hello World",
@@ -89,6 +100,9 @@ export default {
     if (checkoutImg) {
       this.image = checkoutImg.image;
       this.screenshot = checkoutImg.screenshot;
+    }
+    if (navigator.share) {
+      this.sharingSupported = true;
     }
   }
 };
