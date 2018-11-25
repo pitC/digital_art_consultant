@@ -116,8 +116,7 @@ background-size: cover;
   
 	.box {
 		text-align: center;
-        color:black;
-        background-color: #f8f9fa;
+		color:white;
 		padding: 0px;
 		display: flex;
 		flex-direction: column;
@@ -359,6 +358,13 @@ color: white;
     margin-top: 2rem; 
     margin-bottom: 2rem;
  }
+
+/*alert*/
+.alert{
+    background-color: #f8f9fa;
+    color: black;
+}
+
  /*
 .container-fluid {
     height: 100vh;
