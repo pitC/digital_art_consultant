@@ -65,6 +65,7 @@ export default {
             author: respImg.author,
             year: respImg.year, //TODO: get museum from server
             institution: respImg.institution, //TODO: get shop url from server,
+            institutionURL: "https://www.staedelmuseum.de/de",
             shopURL: null,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,

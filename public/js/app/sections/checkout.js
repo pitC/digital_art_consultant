@@ -74,7 +74,7 @@ export default {
                     <p class="card-text">
                         {{image.author}}
                         <br/>{{image.year}}<br/>
-                        <i class="fas fa-university"></i> {{image.institution}}
+                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a>
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
