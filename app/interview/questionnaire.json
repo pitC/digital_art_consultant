@@ -28,7 +28,7 @@
         "answer": "Bedroom",
         "target-metadata": [
           {
-            "category": "motif",
+            "category": "associations",
             "values": ["sleep"]
           }
         ]
@@ -87,7 +87,7 @@
         "answer": "Calm",
         "target-metadata": [
           {
-            "category": "emotion",
+            "category": "atmosphere",
             "values": ["calm"]
           }
         ]

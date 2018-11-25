@@ -31,23 +31,30 @@ export default {
           </li>
         </ul>
       </div>
+      <div class="p-2 bd-highlight nav-link">
+        Give us more Informations
+      </div>
     </nav>
     <div class="container">
-        <h2 class="bg-light">{{question.question}}</h2>
-        <br>
-        <select class="form-control" id="answers">
-        <option v-for="answer in question.answers">{{answer}}</option>
-        </select>
-        <button type="button" class="btn custom-action" v-on:click="confirmAnswer"><i class="fa fa-check"></i> OK</button>
+        <div class="box box-1">
+          <h5 class="question">{{question.question}}</h5>
+        </div>
+        <div class="text-light box box-2">
+          <div class="mt-auto mt-md-0">
+            <button v-for="answer in question.answers" v-on:click="onAnswer" role="button" class="btn custom-standard btn-block rounded-0">{{answer}}</button> 
+          </div>
+        </div>
     </div>
   </div>
   `,
   methods: {
-    confirmAnswer: function() {
-      var e = document.getElementById("answers");
-      var answer = e.options[e.selectedIndex].text;
-      SharedStorage.putAnswer(this.question.id, answer);
+    onAnswer: function(event) {
+      // var e = document.getElementById("answers");
+      // var answer = e.options[e.selectedIndex].text;
+      var element = event.target || event.srcElement;
+      var answer = element.textContent;
 
+      SharedStorage.putAnswer(this.question.id, answer);
       this.$router.push({
         path: RouteNames.RESULT_LIST,
         query: this.$route.query
