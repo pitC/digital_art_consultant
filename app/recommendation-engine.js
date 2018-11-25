@@ -2,15 +2,19 @@ var metadataDao = require("./../db/metadata-dao");
 const VIBRANCE_SELECTOR = require("./selectors/vibranceSelector");
 const VIBRANCE_MUTED_SELECTOR = require("./selectors/vibranceMutedSelector");
 const PALLETTE_SELECTOR = require("./selectors/paletteSelector");
+
 const WEIGHTED_PALLETTE_SELECTOR = require("./selectors/paletteWeightedSelector");
-const colourUtils = require("./colour-utils");
-const DEFAULT_SELECTOR = WEIGHTED_PALLETTE_SELECTOR;
+const WEIGHTED_PALLETTE_METADATA_SELECTOR = require("./selectors/paletteMetadataWeightedSelector");
+const colourUtils = require("./colourUtils");
+const DEFAULT_SELECTOR = WEIGHTED_PALLETTE_METADATA_SELECTOR;
+
 var selector = null;
 var selectors = {
   "Vibrance only": VIBRANCE_SELECTOR,
   "Muted and vibrance same weight": VIBRANCE_MUTED_SELECTOR,
   "Complete palette": PALLETTE_SELECTOR,
-  "Weighted palette": WEIGHTED_PALLETTE_SELECTOR
+  "Weighted palette": WEIGHTED_PALLETTE_SELECTOR,
+  "Weighted metadata palette": WEIGHTED_PALLETTE_METADATA_SELECTOR
 };
 
 const DB_FETCH_LIMIT = 1000;

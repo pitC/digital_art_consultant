@@ -1,4 +1,4 @@
-var colorUtils = require("./../colour-utils");
+var colorUtils = require("./../colourUtils");
 const DISTANCE_LIMIT = 100;
 
 var metadataDao = require("./../../db/metadata-dao");

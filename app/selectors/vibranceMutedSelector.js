@@ -1,4 +1,4 @@
-var colorUtils = require("./../colour-utils");
+var colorUtils = require("./../colourUtils");
 const DISTANCE_LIMIT = 15;
 
 function sortByDistance(imgA, imgB) {

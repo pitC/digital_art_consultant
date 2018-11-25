@@ -19,7 +19,7 @@
         "answer": "Living room",
         "target-metadata": [
           {
-            "category": "C1",
+            "category": "motif",
             "values": ["value 1", "value 2"]
           }
         ]
@@ -28,8 +28,8 @@
         "answer": "Bedroom",
         "target-metadata": [
           {
-            "category": "C1",
-            "values": ["value 1", "value 2"]
+            "category": "motif",
+            "values": ["sleep"]
           }
         ]
       }
@@ -65,8 +65,12 @@
         "answer": "Excited",
         "target-metadata": [
           {
-            "category": "C3",
+            "category": "C4",
             "values": ["v1", "v2"]
+          },
+          {
+            "category": "C1",
+            "values": ["value 2", "value 3"]
           }
         ]
       },
@@ -74,8 +78,17 @@
         "answer": "Sad",
         "target-metadata": [
           {
-            "category": "C3",
+            "category": "C4",
             "values": ["v1", "v2"]
+          }
+        ]
+      },
+      {
+        "answer": "Calm",
+        "target-metadata": [
+          {
+            "category": "emotion",
+            "values": ["calm"]
           }
         ]
       }
