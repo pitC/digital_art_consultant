@@ -230,6 +230,7 @@ color: white;
 }
 /* Custom button  */
 .btn {padding: .75rem .75rem;
+    margin-top: 2px;
 }
 div.fixed-bottom{
     padding: 0 10px 10px 10px;
