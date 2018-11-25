@@ -5,16 +5,11 @@ import AppState from "./../appStates.js";
 export default {
   data: function() {
     return {
-      image: {
-        fileURL: "",
-        title: "",
-        author: "",
-        filename: "",
-        shopURL: ""
-      },
+      image: { fileURL: "", title: "", author: "", filename: "", shopURL: "" },
       screenshot: null,
       sharingSupported: false,
-      arGotoEnable: false
+      arGotoEnable: false,
+      hideLink: true
     };
   },
   computed: {
@@ -80,6 +75,15 @@ export default {
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
                         <a href="#" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                        <span v-else>
+                          <button v-on:click="shareURL" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                          <div :hidden="hideLink" class="input-group mb-3">
+                            <input type="text" class="form-control" ref="shareLink" disabled>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard">Copy</button>
+                            </div>
+                          </div>
+                        </span>
                         <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
                         
@@ -101,6 +105,14 @@ export default {
       var imgDetails = RouteNames.IMAGE_DETAILS.replace(":id", this.image._id);
       var url = `${protocol}//${host}${pathname}#${imgDetails}`;
       return url;
+    },
+    copyToClipboard: function() {
+      //TODO: implement copy to clipboard
+    },
+    shareURL: function() {
+      var url = this.getImagePermalink();
+      this.hideLink = false;
+      this.$refs.shareLink.value = url;
     },
     onTryIt: function(event) {
       SharedStorage.putPreviewImg(this.image);
