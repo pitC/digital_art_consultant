@@ -47,7 +47,11 @@ export default {
       var e = document.getElementById("answers");
       var answer = e.options[e.selectedIndex].text;
       SharedStorage.putAnswer(this.question.id, answer);
-      this.$router.push(RouteNames.RESULT_LIST);
+
+      this.$router.push({
+        path: RouteNames.RESULT_LIST,
+        query: this.$route.query
+      });
     }
   },
 

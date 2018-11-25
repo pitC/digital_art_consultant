@@ -112,7 +112,11 @@ export default {
     goToQuestion: function() {
       var blacklist = this.imgList.map(o => o._id);
       SharedStorage.putBlacklist(blacklist);
-      this.$router.push(RouteNames.QUESTION);
+
+      this.$router.push({
+        path: RouteNames.QUESTION,
+        query: this.$route.query
+      });
     }
   },
   mounted: function() {
