@@ -239,6 +239,12 @@ div.fixed-bottom{
     width: 50%;
     float: left;
 }
+#find-art-btn{
+    margin-right: 2px;
+}
+#videoplay-btn{
+    margin-right: 2px;
+}
 .greenborder {
     border: green solid 3px;}
     .yellowborder {
