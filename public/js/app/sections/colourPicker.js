@@ -79,7 +79,7 @@ export default {
 
       <div class="box box-2">
         <div class="mt-auto mt-md-0 fixed-bottom">
-          <button type="button" class="btn custom-standard btn-block rounded-0" :disabled="isCommitDisabled" v-on:click="onCommitColours">
+          <button type="button" class="btn custom-standard btn-block" :disabled="isCommitDisabled" v-on:click="onCommitColours">
             Find your art
           </button>
         </div>
@@ -100,7 +100,7 @@ export default {
           </div>
           <div class="modal-footer border-0">
             
-            <button type="button" class="btn lightblue btn-info btn-block" v-on:click="saveSelection">Save color</button>
+            <button type="button" class="btn custom-standard btn-block" v-on:click="saveSelection">Save color</button>
           </div>
           </div>
         </div>
