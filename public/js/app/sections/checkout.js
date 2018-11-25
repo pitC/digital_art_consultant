@@ -13,7 +13,8 @@ export default {
         shopURL: ""
       },
       screenshot: null,
-      sharingSupported: false
+      sharingSupported: false,
+      arGotoEnable: false
     };
   },
   computed: {
@@ -29,6 +30,14 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+
+    isImageLoaded() {
+      if (this.state == AppState.SERVER_PROCESSING) {
+        return false;
+      } else {
+        return true;
       }
     }
   },
@@ -55,7 +64,7 @@ export default {
       </div>
     </nav>
         <div id="imageDetailsContainer" class="container">
-            <div class="card card-checkout">
+            <div class="card card-checkout" v-if="isImageLoaded">
               <div class="wrapper-checkout">
                 <img v-if="isScreenshot" class="card-img-top img-fluid" :src="screenshot" alt="Card image cap">
                 <img v-else class="card-img-top img-fluid" :src="image.fileURL" alt="Card image cap">
@@ -65,15 +74,21 @@ export default {
                     <p class="card-text">
                         {{image.author}}
                         <br/>{{image.year}}<br/>
-                        <i class="fas fa-university"></i> {{image.museum}}
+                        <i class="fas fa-university"></i> {{image.institution}}
                     </p>
                     <div class="button-container">
                         <button v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</button>
 
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
                         <button v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</button>
+                        <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
+                        
                     </div>
                 </div>
+            </div>
+            <div v-else>
+              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+              <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
@@ -87,6 +102,10 @@ export default {
       var url = `${protocol}//${host}${pathname}#${imgDetails}`;
       return url;
     },
+    onTryIt: function(event) {
+      SharedStorage.putPreviewImg(this.image);
+      this.$router.push(RouteNames.PREVIEW);
+    },
     share: function() {
       // TODO: set proper text
       var url = this.getImagePermalink();
@@ -98,13 +117,26 @@ export default {
     }
   },
   mounted() {
-    var checkoutImg = SharedStorage.getCheckoutImg();
-    if (checkoutImg) {
-      this.image = checkoutImg.image;
-      this.screenshot = checkoutImg.screenshot;
-    }
-    if (navigator.share) {
-      this.sharingSupported = true;
+    var id = this.$route.params.id;
+    if (id) {
+      this.state = AppState.SERVER_PROCESSING;
+      var self = this;
+      SharedStorage.getImgDetails(id, function(image) {
+        if (image) {
+          self.image = image;
+        }
+        self.state = AppState.READY;
+        self.arGotoEnable = true;
+      });
+    } else {
+      var checkoutImg = SharedStorage.getCheckoutImg();
+      if (checkoutImg) {
+        this.image = checkoutImg.image;
+        this.screenshot = checkoutImg.screenshot;
+      }
+      if (navigator.share) {
+        this.sharingSupported = true;
+      }
     }
   }
 };

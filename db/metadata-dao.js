@@ -70,9 +70,11 @@ exports.findById = function(id, okCallback, errCallback) {
     collection.findOne({ _id: buildIdObject(id) }, function(err, item) {
       if (err) {
         errCallback(err);
-      } else {
+      } else if (item) {
         item.fileURL = self.getTargetURL(item.filename);
         okCallback(item);
+      } else {
+        okCallback(null);
       }
     });
   });

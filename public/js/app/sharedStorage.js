@@ -63,10 +63,8 @@ export default {
             _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
-            year: respImg.year,
-            //TODO: get museum from server
-            museum: "Städel Museum",
-            //TODO: get shop url from server,
+            year: respImg.year, //TODO: get museum from server
+            institution: respImg.institution, //TODO: get shop url from server,
             shopURL: null,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,

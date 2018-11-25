@@ -11,7 +11,7 @@ const routes = [
   { path: RouteNames.PHOTO_INPUT, component: LivePhotoColourPicker },
   { path: RouteNames.RESULT_LIST, component: RecommendationResults },
   { path: RouteNames.COLOUR_PICKER_INPUT, component: ColourPicker },
-  { path: RouteNames.IMAGE_DETAILS, component: ImageDetails },
+  { path: RouteNames.IMAGE_DETAILS, component: Checkout },
   { path: RouteNames.PREVIEW, component: ArPreview },
   { path: RouteNames.CHECKOUT, component: Checkout },
   { path: RouteNames.QUESTION, component: Question }
