@@ -365,7 +365,17 @@ border-radius: .25rem;
      border: none;
  }
             
-  
+  /*card in Checkout*/
+.card-checkout{
+    height: 88vh;
+}
+.card-checkout div {
+    background-color: #000000;
+}
+.card-checkout div img {
+    margin: auto;
+    height: 50vh;
+}
  /*questions*/
  .question {
     margin-top: 2rem; 
