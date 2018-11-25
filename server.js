@@ -13,8 +13,8 @@ var express = require("express"),
   recommendationEngine = require("./app/recommendation-engine"),
   Validator = require("jsonschema").Validator,
   recommendSchema = require("./schemas/criteriaSchema.json"),
-  questionnaire = require("./app/interview/questionnaire.json");
-
+  questionnaire = require("./app/interview/questionnaire.json"),
+  sslRedirect = require("heroku-ssl-redirect");
 var questionSet = [];
 
 Object.keys(questionnaire).forEach(function(key, index) {
@@ -32,12 +32,10 @@ Object.keys(questionnaire).forEach(function(key, index) {
 var metadataDao = require("./db/metadata-dao");
 
 var app = express();
-var validator = new Validator();
 
-// app.get("/img/:filename",function(req,res)){
-//   //then redirect
-//   req.redirect('http://goethe.cabaj.eu/staedel/');
-// }
+app.use(sslRedirect());
+
+var validator = new Validator();
 
 app.use("/previews/staedel/:filename", function(clientReq, clientRes, next) {
   var targetPath = clientReq.originalUrl.replace("previews/", "");
