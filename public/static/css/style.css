@@ -379,6 +379,7 @@ border-radius: .25rem;
     margin: auto;
     height: 50vh;
     width: auto;
+    border-radius: none;
 }
  /*questions*/
  .question {
