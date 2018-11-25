@@ -372,6 +372,8 @@ border-radius: .25rem;
 .card-checkout div.wrapper-checkout {
     background-color: #000000;
     text-align: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
 }
 .card-checkout div img {
     margin: auto;
