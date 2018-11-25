@@ -10,17 +10,35 @@ var fs = require("fs");
 
 var parser = new xml2js.Parser();
 
+function extractAttributeList(nestedObj, aggregatePath, valuePath) {
+  var val = [];
+  var aggregate = extractAttribute(nestedObj, aggregatePath);
+  for (var index in aggregate) {
+    val.push(extractAttribute(aggregate[index], valuePath));
+  }
+
+  return val;
+}
 function extractAttribute(nestedObj, pathArr) {
-  return pathArr.reduce(
-    (obj, key) => (obj && obj[key] !== "undefined" ? obj[key] : NOT_FOUND),
-    nestedObj
-  );
+  val = [];
+
+  try {
+    val = pathArr.reduce(
+      (obj, key) => (obj && obj[key] !== "undefined" ? obj[key] : NOT_FOUND),
+      nestedObj
+    );
+  } catch (e) {
+    console("Oh no!");
+  }
+
+  return val;
 }
 
 function extractAdlibMetadata(record) {
   var metadata = {};
   metadata.filename =
     extractAttribute(record, ["object_number", 0]) + IMG_FORMAT;
+  metadata.filename = metadata.filename.replace(/ /g, "_");
   metadata.title = extractAttribute(record, ["Title", 0, "title", 0]);
   metadata.author = extractAttribute(record, [
     "Production",
@@ -67,6 +85,62 @@ function extractAdlibMetadata(record) {
   metadata.ratio =
     Number.parseFloat(metadata.dimension_x) /
     Number.parseFloat(metadata.dimension_y);
+
+  metadata.emotions = extractAttributeList(
+    record,
+    ["Emotion"],
+    ["emotion", 0, "term", ENGLISH_INDEX, "_"]
+  );
+
+  metadata.period = extractAttribute(record, [
+    "production.period",
+    0,
+    "term",
+    ENGLISH_INDEX,
+    "_"
+  ]);
+
+  metadata.genre = extractAttribute(record, [
+    "school_style",
+    0,
+    "term",
+    ENGLISH_INDEX,
+    "_"
+  ]);
+
+  metadata.motif = extractAttribute(record, [
+    "content.motif.general",
+    0,
+    "term",
+    ENGLISH_INDEX,
+    "_"
+  ]);
+
+  metadata.content = extractAttributeList(
+    record,
+    ["Content_subject"],
+    ["content.subject", 0, "term", ENGLISH_INDEX, "_"]
+  );
+
+  metadata.associations = extractAttributeList(
+    record,
+    ["Associated_subject"],
+    ["association.subject", 0, "term", ENGLISH_INDEX, "_"]
+  );
+
+  metadata.atmosphere = extractAttributeList(
+    record,
+    ["Atmosphere"],
+    ["atmosphere", 0, "term", ENGLISH_INDEX, "_"]
+  );
+
+  metadata.institution = extractAttribute(record, [
+    "institution.name",
+    0,
+    "name",
+    0,
+    "_"
+  ]);
 
   return metadata;
 }

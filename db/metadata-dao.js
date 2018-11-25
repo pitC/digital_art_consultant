@@ -1,7 +1,7 @@
 var MongoClient = require("mongodb").MongoClient;
 var BSON = require("mongodb").BSONPure;
 var ObjectId = require("mongodb").ObjectID;
-var url = process.env.MONGODB_URI;
+var url = process.env.MONGODB_URI || "mongodb://localhost:27017";
 const COLLECTION = "img-metadata";
 const BASE_FILE_URL = "/previews/staedel/";
 var initiated = false;
@@ -31,7 +31,7 @@ exports.initDB = function(dropCollection, callback) {
       // }
       db.createCollection(COLLECTION, function(err, res) {
         if (err) throw err;
-        console.log("Collection " + COLLECTION + " created");
+        console.log("Collection " + COLLECTION + " created on " + url);
       });
       callback();
     }
