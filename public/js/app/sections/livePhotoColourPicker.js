@@ -152,7 +152,7 @@ export default {
       </div>
       <div class="box box-5 fixed-bottom">
         <div class="btn-group mt-auto w-100" role="group">
-          <button id="snapshot-btn" type="button" class="btn custom-standard rounded-0 btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
+          <button id="snapshot-btn" type="button" class="btn custom-standard btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
             <span v-if="isProcessing">
               <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
             </span>
@@ -160,8 +160,8 @@ export default {
               <i class="fas fa-camera"></i> {{snapshotBtLbl}}
             </span>
           </button>
-          <button id="find-art-btn" type="button" class="btn custom-standard btn-block rounded-0" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
-          <button id="videoplay-btn" type="button" class="btn custom-action btn-block rounded-0" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+          <button id="find-art-btn" type="button" class="btn custom-standard btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
+          <button id="videoplay-btn" type="button" class="btn custom-action btn-block" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
           </button>
         </div>
       </div>
