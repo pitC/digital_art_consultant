@@ -3,7 +3,7 @@ var metadataMatcher = require("./../interview/metadataMatcher");
 
 const DISTANCE_LIMIT = 100;
 const COLOUR_WEIGHTS = [10, 30, 60, 0, 0, 0, 0, 0, 0, 0];
-const PALETTE_METADATA_WEIGHTS = [1, 4];
+const PALETTE_METADATA_WEIGHTS = [1, 1];
 
 var metadataDao = require("../../db/metadata-dao");
 
@@ -37,7 +37,7 @@ function getMetadataDistance(inputMetadata, img) {
   var distance = 0;
   var calcLog = {};
   if (Object.keys(inputMetadata).length > 0) {
-    var imgMetadata = img["metadata"] || {};
+    var imgMetadata = img || {};
 
     [distance, calcLog] = metadataMatcher.getDistance(
       inputMetadata,
