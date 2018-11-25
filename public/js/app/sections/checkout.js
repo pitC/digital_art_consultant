@@ -86,7 +86,7 @@ export default {
       return url;
     },
     share: function() {
-      //TODO: get it working
+      // TODO: set proper text
       var url = this.getImagePermalink();
       navigator.share({
         title: "share test",
