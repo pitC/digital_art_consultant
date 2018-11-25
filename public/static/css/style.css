@@ -375,11 +375,11 @@ border-radius: .25rem;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
-.card-checkout div img {
+.card-checkout div.wrapper-checkout img {
     margin: auto;
     height: 50vh;
     width: auto;
-    border-radius: none;
+    border-radius: 0;
 }
  /*questions*/
  .question {
