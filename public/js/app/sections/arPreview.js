@@ -221,7 +221,7 @@ export default {
             v-if="showTrigger"
             clickable-trigger
             id="triggerLock"
-            src="#srcLock"
+            src="#srcUnlock"
             npot="true"
             width="0.7"
             height="0.7"
