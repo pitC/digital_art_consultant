@@ -361,6 +361,7 @@ export default {
       this.state = TAKING_SCREENSHOT;
       var self = this;
       var video = this.$refs.video;
+      video.pause();
       // a small delay so that the button can reload and start spinning
       setTimeout(function() {
         var canvas = document
