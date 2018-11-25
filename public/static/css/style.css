@@ -367,7 +367,7 @@ border-radius: .25rem;
             
   /*card in Checkout*/
 .card-checkout{
-    height: 88vh;
+    min-height: 88vh;
 }
 .card-checkout div.wrapper-checkout {
     background-color: #000000;
