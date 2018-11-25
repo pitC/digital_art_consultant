@@ -55,10 +55,12 @@ export default {
       </div>
     </nav>
         <div id="imageDetailsContainer" class="container">
-            <div class="card">
+            <div class="card card-checkout">
+              <div class="wrapper-checkout">
                 <img v-if="isScreenshot" class="card-img-top img-fluid" :src="screenshot" alt="Card image cap">
                 <img v-else class="card-img-top img-fluid" :src="image.fileURL" alt="Card image cap">
-                <div class="card-body">
+              </div>              
+              <div class="card-body">
                     <h4 class="card-title">{{image.title}}</h4>
                     <p class="card-text">
                         {{image.author}}
@@ -66,10 +68,10 @@ export default {
                         <i class="fas fa-university"></i> {{image.museum}}
                     </p>
                     <div class="button-container">
-                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
+                        <button v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</button>
 
-                        <button v-if="sharingSupported" v-on:click="share" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Share</button>
-                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
+                        <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                        <button v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +88,7 @@ export default {
       return url;
     },
     share: function() {
-      //TODO: get it working
+      // TODO: set proper text
       var url = this.getImagePermalink();
       navigator.share({
         title: "share test",

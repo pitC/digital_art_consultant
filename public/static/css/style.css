@@ -81,12 +81,15 @@ background-size: cover;
 @media (min-width: 992px) {
     .card-columns {
         column-count: 3;
+
     }
 }
 
 @media (min-width: 1200px) {
     .card-columns {
-        column-count: 5;
+        column-count: 3;
+        max-width: 1000px;
+        margin: auto !important;
     }
 }
 
@@ -230,12 +233,13 @@ color: white;
 }
 /* Custom button  */
 .btn {padding: .75rem .75rem;
+    margin-top: 2px;
 }
 div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
 
-#find-art-btn, #videoplay-btn, #snaphot-btn {
+#find-art-btn, #videoplay-btn, #snapshot-btn {
 border-radius: .25rem;
 }
 #find-art-btn{
@@ -365,7 +369,22 @@ border-radius: .25rem;
      border: none;
  }
             
-  
+  /*card in Checkout*/
+.card-checkout{
+    min-height: 88vh;
+}
+.card-checkout div.wrapper-checkout {
+    background-color: #000000;
+    text-align: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.card-checkout div.wrapper-checkout img {
+    margin: auto;
+    height: 50vh;
+    width: auto;
+    border-radius: 0;
+}
  /*questions*/
  .question {
     margin-top: 2rem; 

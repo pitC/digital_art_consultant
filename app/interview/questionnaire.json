@@ -1,49 +1,258 @@
 {
   "Q1": {
-    "text": "Which room?",
+    "text": "What is your idea of perfect happiness?",
     "answers": [
       {
-        "answer": "Kitchen",
-        "target-metadata": [
-          {
-            "category": "C1",
-            "values": ["value 1", "value 2"]
-          },
-          {
-            "category": "C2",
-            "values": ["value 1", "value 2"]
-          }
-        ]
-      },
-      {
-        "answer": "Living room",
-        "target-metadata": [
-          {
-            "category": "motif",
-            "values": ["value 1", "value 2"]
-          }
-        ]
-      },
-      {
-        "answer": "Bedroom",
+        "answer": "Simple country life",
         "target-metadata": [
           {
             "category": "associations",
-            "values": ["sleep"]
+            "values": ["peasant, farmer"]
+          }
+        ]
+      },
+      {
+        "answer": "Asceticism and devotion",
+        "target-metadata": [
+          {
+            "category": "emotions",
+            "values": ["thoughtful", "melancholy"]
+          },
+          {
+            "category": "motif",
+            "values": ["depiction of a saint", "devotional image"]
+          }
+        ]
+      },
+      {
+        "answer": "Modern life suits me well",
+        "target-metadata": [
+          {
+            "category": "motif",
+            "values": ["city view"]
+          },
+          {
+            "category": "content",
+            "values": ["city"]
           }
         ]
       }
     ]
   },
   "Q2": {
-    "text": "Which artist?",
+    "text": "Summer or winter?",
     "answers": [
+      {
+        "answer": "Long dark winter evenings",
+        "target-metadata": [
+          {
+            "category": "content",
+            "values": ["snow"]
+          }
+        ]
+      },
+      {
+        "answer": "Sunny summer days",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["summer"]
+          }
+        ]
+      },
+      {
+        "answer": "Come what may",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["everyday life"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q3": {
+    "text": "Choose one Beatles song",
+    "answers": [
+      {
+        "answer": "Can’t buy me love",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["love", "seduction"]
+          },
+          {
+            "category": "emotions",
+            "values": ["loving", "carefree"]
+          },
+          {
+            "category": "atmosphere",
+            "values": ["desire", "eroticism"]
+          }
+        ]
+      },
+      {
+        "answer": "Drive my car",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["wealth"]
+          }
+        ]
+      },
+      {
+        "answer": "Norwegian Wood",
+        "target-metadata": [
+          {
+            "category": "content",
+            "values": ["fire", "tree trunk", "house"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q4": {
+    "text": "What is your greatest fear?",
+    "answers": [
+      {
+        "answer": "Empty fridge on Sunday",
+        "target-metadata": [
+          {
+            "category": "motif",
+            "values": ["still life"]
+          }
+        ]
+      },
+      {
+        "answer": "Further Bitcoin price crash",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["wealth"]
+          }
+        ]
+      },
+      {
+        "answer": "There is no afterlife",
+        "target-metadata": [
+          {
+            "category": "motif",
+            "values": ["depiction of a saint", "devotional image"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q5": {
+    "text": "How would you rather spend your weekend?",
+    "answers": [
+      {
+        "answer": " A day at the sea",
+        "target-metadata": [
+          {
+            "category": "content",
+            "values": ["body of water"]
+          },
+          {
+            "category": "motif",
+            "values": ["harbour picture", "seascape"]
+          }
+        ]
+      },
+      {
+        "answer": "A meal shared with friends",
+        "target-metadata": [
+          {
+            "category": "motif",
+            "values": ["still life"]
+          },
+          {
+            "category": "associations",
+            "values": ["music"]
+          }
+        ]
+      },
+      {
+        "answer": "An evening full of reflection",
+        "target-metadata": [
+          {
+            "category": "emotions",
+            "values": ["thoughtful", "melancholy"]
+          },
+          {
+            "category": "atmosphere",
+            "values": ["calm", "harmony", "thoughtfulness"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q6": {
+    "text": "What is the quality you most like in a man?",
+    "answers": [
+      {
+        "answer": "Energy",
+        "target-metadata": [
+          {
+            "category": "atmosphere",
+            "values": ["freshness", "unrest"]
+          },
+          {
+            "category": "emotions",
+            "values": ["joyous"]
+          }
+        ]
+      },
+      {
+        "answer": "Money",
+        "target-metadata": [
+          {
+            "category": "associations",
+            "values": ["wealth"]
+          }
+        ]
+      },
+      {
+        "answer": "Full beard",
+        "target-metadata": [
+          {
+            "category": "content",
+            "values": ["full beard"]
+          }
+        ]
+      }
+    ]
+  },
+  "Q7": {
+    "text": "Who is more your type?",
+    "answers": [
+      {
+        "answer": "Giotto",
+        "target-metadata": [
+          {
+            "category": "period",
+            "values": ["14th century"]
+          },
+          {
+            "category": "genre",
+            "values": ["Renaissance"]
+          }
+        ]
+      },
       {
         "answer": "Rubens",
         "target-metadata": [
           {
-            "category": "C3",
-            "values": ["v1", "v2"]
+            "category": "period",
+            "values": ["17th century"]
+          },
+          {
+            "category": "genre",
+            "values": ["Baroque"]
+          },
+          {
+            "category": "motif",
+            "values": ["nude"]
           }
         ]
       },
@@ -51,44 +260,59 @@
         "answer": "Picasso",
         "target-metadata": [
           {
-            "category": "C3",
-            "values": ["v1", "v2"]
+            "category": "period",
+            "values": ["20th century"]
+          },
+          {
+            "category": "genre",
+            "values": ["cubism"]
+          },
+          {
+            "category": "motif",
+            "values": ["abstraction"]
           }
         ]
       }
     ]
   },
-  "Q3": {
-    "text": "How do you feel today?",
+  "Q8": {
+    "text": "What hashtag are you most likely to click on Instagram?",
     "answers": [
       {
-        "answer": "Excited",
+        "answer": "#clouds (cloud, landscape)",
         "target-metadata": [
           {
-            "category": "C4",
-            "values": ["v1", "v2"]
+            "category": "content",
+            "values": ["cloud", "sky"]
           },
           {
-            "category": "C1",
-            "values": ["value 2", "value 3"]
+            "category": "motif",
+            "values": ["landscape"]
           }
         ]
       },
       {
-        "answer": "Sad",
+        "answer": "#cats",
         "target-metadata": [
           {
-            "category": "C4",
-            "values": ["v1", "v2"]
+            "category": "motif",
+            "values": ["animal depiction"]
           }
         ]
       },
       {
-        "answer": "Calm",
+        "answer": "#outfitoftheday",
         "target-metadata": [
           {
-            "category": "atmosphere",
-            "values": ["calm"]
+            "category": "content",
+            "values": [
+              "dress",
+              "garment",
+              "hat",
+              "man's shoe",
+              "shirt",
+              "hairstyle"
+            ]
           }
         ]
       }
