@@ -81,12 +81,15 @@ background-size: cover;
 @media (min-width: 992px) {
     .card-columns {
         column-count: 3;
+
     }
 }
 
 @media (min-width: 1200px) {
     .card-columns {
-        column-count: 5;
+        column-count: 3;
+        max-width: 1000px;
+        margin: auto !important;
     }
 }
 
@@ -236,7 +239,7 @@ div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
 
-#find-art-btn, #videoplay-btn, #snaphot-btn {
+#find-art-btn, #videoplay-btn, #snapshot-btn {
 border-radius: .25rem;
 }
 #find-art-btn{
