@@ -1,7 +1,7 @@
 const RECOMMEND_URL = "recommend";
 const IMAGE_URL = "image";
 const QUESTIONS_URL = "questions";
-const MAX_QUESTION_CNT = 3;
+const DEF_MAX_QUESTION_CNT = 100;
 export default {
   inputColours: [],
   imgList: [],
@@ -10,6 +10,8 @@ export default {
   imgBlacklist: [],
   questionSet: [],
   answerList: [],
+  maxQuestionCnt: DEF_MAX_QUESTION_CNT,
+  answerIterations: 0,
   recommendationValid: false,
   checkoutImg: {
     image: null,
@@ -118,6 +120,7 @@ export default {
       axios.get(QUESTIONS_URL).then(response => {
         if (response.status == 200) {
           this.questionSet = response.data;
+          this.maxQuestionCnt = this.questionSet.length;
           pickRandom(callback);
         } else {
           callback(null);
@@ -131,6 +134,9 @@ export default {
   putAnswer: function(questionId, answer) {
     var answerObj = {};
     answerObj[questionId] = answer;
+    // reset answer list
+    this.answerIterations++;
+    this.answerList = [];
     this.answerList.push(answerObj);
     var index = this.questionSet.findIndex(o => o.id == questionId);
     this.questionSet.splice(index, 1);
@@ -138,8 +144,7 @@ export default {
   },
 
   areQuestionsLeft: function() {
-    var answerCnt = this.answerList.length;
-    if (answerCnt < MAX_QUESTION_CNT) {
+    if (this.answerIterations < this.maxQuestionCnt) {
       return true;
     } else {
       return false;
