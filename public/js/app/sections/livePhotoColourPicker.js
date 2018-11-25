@@ -160,8 +160,13 @@ export default {
               <i class="fas fa-camera"></i> {{snapshotBtLbl}}
             </span>
           </button>
+<<<<<<< HEAD
+          <button id="find-art-btn" type="button" class="btn custom-action btn-block rounded-0" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
+          <button id="videoplay-btn" type="button" class="btn custom-standard btn-block rounded-0" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+=======
           <button id="find-art-btn" type="button" class="btn custom-action btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
           <button id="videoplay-btn" type="button" class="btn custom-standard btn-block" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+>>>>>>> 27bd090971bddfd13be62c8aa90f455cffda082b
           </button>
         </div>
       </div>
