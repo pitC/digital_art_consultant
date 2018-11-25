@@ -77,10 +77,10 @@ export default {
                         <i class="fas fa-university"></i> {{image.institution}}
                     </p>
                     <div class="button-container">
-                        <button v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</button>
-
+                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
+                        <a href="#" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
-                        <button v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</button>
+                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
                         
                     </div>

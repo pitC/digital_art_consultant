@@ -19,20 +19,18 @@ background-size: cover;
     #turn{ display:block; }
     #vue-app{ display:none; }
   }
- /* @media only screen and (min-width: 992px) and (orientation:landscape){
+ @media only screen and (min-width: 992px) and (orientation:landscape){
     #turn{ display:none; }
     #vue-app{ display:initial; }
-  }*/
+  }
   @media only screen and (orientation:portrait){
     #turn{ display:none; }
     #vue-app{ display:initial; }
   }
-
-
-
   #turn
   {
-   
+   width: 100%;
+    height: 100%;
    color: #FFFFFF;
   }
 
