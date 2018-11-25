@@ -19,7 +19,7 @@ export default {
   template: `
   
     <div class="card text-center">
-      <img :src="fileurl" alt="Card image cap" class="card-img-top img-fluid">
+      <img :src="fileurl" v-on:click="onPreviewRequest" alt="Card image cap" class="card-img-top img-fluid">
       <div class="card-body">
         <h4 class="card-title">{{title}}</h4>
         <p class="card-text">{{author}} | {{year}}<br/><i class="fas fa-university"></i> {{museum}}</p>

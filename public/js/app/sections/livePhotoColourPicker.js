@@ -74,7 +74,8 @@ export default {
       if (
         this.state == PROCESSING_MODE ||
         this.state == VIDEO_PREVIEW_MODE ||
-        this.state == WEBCAM_INIT
+        this.state == WEBCAM_INIT ||
+        this.state == MANUAL_UPLOAD_MODE
       ) {
         return true;
       } else {
@@ -89,7 +90,11 @@ export default {
       }
     },
     isPreviewReady() {
-      return !this.isPreviewNotReady;
+      if (this.state == MANUAL_UPLOAD_MODE) {
+        return true;
+      } else {
+        return !this.isPreviewNotReady;
+      }
     },
     style() {
       return "background-color: " + this.markedColour;

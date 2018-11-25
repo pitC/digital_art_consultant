@@ -221,7 +221,7 @@ export default {
             v-if="showTrigger"
             clickable-trigger
             id="triggerLock"
-            src="#srcLock"
+            src="#srcUnlock"
             npot="true"
             width="0.7"
             height="0.7"
@@ -307,28 +307,21 @@ export default {
     </div>
     <div class="container">
       <div class="box box-5 fixed-bottom">
-
-
-
-    <div class="btn-group w-100 btn-group-justified btn-group-lg" role="group">
-          
-    <button id="larger-btn" type="button" class="btn custom-standard mr-3 rounded-right" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
- 
-   
-   <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="goToCheckout" :disabled="buttonsDisabled">
-   <span v-if="isTakingScreenshot">
-     <i class="fa fa-spinner fa-spin fa-fw"></i> Taking snapshot...
-   </span>
-   <span v-else>
-     <i class="fas fa-check"></i> This is it!
-   </span>
-   </button>
-  
- <button id="smaller-btn" type="button" class="btn custom-standard ml-3 rounded-left" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
- </div>
+        <div class="btn-group w-100 btn-group-justified btn-group-lg" role="group">
+          <button id="larger-btn" type="button" class="btn custom-standard mr-3 rounded-right" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
+          <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+            <span v-if="isTakingScreenshot">
+              <i class="fa fa-spinner fa-spin fa-fw"></i> Taking snapshot...
+            </span>
+            <span v-else>
+              <i class="fas fa-check"></i> This is it!
+            </span>
+          </button>
+           <button id="smaller-btn" type="button" class="btn custom-standard ml-3 rounded-left" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
+        </div>
       </div>
     </div>
-  
+  </div>
   `,
 
   props: ["appstate"],
