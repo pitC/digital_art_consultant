@@ -116,7 +116,7 @@ background-size: cover;
   
 	.box {
 		text-align: center;
-		color: white;
+		color:white;
 		padding: 0px;
 		display: flex;
 		flex-direction: column;
@@ -358,6 +358,14 @@ color: white;
     margin-top: 2rem; 
     margin-bottom: 2rem;
  }
+
+/*alert*/
+.alert{
+    background-color: #f8f9fa;
+    color: black;
+    padding: 1rem;
+}
+
  /*
 .container-fluid {
     height: 100vh;
