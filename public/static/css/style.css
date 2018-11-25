@@ -352,7 +352,13 @@ color: white;
      border: none;
  }
             
-    /*
+  
+ /*questions*/
+ .question {
+    margin-top: 2rem; 
+    margin-bottom: 2rem;
+ }
+ /*
 .container-fluid {
     height: 100vh;
 flex-direction: column;    
