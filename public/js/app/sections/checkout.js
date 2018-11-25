@@ -55,10 +55,12 @@ export default {
       </div>
     </nav>
         <div id="imageDetailsContainer" class="container">
-            <div class="card">
+            <div class="card card-checkout">
+              <div class="wrapper-checkout">
                 <img v-if="isScreenshot" class="card-img-top img-fluid" :src="screenshot" alt="Card image cap">
                 <img v-else class="card-img-top img-fluid" :src="image.fileURL" alt="Card image cap">
-                <div class="card-body">
+              </div>              
+              <div class="card-body">
                     <h4 class="card-title">{{image.title}}</h4>
                     <p class="card-text">
                         {{image.author}}

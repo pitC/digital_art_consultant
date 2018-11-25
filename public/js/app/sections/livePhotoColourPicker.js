@@ -74,8 +74,7 @@ export default {
       if (
         this.state == PROCESSING_MODE ||
         this.state == VIDEO_PREVIEW_MODE ||
-        this.state == WEBCAM_INIT ||
-        this.state == MANUAL_UPLOAD_MODE
+        this.state == WEBCAM_INIT
       ) {
         return true;
       } else {
@@ -90,11 +89,7 @@ export default {
       }
     },
     isPreviewReady() {
-      if (this.state == MANUAL_UPLOAD_MODE) {
-        return true;
-      } else {
-        return !this.isPreviewNotReady;
-      }
+      return !this.isPreviewNotReady;
     },
     style() {
       return "background-color: " + this.markedColour;
@@ -156,7 +151,7 @@ export default {
           <button type="button" v-on:click="manualMode" class="btn custom-standard">Select colours manually</button>
       </div>
       <div class="box box-5 fixed-bottom">
-        <div class="mt-auto w-100" role="group">
+        <div class="mt-auto w-100 btn-group" role="group">
           <button id="snapshot-btn" type="button" class="btn custom-standard btn-block" v-on:click="onTakeSnapshot" v-bind:hidden="isPreviewReady" :disabled="isProcessing">
             <span v-if="isProcessing">
               <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
@@ -165,8 +160,13 @@ export default {
               <i class="fas fa-camera"></i> {{snapshotBtLbl}}
             </span>
           </button>
+<<<<<<< HEAD
+          <button id="find-art-btn" type="button" class="btn custom-action btn-block rounded-0" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
+          <button id="videoplay-btn" type="button" class="btn custom-standard btn-block rounded-0" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+=======
           <button id="find-art-btn" type="button" class="btn custom-action btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
           <button id="videoplay-btn" type="button" class="btn custom-standard btn-block" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
+>>>>>>> 27bd090971bddfd13be62c8aa90f455cffda082b
           </button>
         </div>
       </div>

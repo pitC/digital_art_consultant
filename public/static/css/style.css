@@ -234,6 +234,16 @@ color: white;
 div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
+
+#find-art-btn, #videoplay-btn, #snaphot-btn {
+border-radius: .25rem;
+}
+#find-art-btn{
+    margin-right: 5px;
+}
+#videoplay-btn{
+    margin-right: 5px;
+}
 .greenborder {
     border: green solid 3px;}
     .yellowborder {
@@ -355,7 +365,22 @@ div.fixed-bottom{
      border: none;
  }
             
-  
+  /*card in Checkout*/
+.card-checkout{
+    height: 88vh;
+}
+.card-checkout div.wrapper-checkout {
+    background-color: #000000;
+    text-align: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+.card-checkout div.wrapper-checkout img {
+    margin: auto;
+    height: 50vh;
+    width: auto;
+    border-radius: 0;
+}
  /*questions*/
  .question {
     margin-top: 2rem; 
