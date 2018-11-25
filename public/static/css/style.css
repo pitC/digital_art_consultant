@@ -235,9 +235,8 @@ div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
 
-#find-art-btn, #videoplay-btn {
-    width: 50%;
-    float: left;
+#find-art-btn, #videoplay-btn, #snaphot-btn {
+border-radius: .25rem;
 }
 #find-art-btn{
     margin-right: 2px;
