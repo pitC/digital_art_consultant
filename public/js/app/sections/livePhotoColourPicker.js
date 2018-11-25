@@ -146,7 +146,7 @@ export default {
       <div class="box box-1 alert alert-warning" v-bind:hidden="isUploadHidden">
          <p>
             Unfortunately we can’t access your camera. But don’t worry, you can
-            still select colors manually
+            still select colors manually.
           </p>
           <button type="button" v-on:click="manualMode" class="btn custom-standard">Select colours manually</button>
       </div>
