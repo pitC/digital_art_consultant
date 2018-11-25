@@ -6,6 +6,7 @@ import CanvasUtils from "./../canvas/canvasUtils.js";
 
 const VIDEO_READY = "video";
 const TAKING_SCREENSHOT = "scrshot";
+const VIDEO_NOT_AVAILABLE = "no video";
 
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
@@ -75,6 +76,13 @@ export default {
         return false;
       } else {
         return true;
+      }
+    },
+    noVideoAvailable() {
+      if (this.state == VIDEO_NOT_AVAILABLE) {
+        return true;
+      } else {
+        return false;
       }
     },
     displayOverlay() {
@@ -177,16 +185,25 @@ export default {
       </div>
     </nav>
     <p class="bg-light" v-if="debug">{{debugStr}}</p>
+    
     <div class="ar-container">
-        <video
-          id="video-el"
-          width="100%"
-          playsinline
-          autoplay
-          
-          ref="video"
-          
-        ></video>
+      <div class="box box-1 alert alert-warning" v-if="noVideoAvailable">
+      <br>
+        <p>
+            Unfortunately we can’t access your camera. But don’t worry, you can
+            still select colors manually.
+        </p>
+        <button type="button" v-on:click="checkoutWithoutSreenshot" class="btn custom-standard">Go to checkout</button>
+      </div>
+      <video
+        id="video-el"
+        width="100%"
+        playsinline
+        autoplay
+        
+        ref="video"
+        
+      ></video>
     
       <a-scene ref="overlay" id="overlay" v-if="displayOverlay" embedded vr-mode-ui="enabled:false" scene-listener cursor="rayOrigin: mouse;fuse:false; fuseTimeout: 0"><a-assets>
           <img id="srcImage1" :src="currentImage.fileURL" crossorigin="anonymous"/>
@@ -350,6 +367,11 @@ export default {
       }
     },
 
+    checkoutWithoutSreenshot: function() {
+      SharedStorage.putCheckoutImg(this.currentImage, null);
+      this.$router.push(RouteNames.CHECKOUT);
+    },
+
     goToCheckout: function() {
       this.state = TAKING_SCREENSHOT;
       var self = this;
@@ -469,23 +491,31 @@ export default {
     });
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       // Not adding `{ audio: true }` since we only want video now
-      navigator.mediaDevices.getUserMedia(VIDEO_CONSTRAINTS).then(stream => {
-        if ("srcObject" in video) {
-          video.srcObject = stream;
-        } else {
-          video.src = window.URL.createObjectURL(stream);
-        }
-        video.play();
+      navigator.mediaDevices
+        .getUserMedia(VIDEO_CONSTRAINTS)
+        .then(stream => {
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+          } else {
+            video.src = window.URL.createObjectURL(stream);
+          }
+          video.play();
 
-        video.onplaying = function() {
-          self.state = VIDEO_READY;
-        };
-      });
+          video.onplaying = function() {
+            self.state = VIDEO_READY;
+          };
+        })
+        .catch(function(err) {
+          self.state = VIDEO_NOT_AVAILABLE;
+        });
+    } else {
+      this.state == VIDEO_NOT_AVAILABLE;
     }
   },
   beforeRouteLeave: function(to, from, next) {
-    this.stopVideo();
-
+    if (this.state != VIDEO_NOT_AVAILABLE) {
+      this.stopVideo();
+    }
     next();
   }
 };
