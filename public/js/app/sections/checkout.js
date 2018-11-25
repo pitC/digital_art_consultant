@@ -55,7 +55,7 @@ export default {
       </div>
     </nav>
         <div id="imageDetailsContainer" class="container">
-            <div class="card">
+            <div class="card card-checkout">
                 <img v-if="isScreenshot" class="card-img-top img-fluid" :src="screenshot" alt="Card image cap">
                 <img v-else class="card-img-top img-fluid" :src="image.fileURL" alt="Card image cap">
                 <div class="card-body">
