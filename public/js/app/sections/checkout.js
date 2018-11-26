@@ -77,17 +77,14 @@ export default {
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
                         <span v-else>
                           <button v-on:click="shareURL" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
-                          <div :hidden="hideLink" class="custom-file">
-                          <input type="text" class="form-control" ref="shareLink" disabled>
-                          <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
-                        </div>
+                          
                          
-                          <!--<div :hidden="hideLink" class="input-group mb-3">
-                            <input type="text" class="form-control" ref="shareLink" disabled>
+                          <div :hidden="hideLink" class="input-group mb-3">
+                            <input type="text" class="form-control h-100" ref="shareLink" disabled>
                             <div class="input-group-append">
                               <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
                             </div>
-                          </div>-->
+                          </div>
                         </span>
                         <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action btn-block" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
