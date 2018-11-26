@@ -5,15 +5,11 @@ import AppState from "./../appStates.js";
 export default {
   data: function() {
     return {
-      image: {
-        fileURL: "",
-        title: "",
-        author: "",
-        filename: "",
-        shopURL: ""
-      },
+      image: { fileURL: "", title: "", author: "", filename: "", shopURL: "" },
       screenshot: null,
-      sharingSupported: false
+      sharingSupported: false,
+      arGotoEnable: false,
+      hideLink: true
     };
   },
   computed: {
@@ -29,6 +25,14 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+
+    isImageLoaded() {
+      if (this.state == AppState.SERVER_PROCESSING) {
+        return false;
+      } else {
+        return true;
       }
     }
   },
@@ -55,7 +59,7 @@ export default {
       </div>
     </nav>
         <div id="imageDetailsContainer" class="container">
-            <div class="card card-checkout">
+            <div class="card card-checkout" v-if="isImageLoaded">
               <div class="wrapper-checkout">
                 <img v-if="isScreenshot" class="card-img-top img-fluid" :src="screenshot" alt="Card image cap">
                 <img v-else class="card-img-top img-fluid" :src="image.fileURL" alt="Card image cap">
@@ -65,15 +69,30 @@ export default {
                     <p class="card-text">
                         {{image.author}}
                         <br/>{{image.year}}<br/>
-                        <i class="fas fa-university"></i> {{image.museum}}
+                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a>
                     </p>
                     <div class="button-container">
-                        <button v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</button>
-
+                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
+                        <a href="#" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
-                        <button v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</button>
+                        <span v-else>
+                          <button v-on:click="shareURL" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                          <div :hidden="hideLink" class="input-group mb-3">
+                            <input type="text" class="form-control" ref="shareLink" disabled>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard">Copy</button>
+                            </div>
+                          </div>
+                        </span>
+                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
+                        <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
+                        
                     </div>
                 </div>
+            </div>
+            <div v-else>
+              <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+              <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
@@ -87,6 +106,18 @@ export default {
       var url = `${protocol}//${host}${pathname}#${imgDetails}`;
       return url;
     },
+    copyToClipboard: function() {
+      //TODO: implement copy to clipboard
+    },
+    shareURL: function() {
+      var url = this.getImagePermalink();
+      this.hideLink = false;
+      this.$refs.shareLink.value = url;
+    },
+    onTryIt: function(event) {
+      SharedStorage.putPreviewImg(this.image);
+      this.$router.push(RouteNames.PREVIEW);
+    },
     share: function() {
       // TODO: set proper text
       var url = this.getImagePermalink();
@@ -98,13 +129,26 @@ export default {
     }
   },
   mounted() {
-    var checkoutImg = SharedStorage.getCheckoutImg();
-    if (checkoutImg) {
-      this.image = checkoutImg.image;
-      this.screenshot = checkoutImg.screenshot;
-    }
-    if (navigator.share) {
-      this.sharingSupported = true;
+    var id = this.$route.params.id;
+    if (id) {
+      this.state = AppState.SERVER_PROCESSING;
+      var self = this;
+      SharedStorage.getImgDetails(id, function(image) {
+        if (image) {
+          self.image = image;
+        }
+        self.state = AppState.READY;
+        self.arGotoEnable = true;
+      });
+    } else {
+      var checkoutImg = SharedStorage.getCheckoutImg();
+      if (checkoutImg) {
+        this.image = checkoutImg.image;
+        this.screenshot = checkoutImg.screenshot;
+      }
+      if (navigator.share) {
+        this.sharingSupported = true;
+      }
     }
   }
 };

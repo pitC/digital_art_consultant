@@ -22,7 +22,7 @@ export default {
       <img :src="fileurl" v-on:click="onPreviewRequest" alt="Card image cap" class="card-img-top img-fluid">
       <div class="card-body">
         <h4 class="card-title">{{title}}</h4>
-        <p class="card-text">{{author}} | {{year}}<br/><i class="fas fa-university"></i> {{museum}}</p>
+        <p class="card-text">{{author}} | {{year}}<br/><i class="fas fa-university"></i><a :href="institutionURL" target="_blank">{{institution}}</a></p>
         <div class="button-container">
           <button type="button" class="btn custom-action" v-on:click="onPreviewRequest"><i class="far fa-image"></i> See it on your wall</button></button>
         </div>
@@ -43,7 +43,8 @@ export default {
     "author",
     "reason",
     "year",
-    "museum",
+    "institution",
+    "institutionURL",
     "calclog",
     "_id",
     "debug"

@@ -75,7 +75,8 @@ export default {
           :reason="img.reason"
           :_id="img._id"
           :year="img.year"
-          :museum="img.museum"
+          :institution="img.institution"
+          :institutionURL="img.institutionURL"
           :debug="debug"
           @preview-requested="onPreviewRequest"
         ></img-card>
