@@ -409,6 +409,7 @@ border-radius: .25rem;
 .custom-switch, .custom-switch:focus{
     color: black !important;
     background-color: #f8f9fa!important;
+    border: none;
     margin: 0.25rem 0;
 }
  /*
