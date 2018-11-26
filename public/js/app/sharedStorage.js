@@ -60,18 +60,19 @@ export default {
         for (var index in response.data.images) {
           var respImg = response.data.images[index];
           var img = {
+            filename: respImg.filename,
             _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
-            year: respImg.year, //TODO: get museum from server
-            institution: respImg.institution, //TODO: get shop url from server,
-            institutionURL: "https://www.staedelmuseum.de/de",
-            shopURL: null,
+            year: respImg.year,
+            institution: respImg.institution,
+            institutionURL: respImg.institutionURL,
+            printURL: respImg.printURL,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,
             colours: respImg.colours
-          };
+          }; //TODO: get museum from server //TODO: get shop url from server,
           this.imgList.push(img);
         }
         this.recommendationValid = true;

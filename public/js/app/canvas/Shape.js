@@ -1,4 +1,4 @@
-const STROKE_STYLE = "#000000";
+const STROKE_STYLE = "#ffffff";
 const STROKE_WIDTH = 2;
 const SELECTED_STROKE_WIDTH = 5;
 const FRAME_PADDING = 5;
@@ -21,25 +21,27 @@ function getDimensions(frameX, frameY, frameW, frameH, orientation, scale = 1) {
     w: frameW * scale,
     h: frameH * scale
   };
-  // for circle x is the center
-  var radius = (frameH - 2 * FRAME_PADDING) / 2;
+
   if (orientation == LABEL_LEFT) {
     // calculated from the right border:
-    var circleX = frameX + frameW - FRAME_PADDING - radius;
+    var selectorX = frameX + frameW - frameH;
   } else {
-    var circleX = frameX + FRAME_PADDING + radius;
+    var selectorX = frameX;
   }
   // calculated from the top border:
-  var circleY = frameY + FRAME_PADDING + radius;
-  dimensions.colourCircle = {
-    x: circleX * scale,
-    y: circleY * scale,
-    r: radius * scale
+  var selecorY = frameY;
+  dimensions.colourSelector = {
+    x: selectorX * scale,
+    y: selecorY * scale,
+    w: frameH * scale,
+    h: frameH * scale,
+    centerX: (selectorX + frameH / 2) * scale,
+    centerY: (selecorY + frameH / 2) * scale
   };
   if (orientation == LABEL_LEFT) {
     var textX = frameX + FRAME_PADDING;
   } else {
-    var textX = frameX + FRAME_PADDING * 2 + radius * 2;
+    var textX = frameX + FRAME_PADDING + frameH;
   }
 
   // y is bottom left part of text
@@ -47,7 +49,7 @@ function getDimensions(frameX, frameY, frameW, frameH, orientation, scale = 1) {
   dimensions.text = { x: textX * scale, y: textY * scale };
   return dimensions;
 }
-
+//TODO: draw borders
 function drawFrame(ctx, frameDim, shadow = false) {
   if (shadow) {
     ctx.shadowColor = FRAME_COLOUR;
@@ -56,14 +58,18 @@ function drawFrame(ctx, frameDim, shadow = false) {
   ctx.fillStyle = FRAME_COLOUR;
   ctx.globalAlpha = FRAME_ALPHA;
   ctx.fillRect(frameDim.x, frameDim.y, frameDim.w, frameDim.h);
+  ctx.strokeStyle = STROKE_STYLE;
+  ctx.lineWidth = STROKE_WIDTH;
+  ctx.stroke();
   ctx.globalAlpha = OPAQUE;
 }
 
-function drawColourCircle(ctx, circleDim, fill) {
-  ctx.beginPath();
-  ctx.arc(circleDim.x, circleDim.y, circleDim.r, 0, 2 * Math.PI, false);
+function drawColourSelector(ctx, selectorDim, fill) {
   ctx.fillStyle = fill;
-  ctx.fill();
+  ctx.fillRect(selectorDim.x, selectorDim.y, selectorDim.w, selectorDim.h);
+  ctx.strokeStyle = STROKE_STYLE;
+  ctx.lineWidth = STROKE_WIDTH;
+  ctx.stroke();
 }
 
 function drawText(ctx, textDim, text, fill = FONT_COLOUR) {
@@ -90,7 +96,7 @@ export default class Shape {
     this.image = null;
     this.text = swatch.name || "Colour";
     this.swatch = swatch;
-    this.orientation = LABEL_LEFT;
+    this.orientation = LABEL_RIGHT;
   }
   setImage(image) {
     this.image = image;
@@ -112,7 +118,7 @@ export default class Shape {
       scale
     );
     drawFrame(ctx, dimensions.frame, this.selected);
-    drawColourCircle(ctx, dimensions.colourCircle, this.fill);
+    drawColourSelector(ctx, dimensions.colourSelector, this.fill);
     drawText(ctx, dimensions.text, this.text);
   }
   drawAsImage(ctx, scale = 1) {
@@ -146,14 +152,14 @@ export default class Shape {
 
   moveAllowed(newX, newY, canvasW, canvasH) {
     var dim = getDimensions(this.x, this.y, this.w, this.h, this.orientation);
-    var minX = dim.frame.x - dim.colourCircle.x;
+    var minX = dim.frame.x - dim.colourSelector.centerX;
     if (this.orientation == LABEL_LEFT) {
-      var maxX = canvasW - dim.frame.w + dim.colourCircle.r;
+      var maxX = canvasW - dim.frame.w + dim.colourSelector.w / 2;
     } else {
-      var maxX = canvasW - dim.colourCircle.r - FRAME_PADDING;
+      var maxX = canvasW - dim.colourSelector.w / 2 - FRAME_PADDING;
     }
-    var minY = 0 - FRAME_PADDING - dim.colourCircle.r; //
-    var maxY = canvasH - dim.frame.h + FRAME_PADDING + dim.colourCircle.r;
+    var minY = 0 - FRAME_PADDING - dim.colourSelector.h / 2; //
+    var maxY = canvasH - dim.frame.h + FRAME_PADDING + dim.colourSelector.h / 2;
 
     if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
       return true;
@@ -180,13 +186,11 @@ export default class Shape {
     // if label would go out of the canvas - flip it to the right
     if (targetx - this.w < 0) {
       this.orientation = LABEL_RIGHT;
-    } else {
-      this.orientation = LABEL_LEFT;
     }
     var dim = getDimensions(targetx, targety, this.w, this.h, this.orientation);
-    var colourCircleDim = dim.colourCircle;
-    this.x = this.x - (colourCircleDim.x - this.x);
-    this.y = this.y - (colourCircleDim.y - this.y);
+    var colourSelectorDim = dim.colourSelector;
+    this.x = this.x - (colourSelectorDim.centerX - this.x);
+    this.y = this.y - (colourSelectorDim.centerY - this.y);
   }
 
   setColour(colour) {
@@ -202,6 +206,9 @@ export default class Shape {
       this.h,
       this.orientation
     );
-    return dimensions.colourCircle;
+    return {
+      x: dimensions.colourSelector.centerX,
+      y: dimensions.colourSelector.centerY
+    };
   }
 }

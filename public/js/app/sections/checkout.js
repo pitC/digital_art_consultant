@@ -21,7 +21,7 @@ export default {
       }
     },
     shopEnabled() {
-      if (this.image.shopURL) {
+      if (this.image.printURL) {
         return true;
       } else {
         return false;
@@ -34,6 +34,11 @@ export default {
       } else {
         return true;
       }
+    },
+    downloadURL() {
+      return `https://storage.luckycloud.de/d/9b4540c37b684629ab09/files/?p=/big/${
+        this.image.filename
+      }&dl=1`;
     }
   },
   template: `
@@ -80,7 +85,7 @@ Great choice!
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="far fa-save"></i> Save screenshot</a>
-                        <a href="#" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
+                        <a :href="downloadURL" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
                         <span v-else>
                           <button v-on:click="shareURL" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
@@ -93,11 +98,11 @@ Great choice!
                             </div>
                           </div>
                         </span>
-                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
+                        <a v-if="shopEnabled" :href="image.printURL" target="_blank" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action btn-block" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="far fa-image"></i> See it on your wall</button>
                         <hr p-3>
                         <h5>Do you want to try again?</h5>
-                        <button class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
+                        <a href="/" class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</a>
                         
                     </div>
                 </div>
@@ -135,7 +140,8 @@ Great choice!
       var url = this.getImagePermalink();
       navigator.share({
         title: "Artific.app Recommendation",
-        text: "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
+        text:
+          "This is the artwork https://www.artific.app recommended me, what do you think? #artificapp",
         url: url
       });
     }
