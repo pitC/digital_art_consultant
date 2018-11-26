@@ -109,26 +109,33 @@ export default {
   //  //
   template: `
   <div class="container-fluid">
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-      <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="/">Digital Art Consultant</a>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Impressum</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" href="#">Artific</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="museum.html">For museums</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="impressum.html">Impressum</a>
+      </li>
+    </ul>
+  </div>
+  <span class="navbar-text">
+Take a photo
+  </span>
+
+</nav>
     <p class="bg-light" v-if="debug">{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
     <div>
         <video
@@ -160,6 +167,8 @@ export default {
               <i class="fas fa-camera"></i> {{snapshotBtLbl}}
             </span>
           </button>
+          <button id="find-art-btn" type="button" class="btn custom-action btn-block rounded-0" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
+          <button id="videoplay-btn" type="button" class="btn custom-standard btn-block rounded-0" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
           <button id="find-art-btn" type="button" class="btn custom-action btn-block" v-on:click="onCommitColours" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="far fa-check-circle"></i> Find your art</button>
           <button id="videoplay-btn" type="button" class="btn custom-standard btn-block" v-on:click="onRetakeSnapshot" v-bind:hidden="isPreviewNotReady" :disabled="isProcessing"><i class="fas fa-camera"></i> Retake photo</button>
           </button>
