@@ -38,26 +38,33 @@ export default {
   },
   template: `
     <div class="container-fluid">
-        <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-      <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="/">Digital Art Consultant</a>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Impressum</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler border-0 p-0" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="#">Artific</a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="museum.html">For museums</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="impressum.html">Impressum</a>
+        </li>
+      </ul>
+    </div>
+    <span class="navbar-text">
+Great choice!
+    </span>
+ 
+  </nav>
         <div id="imageDetailsContainer" class="container">
             <div class="card card-checkout" v-if="isImageLoaded">
               <div class="wrapper-checkout">
@@ -72,21 +79,25 @@ export default {
                         <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a>
                     </p>
                     <div class="button-container">
-                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download screenshot</a>
-                        <a href="#" class="btn custom-action" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
-                        <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                        <a v-if="isScreenshot" :href="screenshot" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="far fa-save"></i> Save screenshot</a>
+                        <a href="#" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
+                        <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
                         <span v-else>
-                          <button v-on:click="shareURL" class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Share</button>
+                          <button v-on:click="shareURL" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
+                          
+                         
                           <div :hidden="hideLink" class="input-group mb-3">
-                            <input type="text" class="form-control" ref="shareLink" disabled>
+                            <input type="text" class="form-control h-100" ref="shareLink" disabled>
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard">Copy</button>
+                              <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
                             </div>
                           </div>
                         </span>
-                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
-                        <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
-                        <button class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
+                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
+                        <button v-if="arGotoEnable" class="btn custom-action btn-block" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="far fa-image"></i> See it on your wall</button>
+                        <hr p-3>
+                        <h5>Do you want to try again?</h5>
+                        <button class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
                         
                     </div>
                 </div>
@@ -123,8 +134,8 @@ export default {
       // TODO: set proper text
       var url = this.getImagePermalink();
       navigator.share({
-        title: "share test",
-        text: "Hello World",
+        title: "Artific.app Recommendation",
+        text: "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
         url: url
       });
     }

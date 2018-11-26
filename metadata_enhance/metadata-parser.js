@@ -1,5 +1,5 @@
-IMG_FORMAT = ".png";
-NOT_FOUND = "not_found";
+IMG_FORMAT = ".jpg";
+NOT_FOUND = "unknown";
 ENGLISH_INDEX = 1;
 GERMAN_INDEX = 0;
 X_DIM_INDEX = 1;
@@ -39,7 +39,14 @@ function extractAdlibMetadata(record) {
   metadata.filename =
     extractAttribute(record, ["object_number", 0]) + IMG_FORMAT;
   metadata.filename = metadata.filename.replace(/ /g, "_");
-  metadata.title = extractAttribute(record, ["Title", 0, "title", 0]);
+  var engTitle = extractAttribute(record,["Title_translation",0,"title.translation",0]);
+  if (engTitle == NOT_FOUND){
+    metadata.title = extractAttribute(record, ["Title", 0, "title", 0]);
+  }
+  else{
+    metadata.title=engTitle;
+  }
+  
   metadata.author = extractAttribute(record, [
     "Production",
     0,
@@ -141,7 +148,16 @@ function extractAdlibMetadata(record) {
     0,
     "_"
   ]);
+  
+  metadata.institutionURL = "https://www.staedelmuseum.de/de";
 
+  var printUrl = extractAttribute(record, ["digital_reference",0]);
+  if (printUrl == NOT_FOUND){
+    printUrl = null;
+  }
+  
+  metadata.printURL = printUrl;
+  
   return metadata;
 }
 
