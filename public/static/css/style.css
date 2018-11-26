@@ -15,6 +15,9 @@ background-attachment: fixed;
 background-position: center center;
 background-size: cover;
 }
+
+
+
 @media only screen and (orientation:landscape){
     #turn{ display:block; }
     #vue-app{ display:none; }
@@ -129,6 +132,25 @@ background-size: cover;
 		flex: 1;
 	}
 	
+
+.box-1 a {
+    color: white;
+    text-decoration: underline;
+    
+  }
+  
+  .box-1 a:hover {
+    color: white;
+    text-decoration: underline;
+  }
+  
+  .box-1 a:active {
+    color: white;
+  }
+  
+  .box-1 a:visited {
+    color: white;
+  }
 	.box-2 {
 
 		flex: 1;
