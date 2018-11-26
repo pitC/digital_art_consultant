@@ -49,7 +49,7 @@ export default {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">Artific</a>
+      <a class="navbar-brand" href="/">Artific</a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
           <a class="nav-link" href="index.html">Home</a>
@@ -92,10 +92,14 @@ Great choice!
                           
                          
                           <div :hidden="hideLink" class="input-group mb-3">
-                            <input type="text" class="form-control h-100" ref="shareLink" disabled>
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
+                            <div class="input-group"> 
+                              
+                              <input type="text" class="form-control h-100" ref="shareLink" readonly/>
+                              <span class="input-group-btn">
+                                  <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
+                              </span>
                             </div>
+                           
                           </div>
                         </span>
                         <a v-if="shopEnabled" :href="image.printURL" target="_blank" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
@@ -111,6 +115,19 @@ Great choice!
               <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
               <span class="sr-only">Loading...</span>
             </div>
+            <div id="copiedToClipboard" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Link copied to clipboard</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
         </div>
     </div>
   `,
@@ -124,7 +141,9 @@ Great choice!
       return url;
     },
     copyToClipboard: function() {
-      //TODO: implement copy to clipboard
+      this.$refs.shareLink.select();
+      document.execCommand("copy");
+      $("#copiedToClipboard").modal("show");
     },
     shareURL: function() {
       var url = this.getImagePermalink();
@@ -136,7 +155,6 @@ Great choice!
       this.$router.push(RouteNames.PREVIEW);
     },
     share: function() {
-      // TODO: set proper text
       var url = this.getImagePermalink();
       navigator.share({
         title: "Artific.app Recommendation",
