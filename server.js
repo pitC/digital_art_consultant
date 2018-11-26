@@ -45,7 +45,7 @@ app.use("/previews/staedel/:filename", function(clientReq, clientRes, next) {
     method: "GET"
   };
 
-  var proxy = http.request(options, function(res) {
+  https: var proxy = http.request(options, function(res) {
     res.pipe(
       clientRes,
       { end: true }

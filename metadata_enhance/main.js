@@ -1,10 +1,10 @@
-FILE_FOLDER = "/home/pit/workspace/digital_art_consultant/Staedel/Abbildungen/";
+FILE_FOLDER = "/home/pit/workspace/digital_art_consultant/Staedel/Resized/";
 TEST_FILE =
   "/home/pit/workspace/digital_art_consultant/Staedel/Abbildungen/" +
   "2085.png";
 
 METADATA_FILE =
-  "/home/pit/workspace/digital_art_consultant/Staedel/Objekte.xml";
+  "/home/pit/workspace/digital_art_consultant/Staedel/Objekte_v3.xml";
 // "/home/pit/workspace/digital_art_consultant/Staedel/metadata-test.xml";
 
 DROP_COLLECTION = false;
