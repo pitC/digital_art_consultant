@@ -86,6 +86,7 @@ export default {
                         </span>
                         <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i>Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="fa fa-shopping-cart"></i> See it on your wall</button>
+                        <button class="btn custom-standard" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
                         
                     </div>
                 </div>
