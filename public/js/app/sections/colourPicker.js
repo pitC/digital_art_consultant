@@ -32,7 +32,15 @@ export default {
 <span class="navbar-text">
 Choose your colours
 </span>
-
+<div class="ml-auto  bd-highlight">
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-pallete"></i>  By color</button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="app.html#/photo-input"><i class="fas fa-camera"></i> By camera</a>
+  </div>
+</div>
+</div>
 </nav>
   <div class="container">
     <div class="box box-1">
