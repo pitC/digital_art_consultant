@@ -279,7 +279,7 @@
     "text": "What hashtag are you most likely to click on Instagram?",
     "answers": [
       {
-        "answer": "#clouds (cloud, landscape)",
+        "answer": "#clouds",
         "target-metadata": [
           {
             "category": "content",
