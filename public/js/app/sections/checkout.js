@@ -134,8 +134,8 @@ Great choice!
       // TODO: set proper text
       var url = this.getImagePermalink();
       navigator.share({
-        title: "share test",
-        text: "Hello World",
+        title: "Artific.app Recommendation",
+        text: "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
         url: url
       });
     }
