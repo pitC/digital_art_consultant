@@ -115,7 +115,7 @@ export default {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="#">Artific</a>
+    <a class="navbar-brand" href="/">Artific</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
         <a class="nav-link" href="index.html">Home</a>
@@ -127,7 +127,7 @@ export default {
         <a class="nav-link" href="museum.html">For museums</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="impressum.html">Impressum</a>
+        <a class="nav-link" href="impressum.html">Legal Disclosure</a>
       </li>
     </ul>
   </div>
@@ -137,9 +137,9 @@ Take a photo
   <div class="ml-auto  bd-highlight">
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-camera"></i>  By photo</button>
+      <i class="fas fa-camera"></i> By photo</button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-pallete"></i> By color</a>
+      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-palette"></i> By color</a>
     </div>
   </div>
 </div>
