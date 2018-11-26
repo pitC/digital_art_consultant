@@ -31,9 +31,9 @@ export default {
           </li>
         </ul>
       </div>
-      <div class="p-2 bd-highlight nav-link">
-        Give us more Informations
-      </div>
+      <span class="navbar-text">
+        Answer the question
+      </span>
     </nav>
     <div class="container">
         <div class="box box-1">
