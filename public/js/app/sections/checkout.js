@@ -141,7 +141,7 @@ Great choice!
       navigator.share({
         title: "Artific.app Recommendation",
         text:
-          "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
+          "This is the artwork https://www.artific.app recommended me, what do you think? #artificapp",
         url: url
       });
     }
