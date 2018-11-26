@@ -96,8 +96,8 @@ Great choice!
                         <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action btn-block" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="far fa-image"></i> See it on your wall</button>
                         <hr p-3>
-                        <h2>Do you want to try again?</h2>
-                        <button class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
+                        <h5>Do you want to try again?</h5>
+                        <button class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
                         
                     </div>
                 </div>

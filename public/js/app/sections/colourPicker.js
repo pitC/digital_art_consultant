@@ -30,7 +30,7 @@ export default {
   </ul>
 </div>
 <span class="navbar-text">
-Choose your colors
+Choose your colours
 </span>
 
 </nav>
