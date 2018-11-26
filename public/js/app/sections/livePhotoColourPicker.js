@@ -139,7 +139,7 @@ Take a photo
     <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-camera"></i>  By photo</button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="app.html#/photo-input"><i class="fas fa-pallete"></i> By color</a>
+      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-pallete"></i> By color</a>
     </div>
   </div>
 </div>
