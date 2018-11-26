@@ -157,7 +157,10 @@ background-size: cover;
     {
         height: 8px;
     
-    }     
+    } 
+    #navbar{
+        min-height: 80px;
+    }    
 
 
     .indexnavi{
@@ -395,7 +398,18 @@ border-radius: .25rem;
     color: black;
     padding: 1rem;
 }
-
+/*Switch between camera and colorpicker*/
+.dropdown-menu {
+    min-width: 5rem;
+}
+.dropdown-item {
+    padding: .5rem 1.5rem 0.5rem 0.7rem;
+}
+.custom-switch, .custom-switch:focus{
+    color: black !important;
+    background-color: #f8f9fa!important;
+    margin: 0.25rem 0;
+}
  /*
 .container-fluid {
     height: 100vh;
