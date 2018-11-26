@@ -21,7 +21,7 @@ export default {
       }
     },
     shopEnabled() {
-      if (this.image.shopURL) {
+      if (this.image.printURL) {
         return true;
       } else {
         return false;
@@ -93,11 +93,11 @@ Great choice!
                             </div>
                           </div>
                         </span>
-                        <a v-if="shopEnabled" :href="image.shopURL" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
+                        <a v-if="shopEnabled" :href="image.printURL" target="_blank" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
                         <button v-if="arGotoEnable" class="btn custom-action btn-block" role="button" aria-disabled="true" v-on:click="onTryIt"><i class="far fa-image"></i> See it on your wall</button>
                         <hr p-3>
                         <h5>Do you want to try again?</h5>
-                        <button class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</button>
+                        <a href="/" class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</a>
                         
                     </div>
                 </div>
@@ -135,7 +135,8 @@ Great choice!
       var url = this.getImagePermalink();
       navigator.share({
         title: "Artific.app Recommendation",
-        text: "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
+        text:
+          "This is the artwork http://artific.app recommended me, what do you think? #artificapp",
         url: url
       });
     }

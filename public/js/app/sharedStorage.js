@@ -63,15 +63,15 @@ export default {
             _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
-            year: respImg.year, //TODO: get museum from server
-            institution: respImg.institution, //TODO: get shop url from server,
+            year: respImg.year,
+            institution: respImg.institution,
             institutionURL: "https://www.staedelmuseum.de/de",
-            shopURL: null,
+            printURL: printURL,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,
             colours: respImg.colours
-          };
+          }; //TODO: get museum from server //TODO: get shop url from server,
           this.imgList.push(img);
         }
         this.recommendationValid = true;

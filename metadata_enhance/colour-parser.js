@@ -50,18 +50,32 @@ function parsePalette(imageFile, targetMetadata, callback, errCb) {
 exports.parse = function(imageFile, callback, errCb) {
   var colourMetadata = {};
 
-  parseDominantColour(imageFile, colourMetadata, function(colour, metadata) {
-    parsePalette(imageFile, colourMetadata, function(colours, targetMetadata) {
-      parseProminent(
+  parseDominantColour(
+    imageFile,
+    colourMetadata,
+    function(colour, metadata) {
+      parsePalette(
         imageFile,
         colourMetadata,
         function(colours, targetMetadata) {
-          callback(colourMetadata);
+          parseProminent(
+            imageFile,
+            colourMetadata,
+            function(colours, targetMetadata) {
+              callback(colourMetadata);
+            },
+            function() {
+              errCb();
+            }
+          );
         },
         function() {
           errCb();
         }
       );
-    });
-  });
+    },
+    function() {
+      errCb();
+    }
+  );
 };
