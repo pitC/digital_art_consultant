@@ -34,6 +34,11 @@ export default {
       } else {
         return true;
       }
+    },
+    downloadURL() {
+      return `https://storage.luckycloud.de/d/9b4540c37b684629ab09/files/?p=/big/${
+        this.image.filename
+      }&dl=1`;
     }
   },
   template: `
@@ -80,7 +85,7 @@ Great choice!
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="far fa-save"></i> Save screenshot</a>
-                        <a href="#" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
+                        <a :href="downloadURL" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="fa fa-arrow-circle-down"></i> Download artwork</a>
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
                         <span v-else>
                           <button v-on:click="shareURL" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>

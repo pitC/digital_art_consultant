@@ -60,13 +60,14 @@ export default {
         for (var index in response.data.images) {
           var respImg = response.data.images[index];
           var img = {
+            filename: respImg.filename,
             _id: respImg._id,
             title: respImg.title,
             author: respImg.author,
             year: respImg.year,
             institution: respImg.institution,
-            institutionURL: "https://www.staedelmuseum.de/de",
-            printURL: printURL,
+            institutionURL: respImg.institutionURL,
+            printURL: respImg.printURL,
             reason: respImg.recommendationReason,
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,
