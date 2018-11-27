@@ -204,7 +204,7 @@ Place the image on your wall
     <p class="bg-light" v-if="debug">{{debugStr}}</p>
     
     <div class="ar-container">
-      <div class="box box-1 alert alert-warning pt-3" v-if="noVideoAvailable">
+      <div class="box box-1 alert alert-warning p-1" v-if="noVideoAvailable">
       <br>
         <p>
             Unfortunately we can’t access your camera. But don’t worry, you can
