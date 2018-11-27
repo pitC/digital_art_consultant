@@ -94,6 +94,25 @@ background-size: cover;
     }
 }
 
+.card-text a {
+    color: black;
+    text-decoration: none;
+    
+  }
+  
+  .card-text a:hover {
+    color: black;
+    text-decoration: none;
+  }
+  
+  .card-text a:active {
+    color: black;
+  }
+  
+  .card-text a:visited {
+    color:black;
+  }
+
 /*
 .strechheight{
     margin: auto;

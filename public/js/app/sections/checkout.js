@@ -81,6 +81,7 @@ Great choice!
                     <p class="card-text">
                         {{image.author}}
                         <br/>{{image.year}}<br/>
+                        <i class="fab fa-creative-commons"></i> <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA 4.0</a><br/>
                         <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a>
                     </p>
                     <div class="button-container">
