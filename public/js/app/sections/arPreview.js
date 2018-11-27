@@ -7,6 +7,7 @@ import CanvasUtils from "./../canvas/canvasUtils.js";
 const VIDEO_READY = "video";
 const TAKING_SCREENSHOT = "scrshot";
 const VIDEO_NOT_AVAILABLE = "no video";
+const WEBCAM_INIT = "init";
 
 const AFRAME_SCENE_LISTENER = "scene-listener";
 const AFRAME_IMAGE_LISTENER = "image-listener";
@@ -153,11 +154,20 @@ export default {
         return true;
       }
     },
-    isTakingScreenshot() {
-      if (this.state == TAKING_SCREENSHOT) {
+    isProcessing() {
+      if (this.state == WEBCAM_INIT || this.state == TAKING_SCREENSHOT) {
         return true;
       } else {
         return false;
+      }
+    },
+    snapshotBtLbl() {
+      if (this.state == WEBCAM_INIT) {
+        return "Starting webcam";
+      } else if (this.state == TAKING_SCREENSHOT) {
+        return "Hold on...";
+      } else {
+        return "This is it!";
       }
     }
   },
@@ -334,11 +344,11 @@ Place the image on your wall
         <div class="btn-group w-100 btn-group-justified btn-group-lg" role="group">
           <button id="larger-btn" type="button" class="btn custom-standard mr-3 rounded-right" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
           <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="goToCheckout" :disabled="buttonsDisabled">
-            <span v-if="isTakingScreenshot">
-              <i class="fa fa-spinner fa-spin fa-fw"></i> Taking snapshot...
+            <span v-if="isProcessing">
+              <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
             </span>
             <span v-else>
-              <i class="fas fa-check"></i> This is it!
+              <i class="fas fa-check"></i> {{snapshotBtLbl}}
             </span>
           </button>
            <button id="smaller-btn" type="button" class="btn custom-standard ml-3 rounded-left" v-on:click="scaleUp" :disabled="buttonsDisabled"><i class="fas fa-plus-circle"></i> </button>
@@ -445,6 +455,7 @@ Place the image on your wall
   },
 
   mounted() {
+    this.state = WEBCAM_INIT;
     if (this.$route.query.hasOwnProperty("m")) {
       if (this.$route.query.m == "debug") {
         this.debug = true;
