@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
     "body-parser": "^1.18.3",
     "bootstrap-colorpicker": "^3.0.3",
     "color-convert": "^1.9.3",
@@ -16,13 +19,22 @@
     "heroku-ssl-redirect": "0.0.4",
     "http-proxy": "^1.17.0",
     "jsonschema": "^1.2.4",
-    "mongodb": "^3.1.8",
+    "mongodb": "^3.1.10",
     "node-vibrant": "^3.0.0",
     "request": "^2.88.0",
+    "webpack": "^4.26.1",
     "xml2js": "^0.4.19"
   },
   "engines": {
     "node": "8.10.0",
     "npm": "6.4.x"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "heroku-postbuild": "webpack -p",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
   }
 }
