@@ -101,9 +101,12 @@ Choose an artwork
           </div>
         </div>
       </div>
-      <div class="box p-2" v-else>
-        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-        <span class="sr-only">Loading...</span>
+      <div class="container" v-else>
+        <div class="box box-1">
+          <span class="h5">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          </span>
+        </div>
       </div>
     </div>
 </div>
