@@ -94,22 +94,22 @@ background-size: cover;
     }
 }
 
-.card a {
+.card-text a {
     color: black;
     text-decoration: none;
     
   }
   
-  .card a:hover {
+  .card-text a:hover {
     color: black;
     text-decoration: none;
   }
   
-  .card a:active {
+  .card-text a:active {
     color: black;
   }
   
-  .card a:visited {
+  .card-text a:visited {
     color:black;
   }
 
