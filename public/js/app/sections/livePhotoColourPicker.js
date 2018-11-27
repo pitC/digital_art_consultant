@@ -193,13 +193,7 @@ Take a photo
     `,
   // TODO: finish manual upload
   methods: {
-    onDblClick: function(event) {
-      // TODO: decide if colour addition is supported or not
-      // var pos = this.interactiveCanvas.getMouse(event);
-      // var colour = this.interactiveCanvas.getPixelColour(pos.x, pos.y);
-      // this.interactiveCanvas.addShape(pos.x, pos.y, colour);
-      // this.interactiveCanvas.draw();
-    },
+    onDblClick: function(event) {},
     onMove: function(event) {
       if (this.interactiveCanvas) {
         var pos = this.interactiveCanvas.getPos(event);

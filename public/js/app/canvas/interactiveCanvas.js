@@ -91,7 +91,7 @@ export default class InteractiveCanvas {
     }
     return parsedColours;
   }
-  // TODO: refactor to use canvasUtils method instead
+
   takeImgFromVideo(callback) {
     const canvas = document.createElement("canvas");
     var scale = 1;
@@ -220,35 +220,10 @@ export default class InteractiveCanvas {
   }
 
   getMouse(e) {
-    // TODO: check if really not working on Firefox
     var scale = this.getScale();
     var mouseX = parseInt(e.offsetX) * scale;
     var mouseY = parseInt(e.offsetY) * scale;
     return { x: mouseX, y: mouseY };
-    // var element = this.canvas,
-    //   offsetX = 0,
-    //   offsetY = 0,
-    //   mx,
-    //   my;
-
-    // // Compute the total offset
-    // if (element.offsetParent !== undefined) {
-    //   do {
-    //     offsetX += element.offsetLeft;
-    //     offsetY += element.offsetTop;
-    //   } while ((element = element.offsetParent));
-    // }
-
-    // // Add padding and border style widths to offset
-    // // Also add the offsets in case there's a position:fixed bar
-    // offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
-    // offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
-
-    // mx = e.pageX - offsetX;
-    // my = e.pageY - offsetY;
-
-    // // We return a simple javascript object (a hash) with x and y defined
-    // return { x: mx, y: my };
   }
 
   getTouch(e) {

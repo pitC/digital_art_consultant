@@ -93,8 +93,7 @@ app.get("/image/:id", function(req, res) {
     function(item) {
       if (item) {
         res.status(200);
-        //TODO: put institution URL in metadata
-        item.institutionURL = "https://www.staedelmuseum.de/de";
+
         res.send(item);
       } else {
         res.status(404);

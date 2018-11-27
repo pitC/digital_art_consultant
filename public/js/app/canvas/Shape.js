@@ -11,7 +11,7 @@ const LABEL_LEFT = "left";
 const LABEL_RIGHT = "right";
 
 const FONT_STYLE = "14pt Helvetica";
-// TODO: consider orientation
+
 function getDimensions(frameX, frameY, frameW, frameH, orientation, scale = 1) {
   // frame X and Y are positions for top-left pixel
   var dimensions = {};
@@ -183,7 +183,7 @@ export default class Shape {
   }
 
   setColourSelectorPos(targetx, targety) {
-    // if label would go out of the canvas - flip it to the right
+    //TODO: if label would go out of the canvas - flip it to the left
     if (targetx - this.w < 0) {
       this.orientation = LABEL_RIGHT;
     }

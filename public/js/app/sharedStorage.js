@@ -72,7 +72,7 @@ export default {
             fileURL: respImg.fileURL,
             calclog: respImg.calcLog,
             colours: respImg.colours
-          }; //TODO: get museum from server //TODO: get shop url from server,
+          };
           this.imgList.push(img);
         }
         this.recommendationValid = true;

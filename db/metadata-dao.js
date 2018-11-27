@@ -25,10 +25,7 @@ exports.initDB = function(dropCollection, callback) {
     function(err, database) {
       if (err) throw err;
       db = database.db = database.db();
-      // if (dropCollection) {
-      // TODO: find the actual method for collection dropping
-      //   db.collection.drop();
-      // }
+
       db.createCollection(COLLECTION, function(err, res) {
         if (err) throw err;
         console.log("Collection " + COLLECTION + " created on " + url);
@@ -80,7 +77,6 @@ exports.findById = function(id, okCallback, errCallback) {
   });
 };
 
-// TODO: add specific criteria
 exports.findImages = function(criteria, limit, okCallback, errCallback) {
   db.collection(COLLECTION, function(err, collection) {
     collection

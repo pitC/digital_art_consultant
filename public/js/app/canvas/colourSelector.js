@@ -44,28 +44,14 @@ function selectFromProminent(prominentColours) {
     if (colour.name.toLowerCase().includes("vibrant")) {
       if (colour.population > maxVibrant.population) {
         maxVibrant = colour;
-        // TODO: make a copy instead - use once the logic is final
-        // maxVibrant = Object.assign({}, colour);
       }
     } else {
       if (colour.population > maxMuted.population) {
         maxMuted = colour;
-        // TODO: make a copy instead - use once the logic is final
-        // maxMuted = Object.assign({}, colour);
       }
     }
   }
-  // TODO: remove this debug data
-  // TODO: for now work only with changed labels - to verify the logic
-  // if (maxMuted.population > maxVibrant.population) {
 
-  //   maxMuted.name += " (M)";
-  //   maxVibrant.name += " (S)";
-  // } else {
-  //   maxVibrant.name += " (M)";
-  //   maxMuted.name += " (S)";
-  // }
-  // return prominentColours;
   maxMuted.name = ColourTypes.SECONDARY;
   maxVibrant.name = ColourTypes.CONTRAST;
   selectedColours.push(maxMuted);

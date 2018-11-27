@@ -15,7 +15,6 @@ var colourParser = require("./colour-parser");
 var metadataDao = require("./../db/metadata-dao");
 
 function getImgURL(filename) {
-  //TODO: exchange with a real URL
   return FILE_FOLDER + filename;
 }
 
