@@ -2,7 +2,7 @@ export default {
   scale: function(incr, renderMat) {
     this.scalePlane("#artwork", incr);
     if (renderMat) {
-      this.scalePlane("#mat", incr);
+      this.setMat("#artwork");
     }
     this.adjustFrame(renderMat);
     this.adjustLockIndicator();
