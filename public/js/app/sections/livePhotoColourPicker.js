@@ -131,7 +131,7 @@ export default {
       </li>
     </ul>
   </div>
-  <div class="ml-auto  bd-highlight">
+  <div class="ml-auto  bd-highlight custon-dropdown-wrapper">
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-camera"></i> By photo</button>
