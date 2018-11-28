@@ -29,13 +29,11 @@ export default {
     </li>
   </ul>
 </div>
-<span class="navbar-text">
-Choose your colours
-</span>
-<div class="ml-auto  bd-highlight">
+
+<div class="ml-auto bd-highlight custon-dropdown-wrapper">
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-palete"></i>  By color</button>
+    <i class="fas fa-palette"></i>  By color</button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="app.html#/photo-input"><i class="fas fa-camera"></i> By camera</a>
   </div>
