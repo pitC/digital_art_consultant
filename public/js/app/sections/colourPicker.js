@@ -29,9 +29,7 @@ export default {
     </li>
   </ul>
 </div>
-<span class="navbar-text">
-Choose your colours
-</span>
+
 <div class="ml-auto  bd-highlight">
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
