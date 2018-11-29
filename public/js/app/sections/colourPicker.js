@@ -12,24 +12,6 @@ export default {
   aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-  <a class="navbar-brand" href="/">Artific</a>
-  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-    <li class="nav-item active">
-      <a class="nav-link" href="index.html">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="about.html">About</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="museum.html">For museums</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="impressum.html">Legal Disclosure</a>
-    </li>
-  </ul>
-</div>
-
 <div class="ml-auto bd-highlight custon-dropdown-wrapper">
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,6 +21,28 @@ export default {
   </div>
 </div>
 </div>
+<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#"><img src="../../../dist/img/logo_bunt.png" alt="artific logo" id="logo-nav" class="img-fluid"></a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="museum.html">For museums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="impressum.html">Legal Disclosure</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="som-wrapper" href="https://twitter.com/AppArtific" target="_blank"><i id="twitter-icon" class="fab fa-twitter-square"></i></a>
+          </li>
+        </ul>
+      </div>
+
+
 </nav>
   <div class="container">
     <div class="box box-1">
