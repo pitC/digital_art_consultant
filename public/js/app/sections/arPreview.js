@@ -148,7 +148,11 @@ export default {
       } else return "#srcLock";
     },
     buttonsDisabled() {
-      if (this.state == VIDEO_READY && this.previewMode == IMAGE_PLACED) {
+      if (
+        this.state == VIDEO_READY &&
+        (this.previewMode == IMAGE_PLACED ||
+          this.previewMode == IMAGE_INITIAL_PLACING)
+      ) {
         return false;
       } else {
         return true;
@@ -166,6 +170,8 @@ export default {
         return "Starting webcam";
       } else if (this.state == TAKING_SCREENSHOT) {
         return "Hold on...";
+      } else if (this.previewMode == IMAGE_INITIAL_PLACING) {
+        return "Place it";
       } else {
         return "This is it!";
       }
@@ -343,7 +349,7 @@ Place the image on your wall
       <div class="box box-5 fixed-bottom">
         <div class="btn-group w-100 btn-group-justified btn-group-lg" role="group">
           <button id="larger-btn" type="button" class="btn custom-standard mr-3 rounded-right" v-on:click="scaleDown" :disabled="buttonsDisabled"><i class="fas fa-minus-circle"></i></button>
-          <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="goToCheckout" :disabled="buttonsDisabled">
+          <button id="screenshot-btn" type="button" class="btn btn-block custom-action rounded" v-on:click="mainBtClick" :disabled="buttonsDisabled">
             <span v-if="isProcessing">
               <i class="fa fa-spinner fa-spin fa-fw"></i> {{snapshotBtLbl}}
             </span>
@@ -366,6 +372,14 @@ Place the image on your wall
 
     changeImage: function() {
       AframeNav.adjustImageDimensions(this.renderMat);
+    },
+
+    mainBtClick: function() {
+      if (this.previewMode == IMAGE_INITIAL_PLACING) {
+        this.recenter();
+      } else {
+        this.goToCheckout();
+      }
     },
 
     recenter: function() {
