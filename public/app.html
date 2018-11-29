@@ -80,7 +80,30 @@
     <span id="vue-app"><router-view></router-view></span>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
+    <!-- Modal -->
+    <div class="modal fade" id="pwa-install-modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body"><p>Some text in the modal.</p></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-default"
+              onclick="addToHomeScreen"
+            >
+              Add it!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -100,4 +123,18 @@
     <script type="module" src="js/vueappRouted.js"></script>
     <script nomodule src="/dist/build.js"></script>
   </body>
+  <script>
+    var deferredPrompt;
+
+    window.addEventListener("beforeinstallprompt", function(e) {
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      e.preventDefault();
+      console.log("Before install prompt");
+      e.prompt();
+      // Stash the event so it can be triggered later.
+      deferredPrompt = e;
+
+      $("#pwa-install-modal").modal("show");
+    });
+  </script>
 </html>

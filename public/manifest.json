@@ -2,7 +2,7 @@
   "name": "artific.app",
   "short_name": "artific.app",
   "lang": "en",
-  "start_url": "http://artific.app/",
+  "start_url": ".",
   "display": "standalone",
   "icons": [
     {
