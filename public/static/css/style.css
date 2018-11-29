@@ -274,7 +274,8 @@ background-color: FF5858;
 border-color:FF5858;
 color: white;
 }
-/* Custom button  */
+
+/* Custom buttons  */
 .btn {padding: .75rem .75rem;
     margin-top: 2px;
 }
@@ -298,14 +299,10 @@ border-radius: .25rem;
     
    /* Logo style */
 
-        .logoframe {
-            border: white solid 1px;
-         padding: 10px;
-         margin-bottom: 10px;
-         text-transform: uppercase; 
-         color: white;
-         text-align: center;
-        }
+#logo-index{
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
 
             /* Toggle switch */
 
