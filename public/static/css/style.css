@@ -84,6 +84,9 @@ background-size: cover;
         column-count: 3;
 
     }
+#logo-nav{
+    display: none !important;
+}
 }
 
 @media (min-width: 1200px) {
@@ -302,6 +305,9 @@ border-radius: .25rem;
 #logo-index{
     max-width: 500px;
     margin: 2rem auto;
+}
+#logo-nav{
+    width: 65%;
 }
 
             /* Toggle switch */
