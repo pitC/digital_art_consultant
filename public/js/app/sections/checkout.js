@@ -39,6 +39,11 @@ export default {
       return `https://storage.luckycloud.de/d/9b4540c37b684629ab09/files/?p=/big/${
         this.image.filename
       }&dl=1`;
+    },
+    permalink() {
+      var file = this.image.filename.replace(".jpg", "");
+      var url = `http://staedelmuseum.de/go/ds/${file}`;
+      return url;
     }
   },
   template: `
@@ -82,8 +87,9 @@ Great choice!
                         {{image.author}}
                         <br/>{{image.year}}<br/>
                         <i class="fab fa-creative-commons"></i> <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA 4.0</a><br/>
-                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a><br/>
-                        <i class="fas fa-info"></i> Find out more about the artwork on the Städels Digital Collection
+                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a> | <a :href="permalink" target="_blank">Find out more</a>
+                        <br/>
+                        
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="far fa-save"></i> Save screenshot</a>
@@ -91,17 +97,13 @@ Great choice!
                         <button v-if="sharingSupported" v-on:click="share" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
                         <span v-else>
                           <button v-on:click="shareURL" class="btn custom-standard btn-block" role="button" aria-disabled="true"><i class="fas fa-share-alt"></i> Share</button>
-                          
-                         
                           <div :hidden="hideLink" class="input-group mb-3">
-                            <div class="input-group"> 
-                              
+                            <div class="input-group">   
                               <input type="text" class="form-control h-100" ref="shareLink" readonly/>
                               <span class="input-group-btn">
                                   <button class="btn btn-outline-secondary" type="button" v-on:click="copyToClipboard"><i class="far fa-copy"></i></button>
                               </span>
                             </div>
-                           
                           </div>
                         </span>
                         <a v-if="shopEnabled" :href="image.printURL" target="_blank" class="btn custom-action btn-block" role="button" aria-disabled="true"><i class="fa fa-shopping-cart"></i> Order print</a>
@@ -109,7 +111,6 @@ Great choice!
                         <hr p-3>
                         <h5>Do you want to try again?</h5>
                         <a href="/" class="btn custom-action btn-block pt-2" role="button" aria-disabled="true"><i class="fa fa-undo-alt"></i> Find more art</a>
-                        
                     </div>
                 </div>
             </div>
@@ -127,7 +128,6 @@ Great choice!
                       </button>
                     </div>
                 </div>
-                
               </div>
             </div>
         </div>
