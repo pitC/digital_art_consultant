@@ -2,16 +2,16 @@
   "name": "artific.app",
   "short_name": "artific.app",
   "lang": "en",
-  "start_url": "/",
+  "start_url": "http://artific.app/",
   "display": "standalone",
   "icons": [
     {
-      "src": "icons/icon-32.png",
-      "sizes": "32x32",
+      "src": "dist/img/icon-72.png",
+      "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "dist/img/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
