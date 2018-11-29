@@ -290,7 +290,9 @@ color: white;
 div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
-
+.btn-block+.btn-block {
+    margin-top: 2px;
+}
 #find-art-btn, #videoplay-btn, #snapshot-btn {
 border-radius: .25rem;
 }
