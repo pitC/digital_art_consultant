@@ -136,7 +136,7 @@ export default {
     <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-camera"></i> By photo</button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-palette"></i> By color</a>
+      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-palette"></i> By colour</a>
     </div>
   </div>
 </div>
@@ -158,7 +158,7 @@ export default {
       <div class="box box-1 alert alert-warning" v-bind:hidden="isUploadHidden">
          <p>
             Unfortunately we can’t access your camera. But don’t worry, you can
-            still select colors manually.
+            still select colours manually.
           </p>
           <button type="button" v-on:click="manualMode" class="btn custom-standard">Select colours manually</button>
       </div>

@@ -84,6 +84,9 @@ background-size: cover;
         column-count: 3;
 
     }
+#logo-nav{
+    display: none !important;
+}
 }
 
 @media (min-width: 1200px) {
@@ -274,7 +277,8 @@ background-color: FF5858;
 border-color:FF5858;
 color: white;
 }
-/* Custom button  */
+
+/* Custom buttons  */
 .btn {padding: .75rem .75rem;
     margin-top: 2px;
 }
@@ -298,14 +302,12 @@ border-radius: .25rem;
     
    /* Logo style */
 
-        .logoframe {
-            border: white solid 1px;
-         padding: 10px;
-         margin-bottom: 10px;
-         text-transform: uppercase; 
-         color: white;
-         text-align: center;
-        }
+#logo-index{
+    margin: 2rem auto;
+}
+#logo-nav{
+    width: 65%;
+}
 
             /* Toggle switch */
 

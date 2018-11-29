@@ -33,7 +33,7 @@ export default {
 <div class="ml-auto bd-highlight custon-dropdown-wrapper">
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-palette"></i>  By color</button>
+    <i class="fas fa-palette"></i>  By colour</button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="app.html#/photo-input"><i class="fas fa-camera"></i> By camera</a>
   </div>
@@ -113,7 +113,7 @@ export default {
           </div>
           <div class="modal-footer border-0">
             
-            <button type="button" class="btn custom-standard btn-block" v-on:click="saveSelection">Save color</button>
+            <button type="button" class="btn custom-standard btn-block" v-on:click="saveSelection">Save colour</button>
           </div>
           </div>
         </div>
