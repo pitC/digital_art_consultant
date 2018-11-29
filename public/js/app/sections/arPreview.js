@@ -548,7 +548,7 @@ Place the image on your wall
     }
   },
   beforeRouteLeave: function(to, from, next) {
-    if (this.state != VIDEO_NOT_AVAILABLE) {
+    if (this.state != VIDEO_NOT_AVAILABLE && this.state != WEBCAM_INIT) {
       this.stopVideo();
     }
     next();
