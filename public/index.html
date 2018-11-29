@@ -25,6 +25,14 @@
       console.log('Service worker has been registered for scope:' + reg.scope);
     });
   }
+  window.addEventListener("beforeinstallprompt", function (e) {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.prompt();
+    console.log("Before install prompt");
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+
+  });
 </script>
   <meta name="description" content="We choose for you artworks matching your apartment color scheme and taste. Upgrade your home decor with augmented reality preview and free download.">
   <!-- Bootstrap CSS -->
