@@ -303,6 +303,10 @@ border-radius: .25rem;
     border: green solid 3px;}
     .yellowborder {
         border: yellow solid 3px;}
+
+.intro-text{
+    font-size: 1.1rem;
+}
     
    /* Logo style */
 
