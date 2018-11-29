@@ -301,7 +301,7 @@ border-radius: .25rem;
 
 #logo-index{
     max-width: 500px;
-    margin-bottom: 2rem;
+    margin: 2rem auto;
 }
 
             /* Toggle switch */
