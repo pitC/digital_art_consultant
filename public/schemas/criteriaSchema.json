@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "colours": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]+$"
+      }
+    },
+    "enhance": {
+      "type": "boolean"
+    }
+  },
+  "required": ["colours"]
+}
