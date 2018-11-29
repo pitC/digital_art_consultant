@@ -82,7 +82,8 @@ Great choice!
                         {{image.author}}
                         <br/>{{image.year}}<br/>
                         <i class="fab fa-creative-commons"></i> <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC-BY-SA 4.0</a><br/>
-                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a>
+                        <i class="fas fa-university"></i><a :href="image.institutionURL" target="_blank"> {{image.institution}}</a><br/>
+                        <i class="fas fa-info"></i> Find out more about the artwork on the Städels Digital Collection
                     </p>
                     <div class="button-container">
                         <a v-if="isScreenshot" :href="screenshot" class="btn custom-standard btn-block" role="button" aria-disabled="true" download><i class="far fa-save"></i> Save screenshot</a>
