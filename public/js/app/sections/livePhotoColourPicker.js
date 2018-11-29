@@ -114,6 +114,15 @@ export default {
     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <div class="ml-auto  bd-highlight custon-dropdown-wrapper">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-camera"></i> By photo</button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-palette"></i> By colour</a>
+    </div>
+  </div>
+</div>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
   <a class="navbar-brand" href="#"><img src="../../../dist/img/logo_bunt.png" alt="artific logo" id="logo-nav" class="img-fluid"></a>
   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -134,15 +143,7 @@ export default {
     </li>
   </ul>
 </div>
-  <div class="ml-auto  bd-highlight custon-dropdown-wrapper">
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle custom-switch" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-camera"></i> By photo</button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="app.html#/colour-picker"><i class="fas fa-palette"></i> By colour</a>
-    </div>
-  </div>
-</div>
+
 </nav>
     <p class="bg-light" v-if="debug">{{debugStr}} Dragging:{{draggingMode}}<span class='badge badge-primary' :style='style'>{{markedColour}}</span></p>
     <div>
