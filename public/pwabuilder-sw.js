@@ -23,7 +23,8 @@ self.addEventListener("fetch", function(event) {
       return caches
         .open(CACHE_NAME)
         .then(function(cache) {
-          if (/.*\.(png|jpg|css|js)$/.test(event.requets.url)) {
+          var dependencies = /.*\.(png|jpg|css|js)$/.test(event.request.url);
+          if (dependencies) {
             return cache.match(event.request);
           } else {
             return cache.match("offline.html");
@@ -31,7 +32,7 @@ self.addEventListener("fetch", function(event) {
         })
         .catch(function() {
           // If both fail, show a generic fallback:
-          return cache.match("offline.html");
+          return caches.match("offline.html");
         });
     })
   );
