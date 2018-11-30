@@ -23,10 +23,10 @@ self.addEventListener("fetch", function(event) {
       return caches
         .open(CACHE_NAME)
         .then(function(cache) {
-          if (event.request.url.includes("html")) {
-            return cache.match("offline.html");
-          } else {
+          if (/.*\.(png|jpg|css|js)$/.test(event.requets.url)) {
             return cache.match(event.request);
+          } else {
+            return cache.match("offline.html");
           }
         })
         .catch(function() {
