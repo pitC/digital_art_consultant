@@ -1,16 +1,16 @@
-importScripts("/dist/js/cache-polyfill.js");
-const CACHE_NAME = "artific";
+//This is the "Offline page" service worker
 
 //Install stage sets up the offline page in the cache and opens a new cache
 self.addEventListener("install", function(event) {
+  var offlinePage = new Request("offline.html");
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll([
-        "offline.html",
-        "dist/img/logo_weiss.png",
-        "static/src/bg.jpg",
-        "static/css/style.css"
-      ]);
+    fetch(offlinePage).then(function(response) {
+      return caches.open("pwabuilder-offline").then(function(cache) {
+        console.log(
+          "[PWA Builder] Cached offline page during Install" + response.url
+        );
+        return cache.put(offlinePage, response);
+      });
     })
   );
 });
@@ -20,19 +20,9 @@ self.addEventListener("install", function(event) {
 self.addEventListener("fetch", function(event) {
   event.respondWith(
     fetch(event.request).catch(function(error) {
-      return caches
-        .open(CACHE_NAME)
-        .then(function(cache) {
-          if (event.request.url.includes("html")) {
-            return cache.match("offline.html");
-          } else {
-            return cache.match(event.request);
-          }
-        })
-        .catch(function() {
-          // If both fail, show a generic fallback:
-          return cache.match("offline.html");
-        });
+      return caches.open("pwabuilder-offline").then(function(cache) {
+        return cache.match("offline.html");
+      });
     })
   );
 });
