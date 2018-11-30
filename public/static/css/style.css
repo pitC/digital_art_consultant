@@ -103,13 +103,13 @@ background-size: cover;
 
 .card-text a {
     color: black;
-    text-decoration: none;
+    text-decoration: underline;
     
   }
   
   .card-text a:hover {
     color: black;
-    text-decoration: none;
+    text-decoration: underline;
   }
   
   .card-text a:active {
@@ -118,6 +118,7 @@ background-size: cover;
   
   .card-text a:visited {
     color:black;
+    text-decoration: underline;
   }
 
 /*
@@ -289,7 +290,9 @@ color: white;
 div.fixed-bottom{
     padding: 0 10px 10px 10px;
 }
-
+.btn-block+.btn-block {
+    margin-top: 2px;
+}
 #find-art-btn, #videoplay-btn, #snapshot-btn {
 border-radius: .25rem;
 }
