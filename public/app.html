@@ -14,24 +14,26 @@
       name="description"
       content="We choose for you artworks matching your apartment color scheme and taste. Upgrade your home decor with augmented reality preview and free download."
     />
-    <script>
-      if (navigator.serviceWorker.controller) {
-        console.log(
-          "[PWA Builder] active service worker found, no need to register"
-        );
-      } else {
-        //Register the ServiceWorker
-        navigator.serviceWorker
-          .register("pwabuilder-sw.js", {
-            scope: "./"
-          })
-          .then(function(reg) {
-            console.log(
-              "Service worker has been registered for scope:" + reg.scope
-            );
-          });
-      }
-    </script>
+    <!--
+      <script>
+        if (navigator.serviceWorker.controller) {
+          console.log(
+            "[PWA Builder] active service worker found, no need to register"
+          );
+        } else {
+          //Register the ServiceWorker
+          navigator.serviceWorker
+            .register("pwabuilder-sw.js", {
+              scope: "./"
+            })
+            .then(function(reg) {
+              console.log(
+                "Service worker has been registered for scope:" + reg.scope
+              );
+            });
+        }
+      </script>
+    -->
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -60,8 +62,8 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
 
-    <link rel="shortcut icon" href="dist/img/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="dist/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="dist/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="dist/img/favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
